@@ -12,7 +12,7 @@ const Navbar = () => {
   ];
 
   return (
-    <header className="w-full md:flex md:flex-row py-4 bg-transparent">
+    <header className="w-full md:fixed md:flex md:flex-row py-4 bg-transparent">
       {/** Logo, Buttons, and Hamburger */}
       <div className="flex items-center justify-between md:justify-start md:flex-1">
         <img
@@ -22,7 +22,7 @@ const Navbar = () => {
         />
 
         {/** Buttons  */}
-        <div className="hidden md:ml-[80px] md:flex md:gap-11">
+        <div className="hidden md:ml-[80px] md:flex md:gap-9">
           <Button text="Recharge" />
           <Button text="Navigate" />
         </div>

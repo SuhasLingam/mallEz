@@ -1,27 +1,28 @@
 import React from "react";
+import HomeImage from "../assets/homeElement-1.svg";
+import Button from "./button";
 
 const HeroSection = () => {
   return (
-    <div className="flex flex-col items-center justify-center text-center bg-blue-100 py-16">
-      <div className="bg-white bg-opacity-30 p-8 rounded-lg shadow-lg">
-        <h1 className="text-4xl font-bold text-blue-800">
-          NAVIGATE, SHOP AND PARK WITH EASE
-        </h1>
-      </div>
-      <div className="mt-8 flex space-x-4">
-        <button className="bg-white hover:bg-gray-100 text-blue-800 font-bold py-2 px-4 rounded-full shadow">
-          LOGIN
-        </button>
-        <button className="bg-white hover:bg-gray-100 text-blue-800 font-bold py-2 px-4 rounded-full shadow">
-          Sign Up
-        </button>
-      </div>
-      <div className="mt-12">
-        <img
-          src="/path/to/your/mall-image.png"
-          alt="Mall and Parking"
-          className="max-w-full h-auto"
-        />
+    <div className="md:container pt-[60px] ">
+      <div className="md:flex  h-screen md:justify-between md:relative">
+        {/** Hero Text Section */}
+        <div className="md:z-10 md:w-[650px] md:justify-center md:space-y-6 md:bg-transparent md:shadow-2xl md:font-semibold md:font-inter md:text-mainTextColor md:items-center md:flex md:flex-col md:text-[60px] md:h-[350px] md:absolute md:top-[120px] md:left-[100px] md:backdrop-blur-[7px] md:rounded-3xl">
+          <p>NAVIGATE, SHOP</p>
+          <p>AND</p>
+          <p>PARK WITH EASE</p>
+        </div>
+
+        {/** Hero Image Section */}
+        <div className="md:w-[750px] md:mr-[120px] md:right-0 md:absolute">
+          <img src={HomeImage} alt="hero Image" />
+        </div>
+
+        {/** Buttons Section */}
+        <div className="md:absolute md:bottom-[110px] md:left-[240px] md:space-x-6 flex justify-center">
+          <Button text={"Login"} />
+          <Button text={"SignUp"} />
+        </div>
       </div>
     </div>
   );
