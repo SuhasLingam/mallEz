@@ -1,0 +1,75 @@
+import React, { useState } from "react";
+import mallEz from "../assets/Mallez.svg";
+import Button from "../components/button";
+import { FaUser, FaBars, FaTimes } from "react-icons/fa";
+
+const Navbar = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const navItems = [
+    { title: "Explore", link: "#" },
+    { title: "About Us", link: "#" },
+  ];
+
+  return (
+    <header className="w-full md:flex md:flex-row py-4 bg-transparent">
+      {/** Logo, Buttons, and Hamburger */}
+      <div className="flex items-center justify-between md:justify-start md:flex-1">
+        <img
+          src={mallEz}
+          alt="MallEz Logo"
+          className="p-2 w-32 md:w-auto md:mr-4"
+        />
+
+        {/** Buttons  */}
+        <div className="hidden md:ml-[80px] md:flex md:gap-11">
+          <Button text="Recharge" />
+          <Button text="Navigate" />
+        </div>
+
+        {/** Hamburger Icon */}
+        <div className="md:hidden  flex items-center ml-auto mr-4">
+          <button
+            className="text-2xl"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            {isMenuOpen ? <FaTimes size={34} /> : <FaBars size={34} />}
+          </button>
+        </div>
+      </div>
+
+      {/** Navigation, Buttons (in hamburger), and User Info */}
+      <div
+        className={`${
+          isMenuOpen ? "block" : "hidden"
+        } md:flex flex-col md:flex-row md:flex-1 md:justify-end items-center w-full md:w-auto transition-all duration-300 ease-in-out`}
+      >
+        <nav className="flex flex-col md:flex-row md:items-center md:space-x-12 mt-4 md:mt-0">
+          {/** Buttons  */}
+          <div className="flex flex-col md:hidden gap-4 items-center">
+            <Button text="Recharge" />
+            <Button text="Navigate" />
+          </div>
+
+          {/** Navigation Items */}
+          {navItems.map((item) => (
+            <li
+              key={item.title}
+              className="list-none md:font-semibold flex items-center justify-center my-2 md:my-0"
+            >
+              <a href={item.link} className="text-lg md:text-2xl">
+                {item.title}
+              </a>
+            </li>
+          ))}
+          <li className="flex items-center md:font-semibold justify-center gap-2 mt-2 md:pr-11 md:mt-0 md:text-2xl text-lg">
+            <FaUser />
+            <span>Suhas</span>
+          </li>
+        </nav>
+      </div>
+    </header>
+  );
+};
+
+export default Navbar;
