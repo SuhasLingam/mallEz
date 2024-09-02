@@ -65,11 +65,11 @@ const HeroSection = () => {
         </div>
 
         {/** Hero Image Section */}
-        <div className="w-full mt-8 md:mt-0 md:w-[750px] md:mr-[120px] flex justify-center md:justify-end">
+        <div className="w-full mt-8 md:mt-0 md:w-[750px] md:mr-[120px] md:absolute right-0 flex justify-center ">
           <img
             src={HomeImage}
             alt="hero Image"
-            className="w-[300px] md:w-auto"
+            className="w-[300px] md:w-auto "
           />
         </div>
 
