@@ -3,6 +3,9 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      backgroundImage: {
+        home2bg: "./assets/homebg-2.svg",
+      },
       colors: {
         mainBackgroundColor: "#CBECFC",
         mainTextColor: "#000D49",

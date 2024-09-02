@@ -1,21 +1,15 @@
 import React from "react";
 import Navbar from "../components/navbar";
 import HeroSection from "../components/hero";
-import homeBg from "../assets/homebg-1.svg";
 import Footer from "../components/footer";
+import HeroTwo from "../components/hero-2";
 
 const Home = () => {
   return (
-    <div
-      className="w-full h-full bg-center overflow-hidden"
-      style={{
-        backgroundImage: `url(${homeBg})`,
-        height: "100%",
-        backgroundSize: "120%",
-      }}
-    >
+    <div className="w-full h-full bg-mainBackgroundColor overflow-hidden">
       <Navbar />
       <HeroSection />
+      <HeroTwo />
       <Footer />
     </div>
   );
