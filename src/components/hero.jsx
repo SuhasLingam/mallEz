@@ -83,8 +83,8 @@ const HeroSection = () => {
 
         {/** Buttons Section */}
         <div className="mt-8 md:mt-0 flex justify-center space-x-4 md:absolute md:bottom-[110px] md:left-[240px]">
-          <Button text={"Login"} />
-          <Button text={"SignUp"} />
+          <Button text={"Login"} redirectTo={"/login"} />
+          <Button text={"SignUp"} redirectTo={"/signup"} />
         </div>
         <div className="md:absolute text-md px-3 absolute -bottom-[80px] mx-auto md:-bottom-[60px] md:text-2xl italic font-bold text-mainTextColor md:left-11">
           ○ Imagine effortlessly navigating the mall during the busy holiday

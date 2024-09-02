@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
-const Button = ({ text }) => {
+const Button = ({ text, redirectTo }) => {
   const [lastColor, setLastColor] = useState("#08E3FF");
   const [currentColor, setCurrentColor] = useState("#5799F7");
+  const navigate = useNavigate(); // Initialize navigate for navigation
 
   const handleClick = (e) => {
     const ripple = document.createElement("span");
@@ -17,6 +19,10 @@ const Button = ({ text }) => {
 
     setTimeout(() => {
       ripple.remove();
+      // If redirectTo is provided, navigate to the specified route
+      if (redirectTo) {
+        navigate(redirectTo);
+      }
     }, 600);
 
     setLastColor(currentColor);
