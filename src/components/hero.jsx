@@ -45,7 +45,7 @@ const HeroSection = () => {
     <div className="container pt-[60px] px-4 md:px-0">
       <div className="flex flex-col md:flex-row h-screen md:justify-between relative">
         {/** Hero Text Section */}
-        <div className="z-10 w-full md:w-[650px] text-center md:text-left capitalize flex flex-col items-center md:items-start space-y-6 font-bold font-poppins text-black text-[40px] md:text-[60px] md:absolute md:top-[120px] md:left-[100px]">
+        <div className="z-10 w-full md:w-[650px] text-center md:text-left capitalize flex flex-col items-center md:items-center space-y-6 font-bold font-poppins text-black text-[40px] md:text-[60px] md:absolute md:top-[120px] md:left-[100px]">
           <p>Feel The Ease,</p>
 
           {/* Fixed height container for the changing text */}
