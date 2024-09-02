@@ -44,11 +44,11 @@ const HeroSection = () => {
 
   return (
     <div
-      style={{
-        backgroundImage: `url(${homeBg})`,
-        height: "100%",
-        backgroundSize: "100%",
-      }}
+      // style={{
+      //   backgroundImage: `url(${homeBg})`,
+      //   height: "100%",
+      //   backgroundSize: "100%",
+      // }}
       className="container pt-[60px] px-4 md:px-0"
     >
       <div className="flex flex-col md:flex-row h-screen md:justify-between relative">
@@ -85,6 +85,12 @@ const HeroSection = () => {
         <div className="mt-8 md:mt-0 flex justify-center space-x-4 md:absolute md:bottom-[110px] md:left-[240px]">
           <Button text={"Login"} />
           <Button text={"SignUp"} />
+        </div>
+        <div className="md:absolute text-md px-3 absolute -bottom-[80px] mx-auto md:-bottom-[60px] md:text-2xl italic font-bold text-mainTextColor md:left-11">
+          ○ Imagine effortlessly navigating the mall during the busy holiday
+          season, with MallEZ guiding you directly to <br /> your favorite
+          stores and securing a parking spot just as you arrive. That's the
+          power of MallEZ.
         </div>
       </div>
     </div>

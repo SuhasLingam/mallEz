@@ -8,6 +8,7 @@ const Navbar = () => {
   const [activeSubMenu, setActiveSubMenu] = useState(null);
 
   const navItems = [
+    { title: "Events", link: "#" },
     { title: "Explore", link: "#", subItems: ["Malls", "Offers"] },
     { title: "About Us", link: "#" },
   ];
@@ -77,10 +78,10 @@ const Navbar = () => {
               </a>
 
               {item.subItems && activeSubMenu === index && (
-                <ul className="md:absolute flex mt-3 bg-white rounded-full py-2 px-4 gap-2 md:top-full md:mt-2 md:flex md:flex-row md:gap-4 md:bg-white md:shadow-lg md:px-5 md:py-2 md:rounded-full">
+                <ul className="md:absolute flex mt-3 bg-white rounded-full py-2 px-4 gap-2 md:top-full md:mt-2 md:flex md:flex-row md:gap-10 md:bg-white md:shadow-lg md:px-5 md:py-2 md:rounded-full">
                   {item.subItems.map((subItem, subIndex) => (
                     <li key={subIndex} className="list-none">
-                      <button className="bg-mainBackgroundColor shadow-inner text-sm md:text-xl font-semibold hover:text-white hover:bg-gradient-to-b hover:from-[#08E3FF] hover:to-[#5799F7] text-mainTextColor p-2 md:p-2 px-4 md:px-5 rounded-full  transition-all duration-300 ease-in-out">
+                      <button className="bg-mainBackgroundColor shadow-inner drop-shadow-md text-sm md:text-xl font-semibold hover:text-white hover:bg-gradient-to-b hover:from-[#08E3FF] hover:to-[#5799F7] text-mainTextColor p-2 md:p-1 px-4 md:px-6 rounded-full  transition-all duration-300 ease-in-out">
                         {subItem}
                       </button>
                     </li>
