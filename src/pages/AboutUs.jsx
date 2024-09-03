@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react"; // Added useEffect import
+import React, { useState, useEffect } from "react";
 import AboutBG from "../assets/aboutBG.svg";
 import { motion } from "framer-motion";
 import Navbar from "../components/navbar";
+import Team from "../components/team";
+import Footer from "../components/footer";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 50 },
@@ -25,7 +27,7 @@ const AboutUs = () => {
         <Navbar />
       </div>
       <div className="bg-mainBackgroundColor md:pt-[100px] font-poppins flex flex-col items-center justify-center h-full m-auto">
-        {/** About Us */}
+        {/* About Us */}
         <motion.span
           className="sm:text-5xl md:text-8xl sm:my-8 md:my-11 text-mainTextColor my-6 text-4xl font-bold"
           variants={fadeInUp}
@@ -56,12 +58,12 @@ const AboutUs = () => {
           </p>
           <p>
             We want to profit with our members, not from them. That’s why MallEZ
-            doesn’t rely on monthly service fees, or minimum balance
+            doesn’t rely on monthly service fees or minimum balance
             requirements.
           </p>
         </motion.div>
 
-        {/** Our Mission */}
+        {/* Our Mission */}
         <motion.div
           className="sm:px-8 md:px-11 sm:py-8 md:py-11 sm:mt-8 md:mt-11 border-slate-400 border-y-2 sm:border-y-3 md:border-y-4 sm:space-y-8 md:space-y-10 sm:text-xl md:text-2xl flex flex-col items-center justify-center px-4 py-6 mt-6 space-y-6 text-lg text-center"
           variants={fadeInUp}
@@ -87,7 +89,7 @@ const AboutUs = () => {
           </div>
         </motion.div>
 
-        {/** What We Offer */}
+        {/* What We Offer */}
         <motion.div
           className="sm:mt-8 md:mt-11 sm:px-8 md:px-11 sm:py-8 md:py-11 border-slate-400 sm:text-xl md:text-2xl sm:border-b-3 md:border-b-4 flex flex-col justify-center min-h-screen px-4 py-6 mt-6 text-lg bg-no-repeat bg-cover border-b-2"
           style={{
@@ -107,7 +109,6 @@ const AboutUs = () => {
             <ul className="sm:ml-8 md:ml-11 sm:py-8 md:py-11 py-6 ml-4 list-disc">
               <li className="sm:py-3 md:py-4 py-2">
                 <span className="sm:px-2 px-1 font-bold">
-                  {" "}
                   All Malls in One Place:
                 </span>{" "}
                 Explore all the malls in your area with just a few clicks.
@@ -133,7 +134,6 @@ const AboutUs = () => {
               </li>
               <li className="sm:py-3 md:py-4 py-2">
                 <span className="sm:px-2 px-1 font-bold">
-                  {" "}
                   Tokenized System for Purchases:
                 </span>{" "}
                 Experience the future of shopping with our tokenized purchase
@@ -152,7 +152,7 @@ const AboutUs = () => {
           </div>
         </motion.div>
 
-        {/** Why MallEZ */}
+        {/* Why MallEZ */}
         <motion.div
           className="sm:px-8 md:px-11 sm:py-8 md:py-11 sm:mt-8 md:mt-11 border-slate-400 sm:space-y-8 md:space-y-10 sm:text-xl md:text-2xl sm:border-b-3 md:border-b-4 flex flex-col items-center justify-center px-4 py-6 mt-6 space-y-6 text-lg text-center border-b-2"
           variants={fadeInUp}
@@ -166,7 +166,7 @@ const AboutUs = () => {
           </span>
           <p>
             We understand that today's shoppers demand more than just a place to
-            buy goods, they want an experience that’s easy, efficient, and
+            buy goods; they want an experience that’s easy, efficient, and
             enjoyable. MallEZ is here to revolutionize the way you shop by
             bringing all your mall needs into one comprehensive platform. With a
             focus on customer convenience and innovative technology, we’re
@@ -177,7 +177,7 @@ const AboutUs = () => {
           </span>
         </motion.div>
 
-        {/** Join Us */}
+        {/* Join Us */}
         <motion.div
           className="sm:px-8 md:px-11 sm:py-8 md:py-11 sm:mt-8 md:mt-11 border-slate-400 sm:space-y-8 md:space-y-10 sm:text-xl md:text-2xl sm:border-b-3 md:border-b-4 flex flex-col items-center justify-center px-4 py-6 mt-6 space-y-6 text-lg text-center border-b-2"
           variants={fadeInUp}
@@ -200,7 +200,9 @@ const AboutUs = () => {
             Feel the Ease, Shop with MallEZ
           </span>
         </motion.div>
+        <Team />
       </div>
+      <Footer />
     </>
   );
 };
