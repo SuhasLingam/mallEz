@@ -3,6 +3,7 @@ import zxcvbn from "zxcvbn";
 import Footer from "../components/footer";
 import { motion } from "framer-motion";
 import { pageTransition } from "../animation";
+import { useNavigate } from "react-router-dom";
 
 const AccountForm = () => {
   const [vehicleNumbers, setVehicleNumbers] = useState([""]);
@@ -20,6 +21,12 @@ const AccountForm = () => {
     const newVehicleNumbers = [...vehicleNumbers];
     newVehicleNumbers[index] = value;
     setVehicleNumbers(newVehicleNumbers);
+  };
+
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/login");
   };
 
   const getStrengthColor = (score) => {
@@ -57,15 +64,15 @@ const AccountForm = () => {
       exit="exit"
       variants={pageTransition}
     >
-      <div className="flex  flex-col justify-center items-center font-poppins min-h-screen bg-mainBackgroundColor">
+      <div className="font-poppins bg-mainBackgroundColor flex flex-col items-center justify-center min-h-screen">
         <div className="bg-[#FFFFFF] bg-opacity-70 p-8 rounded-3xl shadow-lg w-full max-w-lg md:max-w-4xl flex flex-col md:flex-row">
-          <div className="w-full md:w-1/2">
-            <h2 className="text-2xl font-semibold mb-6 text-center text-mainTextColor">
+          <div className="md:w-1/2 w-full">
+            <h2 className="text-mainTextColor mb-6 text-2xl font-semibold text-center">
               Create an account
             </h2>
-            <p className="text-center text-gray-500 mb-4">
+            <p className="mb-4 text-center text-gray-500">
               Already have an account?{" "}
-              <a href="/login" className="text-blue-500">
+              <a onClick={handleClick} className="text-blue-500 cursor-pointer">
                 Log In
               </a>
             </p>
@@ -78,7 +85,7 @@ const AccountForm = () => {
                   </label>
                   <input
                     type="text"
-                    className="mt-1 p-2 w-full border rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 w-full p-2 mt-1 border"
                   />
                 </div>
                 <div>
@@ -87,7 +94,7 @@ const AccountForm = () => {
                   </label>
                   <input
                     type="text"
-                    className="mt-1 p-2 w-full border rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 w-full p-2 mt-1 border"
                   />
                 </div>
                 <div className="col-span-2">
@@ -96,7 +103,7 @@ const AccountForm = () => {
                   </label>
                   <input
                     type="email"
-                    className="mt-1 p-2 w-full border rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 w-full p-2 mt-1 border"
                   />
                 </div>
                 <div className="col-span-2">
@@ -107,7 +114,7 @@ const AccountForm = () => {
                     type="password"
                     value={password}
                     onChange={handlePasswordChange}
-                    className="mt-1 p-2 w-full border rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 w-full p-2 mt-1 border"
                   />
                   <div className="mt-2">
                     <div
@@ -127,7 +134,7 @@ const AccountForm = () => {
                   </label>
                   <input
                     type="password"
-                    className="mt-1 p-2 w-full border rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 w-full p-2 mt-1 border"
                   />
                 </div>
                 <div className="col-span-2">
@@ -142,13 +149,13 @@ const AccountForm = () => {
                         onChange={(e) =>
                           handleVehicleChange(index, e.target.value)
                         }
-                        className="p-2 w-full border rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 w-full p-2 border"
                       />
                       {index === vehicleNumbers.length - 1 && (
                         <button
                           type="button"
                           onClick={handleAddVehicle}
-                          className="ml-2 p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                          className="hover:bg-blue-600 p-2 ml-2 text-white bg-blue-500 rounded-md"
                         >
                           +
                         </button>
@@ -159,7 +166,7 @@ const AccountForm = () => {
                 <div className="col-span-2">
                   <button
                     type="submit"
-                    className="w-full p-2 bg-blue-600 text-white rounded-2xl hover:bg-blue-700"
+                    className="rounded-2xl hover:bg-blue-700 w-full p-2 text-white bg-blue-600"
                   >
                     CREATE ACCOUNT
                   </button>
@@ -167,12 +174,12 @@ const AccountForm = () => {
               </div>
             </form>
           </div>
-          <div className="items-center justify-center flex m-auto font-bold">
+          <div className="flex items-center justify-center m-auto font-bold">
             OR
           </div>
           {/* Social Sign-Up Options */}
-          <div className="flex flex-col items-center justify-center mt-6 space-y-2 md:mt-0 md:ml-0 md:w-1/3">
-            <button className="flex items-center justify-center w-full py-2 bg-white border border-gray-300 rounded-2xl text-gray-700 hover:bg-gray-50">
+          <div className="md:mt-0 md:ml-0 md:w-1/3 flex flex-col items-center justify-center mt-6 space-y-2">
+            <button className="rounded-2xl hover:bg-gray-50 flex items-center justify-center w-full py-2 text-gray-700 bg-white border border-gray-300">
               <img
                 src="https://img.icons8.com/color/16/000000/google-logo.png"
                 alt="Google"
@@ -180,7 +187,7 @@ const AccountForm = () => {
               />
               Signup with Google
             </button>
-            <button className="flex items-center justify-center w-full py-2 bg-black text-white rounded-2xl hover:bg-gray-800">
+            <button className="rounded-2xl hover:bg-gray-800 flex items-center justify-center w-full py-2 text-white bg-black">
               <img
                 src="https://img.icons8.com/ios-filled/16/ffffff/mac-os.png"
                 alt="Apple"
@@ -188,7 +195,7 @@ const AccountForm = () => {
               />
               Signup with Apple
             </button>
-            <button className="flex items-center justify-center w-full py-2 bg-blue-600 text-white rounded-2xl hover:bg-blue-700">
+            <button className="rounded-2xl hover:bg-blue-700 flex items-center justify-center w-full py-2 text-white bg-blue-600">
               <img
                 src="https://img.icons8.com/color/16/000000/facebook-new.png"
                 alt="Facebook"
@@ -200,12 +207,12 @@ const AccountForm = () => {
         </div>
 
         {/* Language Selection and Footer Links */}
-        <div className="flex flex-col md:flex-row justify-between items-center w-full max-w-lg mt-4 text-sm text-gray-600">
+        <div className="md:flex-row flex flex-col items-center justify-between w-full max-w-lg mt-4 text-sm text-gray-600">
           <div className="relative">
-            <select className="appearance-none bg-transparent text-gray-600 focus:outline-none">
+            <select className="focus:outline-none text-gray-600 bg-transparent appearance-none">
               <option>English (United States)</option>
             </select>
-            <span className="absolute inset-y-0 -right-6 flex items-center pr-2 pointer-events-none">
+            <span className="-right-6 absolute inset-y-0 flex items-center pr-2 pointer-events-none">
               <svg
                 className="w-4 h-4 text-gray-600"
                 fill="none"
@@ -221,7 +228,7 @@ const AccountForm = () => {
               </svg>
             </span>
           </div>
-          <div className="flex space-x-4 mt-4 md:mt-0">
+          <div className="md:mt-0 flex mt-4 space-x-4">
             <a href="#" className="hover:underline">
               Help
             </a>
