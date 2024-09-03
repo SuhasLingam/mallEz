@@ -21,11 +21,11 @@ const AnimatedRoutes = () => {
           path="/login"
           element={
             <motion.div
+              key="login-page"
               initial="initial"
               animate="animate"
               exit="exit"
               variants={pageTransition}
-              key={location.pathname} // Use pathname to ensure key uniqueness
             >
               <LoginForm />
             </motion.div>
@@ -35,11 +35,11 @@ const AnimatedRoutes = () => {
           path="/signup"
           element={
             <motion.div
+              key="signup-page"
               initial="initial"
               animate="animate"
               exit="exit"
               variants={pageTransition}
-              key={location.pathname} // Use pathname to ensure key uniqueness
             >
               <SignupForm />
             </motion.div>
@@ -49,11 +49,11 @@ const AnimatedRoutes = () => {
           path="/"
           element={
             <motion.div
+              key="home-page"
               initial="initial"
               animate="animate"
               exit="exit"
               variants={pageTransition}
-              key={location.pathname} // Use pathname to ensure key uniqueness
             >
               <Home />
             </motion.div>
