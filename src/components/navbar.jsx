@@ -2,15 +2,21 @@ import React, { useState } from "react";
 import mallEz from "../assets/Mallez.svg";
 import Button from "../components/button";
 import { FaUser, FaBars, FaTimes } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSubMenu, setActiveSubMenu] = useState(null);
 
   const navItems = [
-    { title: "Events", link: "#" },
-    { title: "Explore", link: "#", subItems: ["Malls", "Offers"] },
-    { title: "About Us", link: "#" },
+    { title: "Events", link: () => navigate("/events") },
+    {
+      title: "Explore",
+      link: () => navigate("/explore"),
+      subItems: ["Malls", "Offers"],
+    },
+    { title: "About Us", link: () => navigate("/about") },
   ];
 
   const handleSubMenuToggle = (index) => {
@@ -18,13 +24,13 @@ const Navbar = () => {
   };
 
   return (
-    <header className="w-full md:absolute md:z-20 md:flex md:flex-row py-4 bg-transparent">
+    <header className="md:absolute md:z-20 md:flex md:flex-row w-full py-4 bg-transparent">
       {/** Logo, Buttons, and Hamburger */}
-      <div className="flex items-center justify-between md:justify-start md:flex-1">
+      <div className="md:justify-start md:flex-1 flex items-center justify-between">
         <img
           src={mallEz}
           alt="MallEz Logo"
-          className="p-2 w-32 md:w-auto md:mr-4"
+          className="md:w-auto md:mr-4 w-32 p-2"
         />
 
         {/** Buttons */}
@@ -50,9 +56,9 @@ const Navbar = () => {
           isMenuOpen ? "block" : "hidden"
         } md:flex flex-col md:flex-row md:flex-1 md:justify-end items-center w-full md:w-auto transition-all duration-300 ease-in-out`}
       >
-        <nav className="flex flex-col md:flex-row md:items-center md:space-x-12 mt-4 md:mt-0">
+        <nav className="md:flex-row md:items-center md:space-x-12 md:mt-0 flex flex-col mt-4">
           {/** Buttons */}
-          <div className="flex flex-col md:hidden gap-4 items-center">
+          <div className="md:hidden flex flex-col items-center gap-4">
             <Button text="Recharge" />
             <Button text="Navigate" />
           </div>
@@ -61,24 +67,20 @@ const Navbar = () => {
           {navItems.map((item, index) => (
             <li
               key={item.title}
-              className="relative flex-col  list-none md:font-semibold flex items-center justify-center my-2 md:my-0"
+              className="md:font-semibold md:my-0 relative flex flex-col items-center justify-center my-2 list-none"
             >
               <a
-                href={item.link}
-                className="text-lg md:text-2xl"
-                onClick={() => handleSubMenuToggle(index)}
-                onMouseEnter={() => {
-                  setHover(true);
-                }}
-                onMouseLeave={() => {
-                  setHover(false);
+                className="md:text-2xl text-lg"
+                onClick={() => {
+                  handleSubMenuToggle(index);
+                  item.link();
                 }}
               >
                 {item.title}
               </a>
 
               {item.subItems && activeSubMenu === index && (
-                <ul className="md:absolute flex mt-3 bg-white rounded-full py-2 px-4 gap-2 md:top-full md:mt-2 md:flex md:flex-row md:gap-10 md:bg-white md:shadow-lg md:px-5 md:py-2 md:rounded-full">
+                <ul className="md:absolute md:top-full md:mt-2 md:flex md:flex-row md:gap-10 md:bg-white md:shadow-lg md:px-5 md:py-2 md:rounded-full flex gap-2 px-4 py-2 mt-3 bg-white rounded-full">
                   {item.subItems.map((subItem, subIndex) => (
                     <li key={subIndex} className="list-none">
                       <button className="bg-mainBackgroundColor shadow-inner drop-shadow-md text-sm md:text-xl font-semibold hover:text-white hover:bg-gradient-to-b hover:from-[#08E3FF] hover:to-[#5799F7] text-mainTextColor p-2 md:p-1 px-4 md:px-6 rounded-full  transition-all duration-300 ease-in-out">
@@ -90,7 +92,7 @@ const Navbar = () => {
               )}
             </li>
           ))}
-          <li className="flex items-center md:font-semibold justify-center gap-2 mt-2 md:pr-11 md:mt-0 md:text-2xl text-lg">
+          <li className="md:font-semibold md:pr-11 md:mt-0 md:text-2xl flex items-center justify-center gap-2 mt-2 text-lg">
             <FaUser />
             <span>Suhas</span>
           </li>
