@@ -10,10 +10,11 @@ const Navbar = () => {
   const [activeSubMenu, setActiveSubMenu] = useState(null);
 
   const navItems = [
-    { title: "Events", link: () => navigate("/events") },
+    { title: "Home", link: () => navigate("/") },
+    { title: "Events", link: () => navigate("/") },
     {
       title: "Explore",
-      link: () => navigate("/explore"),
+      link: () => navigate("/"),
       subItems: ["Malls", "Offers"],
     },
     { title: "About Us", link: () => navigate("/about") },
@@ -23,11 +24,16 @@ const Navbar = () => {
     setActiveSubMenu(activeSubMenu === index ? null : index);
   };
 
+  const handleLogo = () => {
+    navigate("/");
+  };
+
   return (
-    <header className="md:absolute md:z-20 md:flex md:flex-row w-full py-4 bg-transparent">
+    <header className="md:absolute md:z-20 md:flex md:flex-row w-full py-4 bg-transparent cursor-pointer">
       {/** Logo, Buttons, and Hamburger */}
       <div className="md:justify-start md:flex-1 flex items-center justify-between">
         <img
+          onClick={handleLogo}
           src={mallEz}
           alt="MallEz Logo"
           className="md:w-auto md:mr-4 w-32 p-2"

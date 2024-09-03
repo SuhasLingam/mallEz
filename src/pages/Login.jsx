@@ -3,6 +3,8 @@ import Footer from "../components/footer";
 import { motion } from "framer-motion";
 import { pageTransition } from "../animation";
 import { useNavigate } from "react-router-dom";
+import Button from "../components/button";
+import Navbar from "../components/navbar";
 
 const LoginForm = () => {
   const [password, setPassword] = useState("");
@@ -28,7 +30,11 @@ const LoginForm = () => {
       exit="exit"
       variants={pageTransition}
     >
-      <div className="font-poppins bg-mainBackgroundColor flex flex-col items-center justify-center min-h-screen">
+      <div className="bg-mainBackgroundColor">
+        {" "}
+        <Navbar />
+      </div>
+      <div className="font-poppins bg-mainBackgroundColor md:pt-[80px] relative flex flex-col items-center justify-center min-h-screen">
         <div className="bg-[#FFFFFF] bg-opacity-70 p-8 rounded-3xl shadow-lg w-full max-w-lg md:max-w-4xl flex flex-col md:flex-row">
           <div className="md:w-1/2 w-full">
             <h2 className="text-mainTextColor mb-6 text-2xl font-semibold text-center">
