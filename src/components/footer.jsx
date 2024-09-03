@@ -1,15 +1,29 @@
 import React from "react";
+import { motion } from "framer-motion";
 import { FaInstagram, FaTwitter, FaLinkedin } from "react-icons/fa";
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 50 },
+  visible: { opacity: 1, y: 0, transition: { duration: 1 } },
+  exit: { opacity: 0, y: 50, transition: { duration: 0.5 } },
+};
 
 const Footer = () => {
   return (
-    <footer className="bg-mainBackgroundColor border-t-2 border-slate-400 py-8">
-      <div className="container mx-auto px-6 md:flex md:justify-around">
+    <footer className="bg-mainBackgroundColor border-slate-400 py-8 border-t-2">
+      <div className="md:flex md:justify-around container px-6 mx-auto">
         {/* Footer Links */}
-        <div className="flex flex-wrap justify-between md:space-x-12">
-          <div className="mb-6 md:mb-0">
-            <h5 className="font-bold text-lg mb-2 text-blue-900">Product</h5>
-            <ul className="text-blue-900 space-y-1">
+        <motion.div
+          className="md:space-x-12 flex flex-wrap justify-between"
+          variants={fadeInUp}
+          initial="hidden"
+          whileInView="visible"
+          exit="hidden"
+          viewport={{ once: false, amount: 0.2 }}
+        >
+          <div className="md:mb-0 mb-6">
+            <h5 className="mb-2 text-lg font-bold text-blue-900">Product</h5>
+            <ul className="space-y-1 text-blue-900">
               <li>
                 <a href="#">Solutions</a>
               </li>
@@ -21,9 +35,9 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          <div className="mb-6 md:mb-0">
-            <h5 className="font-bold text-lg mb-2 text-blue-900">About Us</h5>
-            <ul className="text-blue-900 space-y-1">
+          <div className="md:mb-0 mb-6">
+            <h5 className="mb-2 text-lg font-bold text-blue-900">About Us</h5>
+            <ul className="space-y-1 text-blue-900">
               <li>
                 <a href="#">About</a>
               </li>
@@ -35,11 +49,11 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          <div className="mb-6 md:mb-0">
-            <h5 className="font-bold text-lg mb-2 text-blue-900">
+          <div className="md:mb-0 mb-6">
+            <h5 className="mb-2 text-lg font-bold text-blue-900">
               Help & Support
             </h5>
-            <ul className="text-blue-900 space-y-1">
+            <ul className="space-y-1 text-blue-900">
               <li>
                 <a href="#">Help Center</a>
               </li>
@@ -51,10 +65,17 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-        </div>
+        </motion.div>
 
         {/* App Store Links */}
-        <div className="flex flex-col space-y-4 items-start">
+        <motion.div
+          className="flex flex-col items-start space-y-4"
+          variants={fadeInUp}
+          initial="hidden"
+          whileInView="visible"
+          exit="hidden"
+          viewport={{ once: false, amount: 0.2 }}
+        >
           <a href="#">
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
@@ -69,11 +90,18 @@ const Footer = () => {
               className="w-36"
             />
           </a>
-        </div>
+        </motion.div>
       </div>
 
       {/* Footer Bottom */}
-      <div className="container mx-auto px-6 mt-8 flex justify-between items-center border-t-2 border-slate-400 pt-4">
+      <motion.div
+        className="border-slate-400 container flex items-center justify-between px-6 pt-4 mx-auto mt-8 border-t-2"
+        variants={fadeInUp}
+        initial="hidden"
+        whileInView="visible"
+        exit="hidden"
+        viewport={{ once: false, amount: 0.2 }}
+      >
         <p className="text-blue-900">© 2024 MallEZ</p>
         <div className="flex space-x-4">
           <a href="#" className="text-[#E4405F] text-2xl">
@@ -86,7 +114,7 @@ const Footer = () => {
             <FaLinkedin />
           </a>
         </div>
-      </div>
+      </motion.div>
     </footer>
   );
 };

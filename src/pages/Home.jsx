@@ -6,7 +6,7 @@ import HeroTwo from "../components/hero-2";
 
 const Home = () => {
   return (
-    <div className="w-full h-full bg-mainBackgroundColor overflow-hidden">
+    <div className="bg-mainBackgroundColor w-full h-full overflow-hidden">
       <Navbar />
       <HeroSection />
       <HeroTwo />

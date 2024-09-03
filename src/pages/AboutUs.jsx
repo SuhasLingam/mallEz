@@ -179,11 +179,19 @@ const AboutUs = () => {
         exit="hidden"
         viewport={{ once: false, amount: 0.2 }}
       >
+        <span className="sm:text-5xl md:text-8xl sm:mb-8 md:mb-7 text-mainTextColor mb-6 text-4xl font-bold">
+          Join Us on Our Journey:
+        </span>
         <p>
-          Our team is constantly working to bring new features and improvements
-          to the platform. We’re excited to have you on board as we continue to
-          innovate and make shopping a breeze. Thank you for choosing MallEZ!
+          MallEZ is more than just an app; it’s a community of shoppers who
+          value convenience and innovation. We’re constantly evolving and adding
+          new features to make your shopping experience even better. Join us on
+          our journey to make shopping at malls easier and more enjoyable than
+          ever before.
         </p>
+        <span className="sm:mb-8 md:mb-11 text-mainTextColor sm:text-xl md:text-2xl mb-6 text-lg font-bold">
+          Feel the Ease, Shop with MallEZ
+        </span>
       </motion.div>
     </div>
   );
