@@ -10,7 +10,6 @@ const Navbar = () => {
   const [activeSubMenu, setActiveSubMenu] = useState(null);
 
   const navItems = [
-    { title: "Home", link: () => navigate("/") },
     { title: "Events", link: () => navigate("/") },
     {
       title: "Explore",
