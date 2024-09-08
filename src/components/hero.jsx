@@ -69,9 +69,9 @@ const HeroSection = () => {
 
   return (
     <div className="container pt-[20px] px-4 md:px-0">
-      <div className="md:flex-row md:justify-between relative flex flex-col h-screen">
+      <div className="md:flex-row md:justify-between relative flex flex-col w-full h-screen">
         <motion.div
-          className="z-10 w-full md:w-[650px] text-center md:text-left capitalize flex flex-col items-center md:items-center space-y-5 font-bold font-poppins text-black text-[40px] md:text-[60px] md:absolute md:top-[90px] md:left-[60px]"
+          className="z-10 w-full md:w-[650px] text-center md:text-left capitalize flex flex-col items-center md:items-center space-y-5 font-bold font-poppins text-black text-[40px] md:text-[60px] md:absolute md:top-[90px] md:inset-x-1"
           variants={fadeInUp}
           initial="hidden"
           whileInView="visible"
@@ -129,7 +129,7 @@ const HeroSection = () => {
         )}
 
         <motion.div
-          className="w-full mt-8 top-[60px] md:mt-0 md:w-[750px] md:m-auto md:absolute right-1 flex justify-center"
+          className="w-full mt-8 top-[60px] md:mt-0 md:w-1/2 md:m-auto md:absolute right-1 flex justify-center"
           variants={view < 768 ? fadeInUp : fadeImage}
           initial="hidden"
           whileInView="visible"
@@ -139,7 +139,7 @@ const HeroSection = () => {
           <img
             src={HomeImage}
             alt="hero Image"
-            className="w-[320px] md:w-auto "
+            className="w-[320px] md:w-auto md:m-auto"
           />
         </motion.div>
         {view < 768 ? (
