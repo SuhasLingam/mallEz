@@ -11,6 +11,7 @@ import LoginForm from "./pages/Login";
 import SignupForm from "./pages/SignUp";
 import { pageTransition } from "./animation";
 import AboutUs from "./pages/AboutUs";
+import Malls from "./pages/malls";
 
 const AnimatedRoutes = () => {
   const location = useLocation();
@@ -71,6 +72,20 @@ const AnimatedRoutes = () => {
               variants={pageTransition}
             >
               <AboutUs />
+            </motion.div>
+          }
+        />
+        <Route
+          path="/malls"
+          element={
+            <motion.div
+              key="aboutus"
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              variants={pageTransition}
+            >
+              <Malls />
             </motion.div>
           }
         />
