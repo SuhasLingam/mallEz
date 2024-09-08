@@ -4,7 +4,7 @@ import mallVector from "../assets/mallVector.svg";
 
 const mallOffersRev = () => {
   return (
-    <div className="container pt-[90px] pb-[150px]">
+    <div className="container  pb-[150px]">
       <div className="bg-mainBackgroundColor rounded-3xl border-opacity-10 relative flex flex-col w-full h-full m-auto border-2 border-black shadow-xl">
         {/* Image on the left now */}
         <div className="flex items-center justify-start w-auto">

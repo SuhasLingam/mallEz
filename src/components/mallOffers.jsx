@@ -4,7 +4,7 @@ import mallVector from "../assets/mallVector.svg";
 
 const mallOffers = () => {
   return (
-    <div className="container pt-[70px]">
+    <div className=" container pb-[150px]">
       <div className="bg-mainBackgroundColor rounded-3xl border-opacity-10 relative flex flex-col w-full h-full m-auto border-2 border-black shadow-xl">
         <div className="w-max top-[5rem] left-[65px] absolute flex flex-row gap-10">
           <p className="w-max ml-[80px] p-4 px-[100px] text-3xl font-bold shadow-inner text-mainTextColor bg-white bg-opacity-50 stroke-black  rounded-full">
