@@ -32,7 +32,7 @@ const HeroTwo = () => {
 
   return (
     <div
-      className=" w-full h-full"
+      className="w-full h-full"
       style={{
         backgroundImage: width < 768 ? "none" : `url(${herobgtwo})`,
         height: "100%",
@@ -43,7 +43,7 @@ const HeroTwo = () => {
         <div className="md:flex-row md:justify-between relative flex flex-col h-screen">
           {/* Hero Image Section */}
           <motion.div
-            className="w-full mt-9 md:mt-0 md:-bottom-10 md:w-[750px] md:ml-[120px] md:absolute left-0 flex justify-center"
+            className="w-full mt-9 md:mt-0 md:-bottom-10 md:w-1/2 md:ml-[120px] md:absolute left-0 flex justify-center"
             variants={width < 768 ? fadeInUp : fadeInleft}
             initial="hidden"
             whileInView="visible"
@@ -53,7 +53,7 @@ const HeroTwo = () => {
             <img
               src={homeImageTwo}
               alt="hero Image"
-              className="w-[320px] md:w-auto"
+              className="w-[320px] md:w-auto md:m-auto"
             />
           </motion.div>
 
