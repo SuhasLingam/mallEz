@@ -13,8 +13,9 @@ const Navbar = () => {
     { title: "Events", link: () => navigate("/") },
     {
       title: "Explore",
-      link: () => navigate("/"),
-      subItems: ["Malls", "Offers"],
+
+      subItems: [ { title: "Malls", link: () => navigate("/malls") },
+      { title: "Offers", link: () => navigate("/offers") },],
     },
     { title: "About Us", link: () => navigate("/about") },
   ];
@@ -85,16 +86,18 @@ const Navbar = () => {
               </a>
 
               {item.subItems && activeSubMenu === index && (
-                <ul className="md:absolute md:top-full md:mt-2 md:flex md:flex-row md:gap-10 md:bg-white md:shadow-lg md:px-5 md:py-2 md:rounded-full flex gap-2 px-4 py-2 mt-3 bg-white rounded-full">
-                  {item.subItems.map((subItem, subIndex) => (
-                    <li key={subIndex} className="list-none">
-                      <button className="bg-mainBackgroundColor shadow-inner drop-shadow-md text-sm md:text-xl font-semibold hover:text-white hover:bg-gradient-to-b hover:from-[#08E3FF] hover:to-[#5799F7] text-mainTextColor p-2 md:p-1 px-4 md:px-6 rounded-full  transition-all duration-300 ease-in-out">
-                        {subItem}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              )}
+              <ul className="md:absolute md:top-full md:mt-2 md:flex md:flex-row md:gap-10 md:bg-white md:shadow-lg md:px-5 md:py-2 md:rounded-full flex gap-2 px-4 py-2 mt-3 bg-white rounded-full">
+                {item.subItems.map((subItem, subIndex) => (
+                  <li key={subIndex} className="list-none">
+                    <button 
+                      onClick={subItem.link} // Add this line
+                      className="bg-mainBackgroundColor shadow-inner drop-shadow-md text-sm md:text-xl font-semibold hover:text-white hover:bg-gradient-to-b hover:from-[#08E3FF] hover:to-[#5799F7] text-mainTextColor p-2 md:p-1 px-4 md:px-6 rounded-full  transition-all duration-300 ease-in-out">
+                      {subItem.title}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+)}
             </li>
           ))}
           <li className="md:font-semibold md:pr-11 md:mt-0 md:text-2xl flex items-center justify-center gap-2 mt-2 text-lg">
