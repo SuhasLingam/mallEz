@@ -2,7 +2,9 @@ import React from "react";
 import MallOffers from "../components/mallOffers";
 import MallOffersRev from "../components/mallsOfferRev";
 import Footer from "../components/footer";
-import mallVector from "../assets/mallVector.svg";  // Assuming you use the same image for both
+import mallVector from "../assets/mallVector.svg";  
+import MallsNavbar from "../components/MallsNavbar";
+
 
 const malls = () => {
   // Dynamic data for the components
@@ -36,7 +38,10 @@ const malls = () => {
   ];
 
   return (
-    <div className="bg-mainBackgroundColor h-max  w-screen">
+    <div className="bg-mainBackgroundColor h-max w-full">
+      <div className="md:pb-[120px]">
+        <MallsNavbar />
+      </div>
       {content.map(({ Component, title, description, image, buttonText }, index) => (
         <div key={index}>
           <Component
