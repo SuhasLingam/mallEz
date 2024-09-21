@@ -14,7 +14,7 @@ const Team = () => {
     { name: "Suhas Lingam", title: "Chief Technical Officer" },
     { name: "Aryan Reddy", title: "Chief Design Officer" },
     { name: "Elon Musk", title: "Chai Sutta Shop Owner" },
-    { name: "Bill Gates", title: "GateKeeper" },
+    { name: "Bill Gates", title: "GateKeper" },
   ];
 
   return (
