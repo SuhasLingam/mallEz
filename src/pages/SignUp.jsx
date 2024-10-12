@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import zxcvbn from "zxcvbn";
+import { supabase, signInWithGoogle } from "../supabaseClient";
 import Footer from "../components/footer";
 import { motion } from "framer-motion";
 import { pageTransition } from "../animation";
@@ -7,12 +7,17 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../components/navbar";
 
 const AccountForm = () => {
-  const [vehicleNumbers, setVehicleNumbers] = useState([""]);
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [vehicleNumbers, setVehicleNumbers] = useState([""]);
   const [passwordStrength, setPasswordStrength] = useState({
     score: 0,
     feedback: "",
   });
+  const navigate = useNavigate();
 
   const handleAddVehicle = () => {
     setVehicleNumbers([...vehicleNumbers, ""]);
@@ -23,8 +28,6 @@ const AccountForm = () => {
     newVehicleNumbers[index] = value;
     setVehicleNumbers(newVehicleNumbers);
   };
-
-  const navigate = useNavigate();
 
   const handleClick = () => {
     navigate("/login");
@@ -57,6 +60,52 @@ const AccountForm = () => {
     });
   };
 
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      const { data, error } = await supabase.auth.signUp({
+        email: email,
+        password: password,
+      });
+
+      if (error) throw error;
+
+      if (data.user) {
+        // Create a profile for the new user
+        const { error: profileError } = await supabase.from("profiles").insert({
+          id: data.user.id,
+          email: data.user.email,
+          first_name: firstName,
+          last_name: lastName,
+          vehicle_numbers: vehicleNumbers,
+        });
+
+        if (profileError) throw profileError;
+      }
+
+      alert("Signup successful! Please check your email for verification.");
+      navigate("/login");
+    } catch (error) {
+      alert(error.error_description || error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSocialSignup = async (provider) => {
+    try {
+      setLoading(true);
+      let { error } = await provider();
+      if (error) throw error;
+      navigate("/"); // Redirect to home page after successful signup
+    } catch (error) {
+      alert(error.error_description || error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <motion.div
       key="signup"
@@ -68,20 +117,20 @@ const AccountForm = () => {
       <div className="bg-mainBackgroundColor">
         <Navbar />
       </div>
-      <div className="font-poppins md:pb-[80px] md:pt-[130px] bg-mainBackgroundColor flex flex-col items-center justify-center min-h-screen">
-        <div className="bg-[#FFFFFF] bg-opacity-70 p-8 rounded-3xl shadow-lg w-full max-w-lg md:max-w-4xl flex flex-col md:flex-row">
-          <div className="md:w-1/2 w-full">
-            <h2 className="text-mainTextColor mb-6 text-2xl font-semibold text-center">
+      <div className="flex min-h-screen flex-col items-center justify-center bg-mainBackgroundColor font-poppins md:pb-[80px] md:pt-[130px]">
+        <div className="flex w-full max-w-lg flex-col rounded-3xl bg-[#FFFFFF] bg-opacity-70 p-8 shadow-lg md:max-w-4xl md:flex-row">
+          <div className="w-full md:w-1/2">
+            <h2 className="mb-6 text-center text-2xl font-semibold text-mainTextColor">
               Create an account
             </h2>
             <p className="mb-4 text-center text-gray-500">
               Already have an account?{" "}
-              <a onClick={handleClick} className="text-blue-500 cursor-pointer">
+              <a onClick={handleClick} className="cursor-pointer text-blue-500">
                 Log In
               </a>
             </p>
 
-            <form>
+            <form onSubmit={handleSignup}>
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700">
@@ -89,7 +138,9 @@ const AccountForm = () => {
                   </label>
                   <input
                     type="text"
-                    className="rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 w-full p-2 mt-1 border"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    className="mt-1 w-full rounded-2xl border p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
                 <div>
@@ -98,7 +149,9 @@ const AccountForm = () => {
                   </label>
                   <input
                     type="text"
-                    className="rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 w-full p-2 mt-1 border"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    className="mt-1 w-full rounded-2xl border p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
                 <div className="col-span-2">
@@ -107,7 +160,9 @@ const AccountForm = () => {
                   </label>
                   <input
                     type="email"
-                    className="rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 w-full p-2 mt-1 border"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="mt-1 w-full rounded-2xl border p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
                 <div className="col-span-2">
@@ -118,12 +173,12 @@ const AccountForm = () => {
                     type="password"
                     value={password}
                     onChange={handlePasswordChange}
-                    className="rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 w-full p-2 mt-1 border"
+                    className="mt-1 w-full rounded-2xl border p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                   <div className="mt-2">
                     <div
                       className={`h-2 w-full ${getStrengthColor(
-                        passwordStrength.score
+                        passwordStrength.score,
                       )} rounded`}
                       style={{ width: `${(passwordStrength.score + 1) * 20}%` }}
                     />
@@ -138,7 +193,7 @@ const AccountForm = () => {
                   </label>
                   <input
                     type="password"
-                    className="rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 w-full p-2 mt-1 border"
+                    className="mt-1 w-full rounded-2xl border p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
                 <div className="col-span-2">
@@ -146,20 +201,20 @@ const AccountForm = () => {
                     Vehicle Number
                   </label>
                   {vehicleNumbers.map((vehicle, index) => (
-                    <div key={index} className="flex mt-1">
+                    <div key={index} className="mt-1 flex">
                       <input
                         type="text"
                         value={vehicle}
                         onChange={(e) =>
                           handleVehicleChange(index, e.target.value)
                         }
-                        className="rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 w-full p-2 border"
+                        className="w-full rounded-2xl border p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                       />
                       {index === vehicleNumbers.length - 1 && (
                         <button
                           type="button"
                           onClick={handleAddVehicle}
-                          className="hover:bg-blue-600 p-2 ml-2 text-white bg-blue-500 rounded-md"
+                          className="ml-2 rounded-md bg-blue-500 p-2 text-white hover:bg-blue-600"
                         >
                           +
                         </button>
@@ -170,20 +225,24 @@ const AccountForm = () => {
                 <div className="col-span-2">
                   <button
                     type="submit"
-                    className="rounded-2xl hover:bg-blue-700 w-full p-2 text-white bg-blue-600"
+                    disabled={loading}
+                    className="w-full rounded-2xl bg-blue-600 p-2 text-white hover:bg-blue-700"
                   >
-                    CREATE ACCOUNT
+                    {loading ? "CREATING ACCOUNT..." : "CREATE ACCOUNT"}
                   </button>
                 </div>
               </div>
             </form>
           </div>
-          <div className="flex items-center justify-center m-auto font-bold">
+          <div className="m-auto flex items-center justify-center font-bold">
             OR
           </div>
           {/* Social Sign-Up Options */}
-          <div className="md:mt-0 md:ml-0 md:w-1/3 flex flex-col items-center justify-center mt-6 space-y-2">
-            <button className="rounded-2xl hover:bg-gray-50 flex items-center justify-center w-full py-2 text-gray-700 bg-white border border-gray-300">
+          <div className="mt-6 flex flex-col items-center justify-center space-y-2 md:ml-0 md:mt-0 md:w-1/3">
+            <button
+              onClick={() => handleSocialSignup(signInWithGoogle)}
+              className="flex w-full items-center justify-center rounded-2xl border border-gray-300 bg-white py-2 text-gray-700 hover:bg-gray-50"
+            >
               <img
                 src="https://img.icons8.com/color/16/000000/google-logo.png"
                 alt="Google"
@@ -191,34 +250,18 @@ const AccountForm = () => {
               />
               Signup with Google
             </button>
-            <button className="rounded-2xl hover:bg-gray-800 flex items-center justify-center w-full py-2 text-white bg-black">
-              <img
-                src="https://img.icons8.com/ios-filled/16/ffffff/mac-os.png"
-                alt="Apple"
-                className="mr-2"
-              />
-              Signup with Apple
-            </button>
-            <button className="rounded-2xl hover:bg-blue-700 flex items-center justify-center w-full py-2 text-white bg-blue-600">
-              <img
-                src="https://img.icons8.com/color/16/000000/facebook-new.png"
-                alt="Facebook"
-                className="mr-2"
-              />
-              Signup with Facebook
-            </button>
           </div>
         </div>
 
         {/* Language Selection and Footer Links */}
-        <div className="md:flex-row flex flex-col items-center justify-between w-full max-w-lg mt-4 text-sm text-gray-600">
+        <div className="mt-4 flex w-full max-w-lg flex-col items-center justify-between text-sm text-gray-600 md:flex-row">
           <div className="relative">
-            <select className="focus:outline-none text-gray-600 bg-transparent appearance-none">
+            <select className="appearance-none bg-transparent text-gray-600 focus:outline-none">
               <option>English (United States)</option>
             </select>
-            <span className="-right-6 absolute inset-y-0 flex items-center pr-2 pointer-events-none">
+            <span className="pointer-events-none absolute inset-y-0 -right-6 flex items-center pr-2">
               <svg
-                className="w-4 h-4 text-gray-600"
+                className="h-4 w-4 text-gray-600"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -232,7 +275,7 @@ const AccountForm = () => {
               </svg>
             </span>
           </div>
-          <div className="md:mt-0 flex mt-4 space-x-4">
+          <div className="mt-4 flex space-x-4 md:mt-0">
             <a href="#" className="hover:underline">
               Help
             </a>
