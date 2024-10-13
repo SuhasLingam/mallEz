@@ -3,6 +3,8 @@ import HomeImage from "../assets/homeElement-1.svg";
 import Button from "./button";
 import { motion } from "framer-motion";
 import homeBg from "../assets/homebg-1.svg";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../firebase/firebaseConfig";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 50 },
@@ -28,12 +30,21 @@ const HeroSection = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [typingSpeed, setTypingSpeed] = useState(100);
   const [view, setView] = useState(window.innerWidth);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     const handleResize = () => setView(window.innerWidth);
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setIsLoggedIn(!!user);
+    });
+
+    return () => unsubscribe();
   }, []);
 
   const words = ["SHOP", "NAVIGATE", "PARK"];
@@ -68,10 +79,10 @@ const HeroSection = () => {
   }, [displayedText, isDeleting, typingSpeed, currentWordIndex]);
 
   return (
-    <div className="container pt-[20px] px-4 md:px-0">
-      <div className="md:flex-row md:justify-between relative flex flex-col w-full h-screen">
+    <div className="container px-4 pt-[20px] md:px-0">
+      <div className="relative flex h-screen w-full flex-col md:flex-row md:justify-between">
         <motion.div
-          className="z-10 w-full md:w-[650px] text-center md:text-left capitalize flex flex-col items-center md:items-center space-y-5 font-bold font-poppins text-black text-[40px] md:text-[60px] md:absolute md:top-[90px] md:inset-x-1"
+          className="z-10 flex w-full flex-col items-center space-y-5 text-center font-poppins text-[40px] font-bold capitalize text-black md:absolute md:inset-x-1 md:top-[90px] md:w-[650px] md:items-center md:text-left md:text-[60px]"
           variants={fadeInUp}
           initial="hidden"
           whileInView="visible"
@@ -94,16 +105,10 @@ const HeroSection = () => {
 
           <p>With MallEZ</p>
 
-          {view < 768 ? (
-            <div></div>
-          ) : (
-            <div>
-              {" "}
-              <div className="md:gap-11 md:flex">
-                {" "}
-                <Button text={"LOGIN"} redirectTo={"/login"} />
-                <Button text={"SIGNUP"} redirectTo={"/signup"} />
-              </div>
+          {!isLoggedIn && view >= 768 && (
+            <div className="md:flex md:gap-11">
+              <Button text={"LOGIN"} redirectTo={"/login"} />
+              <Button text={"SIGNUP"} redirectTo={"/signup"} />
             </div>
           )}
         </motion.div>
@@ -113,7 +118,7 @@ const HeroSection = () => {
         ) : (
           <div>
             <motion.div
-              className="text-mainTextColor md:absolute md:text-center md:bottom-[2rem] md:w-1/2 md:px-[60px] md:text-2xl font-poppins font-semibold italic"
+              className="font-poppins font-semibold italic text-mainTextColor md:absolute md:bottom-[2rem] md:w-1/2 md:px-[60px] md:text-center md:text-2xl"
               variants={view < 768 ? fadeInUp : fadeInleft}
               initial="hidden"
               whileInView="visible"
@@ -129,7 +134,7 @@ const HeroSection = () => {
         )}
 
         <motion.div
-          className="w-full mt-8 top-[60px] md:mt-0 md:w-1/2 md:m-auto md:absolute right-1 flex justify-center"
+          className="right-1 top-[60px] mt-8 flex w-full justify-center md:absolute md:m-auto md:mt-0 md:w-1/2"
           variants={view < 768 ? fadeInUp : fadeImage}
           initial="hidden"
           whileInView="visible"
@@ -139,12 +144,12 @@ const HeroSection = () => {
           <img
             src={HomeImage}
             alt="hero Image"
-            className="w-[320px] md:w-auto md:m-auto"
+            className="w-[320px] md:m-auto md:w-auto"
           />
         </motion.div>
-        {view < 768 ? (
+        {view < 768 && !isLoggedIn && (
           <motion.div
-            className="mt-8 md:mt-0 flex justify-center space-x-4 md:absolute md:bottom-[110px] md:left-[240px]"
+            className="mt-8 flex justify-center space-x-4 md:absolute md:bottom-[110px] md:left-[240px] md:mt-0"
             variants={fadeInUp}
             initial="hidden"
             whileInView="visible"
@@ -154,13 +159,11 @@ const HeroSection = () => {
             <Button text={"LOGIN"} redirectTo={"/login"} />
             <Button text={"SIGNUP"} redirectTo={"/signup"} />
           </motion.div>
-        ) : (
-          <div></div>
         )}
 
         {view < 768 ? (
           <motion.div
-            className="md:absolute text-md px-3 absolute text-center -bottom-[50px] mx-auto md:-bottom-[60px] md:text-2xl italic font-bold text-mainTextColor md:left-11"
+            className="text-md absolute -bottom-[50px] mx-auto px-3 text-center font-bold italic text-mainTextColor md:absolute md:-bottom-[60px] md:left-11 md:text-2xl"
             variants={fadeInUp}
             initial="hidden"
             whileInView="visible"

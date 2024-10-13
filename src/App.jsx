@@ -11,11 +11,11 @@ import LoginForm from "./pages/Login";
 import SignupForm from "./pages/SignUp";
 import { pageTransition } from "./animation";
 import AboutUs from "./pages/AboutUs";
-import Malls from "./pages/malls";
+import Malls from "./pages/Malls";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const AnimatedRoutes = () => {
   const location = useLocation();
-
 
   return (
     <AnimatePresence mode="wait">
