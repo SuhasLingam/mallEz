@@ -11,7 +11,7 @@ import LoginForm from "./pages/Login";
 import SignupForm from "./pages/SignUp";
 import { pageTransition } from "./animation";
 import AboutUs from "./pages/AboutUs";
-import Malls from "./pages/Malls";
+import Malls from "./pages/malls";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 const AnimatedRoutes = () => {
