@@ -173,13 +173,13 @@ const Profile = () => {
   }
 
   return (
-    <div className="bg-mainBackground min-h-screen py-8">
+    <div className="min-h-screen bg-mainBackgroundColor py-8">
       <div className="container mx-auto max-w-2xl p-4 sm:p-6">
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="mb-6 text-center text-3xl font-bold text-white sm:mb-8 sm:text-4xl"
+          className="mb-6 text-center text-3xl font-bold text-mainTextColor sm:mb-8 sm:text-4xl"
         >
           User Profile
         </motion.h1>
