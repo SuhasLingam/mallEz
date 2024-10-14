@@ -8,7 +8,7 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 import { motion } from "framer-motion";
-import ProfileComponent from "../components/profileComponent";
+import ProfileComponent from "../components/ProfileComponent";
 import Navbar from "../components/navbar";
 
 const Profile = () => {
