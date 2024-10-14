@@ -2,9 +2,8 @@ import React from "react";
 import MallOffers from "../components/mallOffers";
 import MallOffersRev from "../components/mallsOfferRev";
 import Footer from "../components/footer";
-import mallVector from "../assets/mallVector.svg";  
-import MallsNavbar from "../components/MallsNavbar";
-
+import mallVector from "../assets/mallVector.svg";
+import Navbar from "../components/navbar";
 
 const malls = () => {
   // Dynamic data for the components
@@ -26,7 +25,7 @@ const malls = () => {
       buttonText: "EXPLORE",
     },
 
-      {
+    {
       Component: MallOffers,
       title: "VR Chain",
       description:
@@ -34,24 +33,25 @@ const malls = () => {
       image: mallVector,
       buttonText: "EXPLORE",
     },
-    
   ];
 
   return (
-    <div className="bg-mainBackgroundColor h-max w-full">
+    <div className="h-max w-full bg-mainBackgroundColor">
       <div className="md:pb-[120px]">
-        <MallsNavbar />
+        <Navbar />
       </div>
-      {content.map(({ Component, title, description, image, buttonText }, index) => (
-        <div key={index}>
-          <Component
-            title={title}
-            description={description}
-            image={image}
-            buttonText={buttonText}
-          />
-        </div>
-      ))}
+      {content.map(
+        ({ Component, title, description, image, buttonText }, index) => (
+          <div key={index}>
+            <Component
+              title={title}
+              description={description}
+              image={image}
+              buttonText={buttonText}
+            />
+          </div>
+        ),
+      )}
       <Footer />
     </div>
   );

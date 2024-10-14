@@ -9,7 +9,7 @@ import {
 } from "firebase/auth";
 import { motion } from "framer-motion";
 import ProfileComponent from "../components/profileComponent";
-
+import Navbar from "../components/navbar";
 const Profile = () => {
   const [user, setUser] = useState(null);
   const [userData, setUserData] = useState({
@@ -173,8 +173,9 @@ const Profile = () => {
   }
 
   return (
-    <div className="min-h-screen bg-mainBackgroundColor py-8">
-      <div className="container mx-auto max-w-2xl p-4 sm:p-6">
+    <div className="min-h-screen bg-mainBackgroundColor">
+      <Navbar />
+      <div className="container mx-auto max-w-2xl p-4 sm:p-6 md:pt-[135px]">
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}

@@ -26,10 +26,10 @@ const AboutUs = () => {
       <div className="bg-mainBackgroundColor">
         <Navbar />
       </div>
-      <div className="bg-mainBackgroundColor md:pt-[100px] font-poppins flex flex-col items-center justify-center h-full m-auto">
+      <div className="m-auto flex h-full flex-col items-center justify-center bg-mainBackgroundColor font-poppins md:px-28 md:pt-[100px]">
         {/* About Us */}
         <motion.span
-          className="sm:text-5xl md:text-8xl sm:my-8 md:my-11 text-mainTextColor my-6 text-4xl font-bold"
+          className="my-6 text-4xl font-bold text-mainTextColor sm:my-8 sm:text-5xl md:my-11 md:text-8xl"
           variants={fadeInUp}
           initial="hidden"
           whileInView="visible"
@@ -39,7 +39,7 @@ const AboutUs = () => {
           About MallEZ
         </motion.span>
         <motion.div
-          className="sm:space-y-8 md:space-y-11 sm:px-8 md:px-11 sm:text-xl md:text-2xl flex flex-col items-center justify-center px-4 space-y-6 text-lg text-center"
+          className="flex flex-col items-center justify-center space-y-6 px-4 text-center text-lg sm:space-y-8 sm:px-8 sm:text-xl md:space-y-11 md:px-11 md:text-2xl"
           variants={fadeInUp}
           initial="hidden"
           whileInView="visible"
@@ -65,19 +65,19 @@ const AboutUs = () => {
 
         {/* Our Mission */}
         <motion.div
-          className="sm:px-8 md:px-11 sm:py-8 md:py-11 sm:mt-8 md:mt-11 border-slate-400 border-y-2 sm:border-y-3 md:border-y-4 sm:space-y-8 md:space-y-10 sm:text-xl md:text-2xl flex flex-col items-center justify-center px-4 py-6 mt-6 space-y-6 text-lg text-center"
+          className="sm:border-y-3 mt-6 flex flex-col items-center justify-center space-y-6 border-y-2 border-slate-400 px-4 py-6 text-center text-lg sm:mt-8 sm:space-y-8 sm:px-8 sm:py-8 sm:text-xl md:mt-11 md:space-y-10 md:border-y-4 md:px-11 md:py-11 md:text-2xl"
           variants={fadeInUp}
           initial="hidden"
           whileInView="visible"
           exit="hidden"
           viewport={{ once: false, amount: 0.2 }}
         >
-          <span className="sm:text-5xl md:text-8xl sm:mb-8 md:mb-7 text-mainTextColor mb-6 text-4xl font-bold">
+          <span className="mb-6 text-4xl font-bold text-mainTextColor sm:mb-8 sm:text-5xl md:mb-7 md:text-8xl">
             Our Mission
           </span>
           <div>
             <p>
-              <span className="sm:px-2 px-1 font-bold">
+              <span className="px-1 font-bold sm:px-2">
                 Our mission is simple:
               </span>{" "}
               to bring convenience, excitement, and savings to your shopping
@@ -91,7 +91,7 @@ const AboutUs = () => {
 
         {/* What We Offer */}
         <motion.div
-          className="sm:mt-8 md:mt-11 sm:px-8 md:px-11 sm:py-8 md:py-11 border-slate-400 sm:text-xl md:text-2xl sm:border-b-3 md:border-b-4 flex flex-col justify-center min-h-screen px-4 py-6 mt-6 text-lg bg-no-repeat bg-cover border-b-2"
+          className="sm:border-b-3 mt-6 flex min-h-screen flex-col justify-center border-b-2 border-slate-400 bg-cover bg-no-repeat px-4 py-6 text-lg sm:mt-8 sm:px-8 sm:py-8 sm:text-xl md:mt-11 md:border-b-4 md:px-11 md:py-11 md:text-2xl"
           style={{
             backgroundImage: width < 768 ? "none" : `url(${AboutBG})`,
             backgroundSize: "cover",
@@ -102,13 +102,13 @@ const AboutUs = () => {
           exit="hidden"
           viewport={{ once: false, amount: 0.2 }}
         >
-          <span className="sm:text-5xl md:text-8xl sm:mb-8 md:mb-7 text-mainTextColor sm:ml-8 md:ml-11 flex mb-6 ml-4 text-4xl font-bold text-left">
+          <span className="mb-6 ml-4 flex text-left text-4xl font-bold text-mainTextColor sm:mb-8 sm:ml-8 sm:text-5xl md:mb-7 md:ml-11 md:text-8xl">
             What We Offer:
           </span>
           <div className="flex">
-            <ul className="sm:ml-8 md:ml-11 sm:py-8 md:py-11 py-6 ml-4 list-disc">
-              <li className="sm:py-3 md:py-4 py-2">
-                <span className="sm:px-2 px-1 font-bold">
+            <ul className="ml-4 list-disc py-6 sm:ml-8 sm:py-8 md:ml-11 md:py-11">
+              <li className="py-2 sm:py-3 md:py-4">
+                <span className="px-1 font-bold sm:px-2">
                   All Malls in One Place:
                 </span>{" "}
                 Explore all the malls in your area with just a few clicks.
@@ -116,32 +116,32 @@ const AboutUs = () => {
                 dining options, or the newest entertainment spots, MallEZ has
                 got you covered.
               </li>
-              <li className="sm:py-3 md:py-4 py-2">
-                <span className="sm:px-2 px-1 font-bold">
+              <li className="py-2 sm:py-3 md:py-4">
+                <span className="px-1 font-bold sm:px-2">
                   Exclusive Offers and Coupons:
                 </span>
                 Never miss out on a deal! Get access to exclusive offers, redeem
                 codes, and coupons that you can use on your favorite brands and
                 stores.
               </li>
-              <li className="sm:py-3 md:py-4 py-2">
-                <span className="sm:px-2 px-1 font-bold">
+              <li className="py-2 sm:py-3 md:py-4">
+                <span className="px-1 font-bold sm:px-2">
                   In-Mall Navigation:
                 </span>{" "}
                 Lost inside a mall? Not anymore! Our in-mall navigation system
                 ensures you find your way to your desired shop or facility
                 without any hassle.
               </li>
-              <li className="sm:py-3 md:py-4 py-2">
-                <span className="sm:px-2 px-1 font-bold">
+              <li className="py-2 sm:py-3 md:py-4">
+                <span className="px-1 font-bold sm:px-2">
                   Tokenized System for Purchases:
                 </span>{" "}
                 Experience the future of shopping with our tokenized purchase
                 system, which makes transactions faster, easier, and more
                 secure.
               </li>
-              <li className="sm:py-3 md:py-4 py-2">
-                <span className="sm:px-2 px-1 font-bold">
+              <li className="py-2 sm:py-3 md:py-4">
+                <span className="px-1 font-bold sm:px-2">
                   Automated Parking Management:
                 </span>{" "}
                 Say goodbye to parking headaches. With our automated parking
@@ -154,14 +154,14 @@ const AboutUs = () => {
 
         {/* Why MallEZ */}
         <motion.div
-          className="sm:px-8 md:px-11 sm:py-8 md:py-11 sm:mt-8 md:mt-11 border-slate-400 sm:space-y-8 md:space-y-10 sm:text-xl md:text-2xl sm:border-b-3 md:border-b-4 flex flex-col items-center justify-center px-4 py-6 mt-6 space-y-6 text-lg text-center border-b-2"
+          className="sm:border-b-3 mt-6 flex flex-col items-center justify-center space-y-6 border-b-2 border-slate-400 px-4 py-6 text-center text-lg sm:mt-8 sm:space-y-8 sm:px-8 sm:py-8 sm:text-xl md:mt-11 md:space-y-10 md:border-b-4 md:px-11 md:py-11 md:text-2xl"
           variants={fadeInUp}
           initial="hidden"
           whileInView="visible"
           exit="hidden"
           viewport={{ once: false, amount: 0.2 }}
         >
-          <span className="sm:text-5xl md:text-8xl sm:mb-8 md:mb-7 text-mainTextColor mb-6 text-4xl font-bold">
+          <span className="mb-6 text-4xl font-bold text-mainTextColor sm:mb-8 sm:text-5xl md:mb-7 md:text-8xl">
             Why MallEZ:
           </span>
           <p>
@@ -172,21 +172,21 @@ const AboutUs = () => {
             focus on customer convenience and innovative technology, we’re
             setting a new standard in the shopping industry.
           </p>
-          <span className="sm:mb-8 md:mb-11 text-mainTextColor sm:text-xl md:text-2xl mb-6 text-lg font-bold">
+          <span className="mb-6 text-lg font-bold text-mainTextColor sm:mb-8 sm:text-xl md:mb-11 md:text-2xl">
             Join Us on Our Journey
           </span>
         </motion.div>
 
         {/* Join Us */}
         <motion.div
-          className="sm:px-8 md:px-11 sm:py-8 md:py-11 sm:mt-8 md:mt-11 border-slate-400 sm:space-y-8 md:space-y-10 sm:text-xl md:text-2xl sm:border-b-3 md:border-b-4 flex flex-col items-center justify-center px-4 py-6 mt-6 space-y-6 text-lg text-center border-b-2"
+          className="sm:border-b-3 mt-6 flex flex-col items-center justify-center space-y-6 border-b-2 border-slate-400 px-4 py-6 text-center text-lg sm:mt-8 sm:space-y-8 sm:px-8 sm:py-8 sm:text-xl md:mt-11 md:space-y-10 md:border-b-4 md:px-11 md:py-11 md:text-2xl"
           variants={fadeInUp}
           initial="hidden"
           whileInView="visible"
           exit="hidden"
           viewport={{ once: false, amount: 0.2 }}
         >
-          <span className="sm:text-5xl md:text-8xl sm:mb-8 md:mb-7 text-mainTextColor mb-6 text-4xl font-bold">
+          <span className="mb-6 text-4xl font-bold text-mainTextColor sm:mb-8 sm:text-5xl md:mb-7 md:text-8xl">
             Join Us on Our Journey:
           </span>
           <p>
@@ -196,7 +196,7 @@ const AboutUs = () => {
             Join us on our journey to make shopping at malls easier and more
             enjoyable than ever before.
           </p>
-          <span className="sm:mb-8 md:mb-11 text-mainTextColor sm:text-xl md:text-2xl mb-6 text-lg font-bold">
+          <span className="mb-6 text-lg font-bold text-mainTextColor sm:mb-8 sm:text-xl md:mb-11 md:text-2xl">
             Feel the Ease, Shop with MallEZ
           </span>
         </motion.div>

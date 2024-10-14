@@ -4,6 +4,7 @@ import {
   Routes,
   Route,
   useLocation,
+  Navigate,
 } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import Home from "./pages/Home";
@@ -21,6 +22,21 @@ const AnimatedRoutes = () => {
   return (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
+        {/* Public routes */}
+        <Route
+          path="/"
+          element={
+            <motion.div
+              key="home-page"
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              variants={pageTransition}
+            >
+              <Home />
+            </motion.div>
+          }
+        />
         <Route
           path="/login"
           element={
@@ -50,20 +66,6 @@ const AnimatedRoutes = () => {
           }
         />
         <Route
-          path="/"
-          element={
-            <motion.div
-              key="home-page"
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              variants={pageTransition}
-            >
-              <Home />
-            </motion.div>
-          }
-        />
-        <Route
           path="/about"
           element={
             <motion.div
@@ -77,35 +79,43 @@ const AnimatedRoutes = () => {
             </motion.div>
           }
         />
+
+        {/* Protected routes */}
         <Route
           path="/malls"
           element={
-            <motion.div
-              key="aboutus"
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              variants={pageTransition}
-            >
-              <Malls />
-            </motion.div>
+            <ProtectedRoute>
+              <motion.div
+                key="malls"
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                variants={pageTransition}
+              >
+                <Malls />
+              </motion.div>
+            </ProtectedRoute>
           }
         />
-
         <Route
           path="/profile"
           element={
-            <motion.div
-              key="aboutus"
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              variants={pageTransition}
-            >
-              <Profile />
-            </motion.div>
+            <ProtectedRoute>
+              <motion.div
+                key="profile"
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                variants={pageTransition}
+              >
+                <Profile />
+              </motion.div>
+            </ProtectedRoute>
           }
         />
+
+        {/* Redirect all other routes to home */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </AnimatePresence>
   );
