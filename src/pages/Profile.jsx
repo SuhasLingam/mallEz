@@ -10,6 +10,7 @@ import {
 import { motion } from "framer-motion";
 import ProfileComponent from "../components/profileComponent";
 import Navbar from "../components/navbar";
+
 const Profile = () => {
   const [user, setUser] = useState(null);
   const [userData, setUserData] = useState({
