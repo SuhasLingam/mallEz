@@ -12,6 +12,7 @@ import SignupForm from "./pages/SignUp";
 import { pageTransition } from "./animation";
 import AboutUs from "./pages/AboutUs";
 import Malls from "./pages/malls";
+import Profile from "./pages/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 const AnimatedRoutes = () => {
@@ -87,6 +88,21 @@ const AnimatedRoutes = () => {
               variants={pageTransition}
             >
               <Malls />
+            </motion.div>
+          }
+        />
+
+        <Route
+          path="/profile"
+          element={
+            <motion.div
+              key="aboutus"
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              variants={pageTransition}
+            >
+              <Profile />
             </motion.div>
           }
         />
