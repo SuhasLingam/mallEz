@@ -36,8 +36,8 @@ const malls = () => {
   ];
 
   return (
-    <div className="h-max w-full bg-mainBackgroundColor">
-      <div className="md:pb-[120px]">
+    <div className="h-max bg-mainBackgroundColor w-full">
+      <div className="">
         <Navbar />
       </div>
       {content.map(

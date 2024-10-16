@@ -3,25 +3,33 @@ import Button from "./button";
 
 const MallOffersRev = ({ title, description, image, buttonText }) => {
   return (
-    <div className="container pb-[50px] md:pb-[150px]">
-      <div className="bg-mainBackgroundColor rounded-3xl border-opacity-10 relative flex flex-col w-full h-full m-auto border-2 border-black shadow-xl">
-        <div className="flex items-center justify-start w-auto">
-          <img className="scale-x-[-1]" src={image} alt="mallsImage" />
+    <div className="sm:px-6 sm:py-8 md:px-8 md:py-10 lg:px-10 lg:py-12 container px-4 py-6">
+      <div className="rounded-xl border-opacity-10 bg-mainBackgroundColor sm:flex-row flex flex-col-reverse overflow-hidden border border-black shadow-md">
+        {/* Content Section */}
+        <div className="sm:w-1/2 lg:w-2/5 flex flex-col justify-between w-full p-6">
+          <div>
+            <h3 className="text-mainTextColor sm:text-4xl md:text-5xl lg:text-6xl mb-4 text-3xl font-bold leading-tight">
+              {title}
+            </h3>
+            <p className="sm:text-xl md:text-xl mb-6 text-lg font-semibold leading-relaxed">
+              {description}
+            </p>
+          </div>
+          <div className="flex items-center justify-between">
+            <span className="sm:text-2xl md:text-3xl text-xl font-semibold text-gray-600">
+              VR Chain
+            </span>
+            <Button text={buttonText} redirectTo={"/"} />
+          </div>
         </div>
 
-        {/* Title and Button */}
-        <div className="absolute top-11 right-4 md:right-[120px] mr-4 md:mr-11 flex md:flex-row flex-col gap-5 md:gap-10 items-center z-10">
-          <p className="p-3 px-4 text-lg font-bold shadow-inner text-mainTextColor bg-white bg-opacity-50 stroke-black rounded-full md:p-4 md:px-[80px] md:text-3xl">
-            {title}
-          </p>
-          <Button text={buttonText} redirectTo={"/"} />
-        </div>
-
-        {/* Description */}
-        <div className="absolute bottom-[-30px] md:bottom-[-60px] right-4 md:right-[70px] h-auto md:h-[350px] w-[90%] md:w-[700px] rounded-[30px] md:rounded-[100px] flex items-center justify-center p-5 md:p-11 ring-4 ring-black ring-opacity-5 drop-shadow-2xl bg-mainBackgroundColor shadow-3xl">
-          <p className="font-inter md:text-2xl text-sm text-center">
-            {description}
-          </p>
+        {/* Image Section */}
+        <div className="sm:h-auto sm:w-1/2 lg:w-3/5 w-full h-56">
+          <img
+            className="h-full w-full scale-x-[-1] object-cover"
+            src={image}
+            alt="mallsImage"
+          />
         </div>
       </div>
     </div>

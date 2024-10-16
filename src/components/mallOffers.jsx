@@ -3,27 +3,33 @@ import Button from "./button";
 
 const MallOffers = ({ title, description, image, buttonText }) => {
   return (
-    <div className="container pb-[50px] md:pb-[150px]">
-      <div className="bg-mainBackgroundColor rounded-3xl border-opacity-10 relative flex flex-col w-full h-auto p-6 m-auto border-2 border-black shadow-xl">
-        
-        {/* Title and Button */}
-        <div className="absolute top-6 md:top-[5rem] left-6 md:left-[150px] flex flex-col md:flex-row gap-5 md:gap-10 items-center z-10">
-          <p className="p-3 md:p-4 px-4 md:px-[80px] text-lg md:text-3xl font-bold shadow-inner text-mainTextColor bg-white bg-opacity-50 stroke-black rounded-full">
-            {title}
-          </p>
-          <Button text={buttonText} redirectTo={"/"} />
-        </div>
-
+    <div className="sm:px-6 sm:py-8 md:px-8 md:py-10 lg:px-10 lg:py-12 container px-4 py-6">
+      <div className="rounded-xl border-opacity-10 bg-mainBackgroundColor sm:flex-row flex flex-col overflow-hidden border border-black shadow-md">
         {/* Image Section */}
-       <div className="md:justify-end flex items-center justify-start w-auto">
-          <img className="" src={image} alt="mallsImage" />
+        <div className="sm:h-auto sm:w-1/2 lg:w-3/5 w-full h-56">
+          <img
+            className="object-cover w-full h-full"
+            src={image}
+            alt="mallsImage"
+          />
         </div>
 
-        {/* Description */}
-        <div className="absolute bottom-[-30px] md:bottom-[-60px] left-4 md:left-[70px] w-[90%] md:w-[700px] h-auto rounded-[30px] md:rounded-[100px] flex items-center justify-center p-5 md:p-[70px] ring-4 ring-black ring-opacity-5 drop-shadow-2xl bg-mainBackgroundColor shadow-3xl">
-          <p className="font-inter md:text-2xl text-sm text-center">
-            {description}
-          </p>
+        {/* Content Section */}
+        <div className="sm:w-1/2 lg:w-2/5 flex flex-col justify-between w-full p-6">
+          <div>
+            <h3 className="text-mainTextColor sm:text-4xl md:text-5xl lg:text-6xl mb-4 text-3xl font-bold leading-tight">
+              {title}
+            </h3>
+            <p className="sm:text-xl md:text-xl mb-6 text-lg font-semibold leading-relaxed">
+              {description}
+            </p>
+          </div>
+          <div className="flex items-center justify-between">
+            <span className="sm:text-2xl md:text-3xl text-xl font-semibold text-gray-600">
+              VR Chain
+            </span>
+            <Button text={buttonText} redirectTo={"/"} />
+          </div>
         </div>
       </div>
     </div>
