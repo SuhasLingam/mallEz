@@ -82,7 +82,7 @@ const Navbar = () => {
   };
 
   return (
-    <header className="w-full bg-transparent py-4 lg:sticky lg:left-0 lg:right-0 lg:top-0 lg:z-20">
+    <header className="w-full bg-transparent py-4 lg:static lg:left-0 lg:right-0 lg:top-0 lg:z-20">
       <div className="container mx-auto px-4">
         <div className="flex flex-wrap items-center justify-between">
           <div className="flex items-center">
