@@ -108,6 +108,15 @@ const HeroSection = () => {
             With MallEZ
           </h1>
 
+          <motion.div
+            className="mb-8 lg:hidden"
+            variants={fadeInUp}
+            initial="hidden"
+            animate={controls}
+          >
+            <img src={HomeImage} alt="Mall Illustration" className="w-full" />
+          </motion.div>
+
           {!isLoggedIn && (
             <motion.div
               className="flex justify-center gap-4 lg:justify-center"
@@ -134,7 +143,7 @@ const HeroSection = () => {
         </motion.div>
 
         <motion.div
-          className="lg:w-1/2"
+          className="hidden lg:block lg:w-1/2"
           variants={fadeInRight}
           initial="hidden"
           animate={controls}
