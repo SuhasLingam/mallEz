@@ -15,6 +15,7 @@ import AboutUs from "./pages/AboutUs";
 import Malls from "./pages/malls";
 import Profile from "./pages/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
+import ForgotPassword from "./components/ForgotPassword";
 
 const AnimatedRoutes = () => {
   const location = useLocation();
@@ -76,6 +77,20 @@ const AnimatedRoutes = () => {
               variants={pageTransition}
             >
               <AboutUs />
+            </motion.div>
+          }
+        />
+        <Route
+          path="/forgot-password"
+          element={
+            <motion.div
+              key="forgot-password"
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              variants={pageTransition}
+            >
+              <ForgotPassword />
             </motion.div>
           }
         />

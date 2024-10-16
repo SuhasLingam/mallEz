@@ -101,7 +101,7 @@ const Navbar = () => {
                 {item.title}
               </a>
               {item.subItems && activeSubMenu === index && (
-                <ul className="mt-3 flex gap-2 rounded-full bg-white px-4 py-2 md:absolute md:top-full md:mt-2 md:flex md:flex-row md:gap-10 md:rounded-full md:bg-white md:px-5 md:py-2 md:shadow-lg">
+                <ul className="mt-3 flex gap-2 rounded-full bg-white px-4 py-2 md:absolute md:top-full md:mt-2 md:flex md:flex-row md:gap-5 md:rounded-full md:bg-white md:px-5 md:py-2 md:shadow-lg">
                   {item.subItems.map((subItem, subIndex) => (
                     <li key={subIndex} className="list-none">
                       <button
@@ -119,13 +119,15 @@ const Navbar = () => {
 
           {/* User Dropdown */}
           {userName ? (
-            <li className="relative mt-2 flex items-center justify-center gap-2 text-lg md:mt-0 md:pr-11 md:text-2xl md:font-semibold">
-              <FaUser />
-              <span onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
-                {userName}
+            <li className="relative mt-2 flex flex-col items-center justify-center gap-2 text-lg md:mt-0 md:pr-11 md:text-2xl md:font-semibold">
+              <span
+                className="flex cursor-pointer flex-row items-center justify-center gap-2"
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              >
+                <FaUser /> {userName}
               </span>
               {isDropdownOpen && (
-                <ul className="absolute right-0 mt-3 flex flex-col items-center justify-center gap-2 rounded-full bg-white p-4 shadow-lg md:top-full md:mt-4 md:flex-row">
+                <ul className="mt-3 flex gap-2 rounded-full bg-white px-4 py-2 md:absolute md:top-full md:mt-2 md:flex md:flex-row md:gap-3 md:rounded-full md:bg-white md:px-4 md:py-2 md:shadow-lg">
                   <li>
                     <button
                       onClick={() => navigate("/profile")}

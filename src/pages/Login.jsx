@@ -7,6 +7,7 @@ import Button from "../components/button";
 import Navbar from "../components/navbar";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from "../firebase/firebaseConfig";
+import { Link } from "react-router-dom";
 
 const LoginForm = () => {
   const [email, setEmail] = useState(""); // Add state for email
@@ -96,9 +97,12 @@ const LoginForm = () => {
                   onChange={handlePasswordChange}
                   className="mt-1 w-full rounded-2xl border p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
-                <a href="#" className="mt-1 inline-block text-sm text-blue-500">
+                <Link
+                  to="/forgot-password"
+                  className="mt-1 inline-block text-sm text-blue-500"
+                >
                   Forgot Password?
-                </a>
+                </Link>
               </div>
               <div className="mb-6 flex items-center">
                 <input

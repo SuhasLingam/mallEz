@@ -10,6 +10,7 @@ import {
 import { motion } from "framer-motion";
 import ProfileComponent from "../components/ProfileComponent";
 import Navbar from "../components/navbar";
+import { sendPasswordReset } from "../firebase/auth";
 
 const Profile = () => {
   const [user, setUser] = useState(null);
@@ -143,6 +144,25 @@ const Profile = () => {
     setEditField(field);
   };
 
+  const handleChangePassword = async () => {
+    setMessage("");
+    setLoading(true);
+
+    try {
+      if (!user || !user.email) {
+        throw new Error("User email not available");
+      }
+
+      const result = await sendPasswordReset(user.email);
+      setMessage(result);
+    } catch (error) {
+      console.error("Error sending password reset email:", error);
+      setMessage(`Error sending password reset email: ${error.message}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="bg-mainBackground flex h-screen items-center justify-center">
@@ -196,6 +216,7 @@ const Profile = () => {
           setNewVehicle={setNewVehicle}
           onAddVehicle={handleAddVehicle}
           message={message}
+          onChangePassword={handleChangePassword}
         />
       </div>
     </div>
