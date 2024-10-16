@@ -1,40 +1,58 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useEffect, useState } from "react";
+import { motion, useAnimation } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 import herobgtwo from "../assets/homebg-2.svg";
 import homeImageTwo from "../assets/homeElement-2.svg";
 
-const fadeInUp = {
-  hidden: { opacity: 0, y: 50 },
-  visible: { opacity: 1, y: 0, transition: { duration: 1 } },
-  exit: { opacity: 0, y: 50, transition: { duration: 0.5 } },
+const fadeInLeft = {
+  hidden: { opacity: 0, x: -100 },
+  visible: { opacity: 1, x: 0, transition: { duration: 1, ease: "easeOut" } },
+  exit: { opacity: 0, x: -100, transition: { duration: 0.5, ease: "easeIn" } },
 };
 
-const fadeInleft = {
-  hidden: { opacity: 0, x: -400 },
-  visible: { opacity: 1, x: 0, transition: { duration: 1 } },
-  exit: { opacity: 0, x: -400, transition: { duration: 0.5 } },
-};
-
-const fadeImage = {
-  hidden: { opacity: 0, x: 400 },
-  visible: { opacity: 1, x: 0, transition: { duration: 1 } },
-  exit: { opacity: 0, x: 400, transition: { duration: 0.5 } },
+const fadeInRight = {
+  hidden: { opacity: 0, x: 100 },
+  visible: { opacity: 1, x: 0, transition: { duration: 1, ease: "easeOut" } },
+  exit: { opacity: 0, x: 100, transition: { duration: 0.5, ease: "easeIn" } },
 };
 
 const HeroTwo = () => {
+  const [width, setWidth] = useState(window.innerWidth);
+  const controls = useAnimation();
+  const [ref, inView] = useInView({
+    triggerOnce: false,
+    threshold: 0.1,
+  });
+
+  useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    if (inView) {
+      controls.start("visible");
+    } else {
+      controls.start("hidden");
+    }
+  }, [controls, inView]);
+
   return (
     <div
-      className="relative min-h-screen w-full bg-cover bg-center bg-no-repeat p-4 md:p-8"
-      style={{ backgroundImage: `url(${herobgtwo})` }}
+      ref={ref}
+      className="relative min-h-screen w-full bg-mainBackgroundColor p-4 sm:p-6 md:p-8 lg:p-12"
+      style={{
+        backgroundImage: width < 768 ? "none" : `url(${herobgtwo})`,
+        backgroundSize: "cover",
+      }}
     >
-      <div className="container mx-auto flex flex-col-reverse items-center lg:flex-row lg:justify-between">
+      <div className="container mx-auto flex flex-col items-center lg:flex-row lg:items-center lg:justify-between">
         <motion.div
-          className="mt-8 w-full lg:mt-0 lg:w-1/2"
-          variants={fadeInleft}
+          className="mb-8 w-full lg:mb-0 lg:w-1/2 lg:pr-8"
+          variants={fadeInLeft}
           initial="hidden"
-          whileInView="visible"
-          exit="exit"
-          viewport={{ once: true, amount: 0.2 }}
+          animate={controls}
         >
           <img
             src={homeImageTwo}
@@ -44,14 +62,12 @@ const HeroTwo = () => {
         </motion.div>
 
         <motion.div
-          className="w-full rounded-3xl bg-white bg-opacity-80 p-6 shadow-lg backdrop-blur-md lg:w-1/2"
-          variants={fadeImage}
+          className="w-full rounded-3xl bg-transparent bg-opacity-80 p-8 shadow-lg backdrop-blur-md sm:p-10 lg:w-1/2"
+          variants={fadeInRight}
           initial="hidden"
-          whileInView="visible"
-          exit="exit"
-          viewport={{ once: true, amount: 0.2 }}
+          animate={controls}
         >
-          <p className="text-center text-lg font-medium text-gray-800 sm:text-xl md:text-2xl">
+          <p className="text-justify font-poppins text-xl font-semibold text-mainTextColor sm:text-xl md:text-2xl lg:text-3xl">
             MallEZ is your all-in-one shopping companion that revolutionizes the
             way you navigate, shop, and park at your favorite malls. With
             features like smart mall navigation, personalized shopping
