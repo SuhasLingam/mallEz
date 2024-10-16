@@ -1,53 +1,98 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Footer from "../components/footer";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { pageTransition } from "../animation";
 import { useNavigate } from "react-router-dom";
-import Button from "../components/button";
 import Navbar from "../components/navbar";
-import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  RecaptchaVerifier,
+} from "firebase/auth";
 import { auth, googleProvider } from "../firebase/firebaseConfig";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import {
+  FaEnvelope,
+  FaGoogle,
+  FaLock,
+  FaFacebook,
+  FaApple,
+} from "react-icons/fa";
+import { getAuth } from "firebase/auth";
+import { FacebookAuthProvider, OAuthProvider } from "firebase/auth";
 
 const LoginForm = () => {
-  const [email, setEmail] = useState(""); // Add state for email
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://www.google.com/recaptcha/api.js";
+    script.async = true;
+    script.defer = true;
+    document.body.appendChild(script);
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
 
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleRememberMeChange = () => {
-    setRememberMe(!rememberMe);
-  };
+  const handleEmailChange = (e) => setEmail(e.target.value);
+  const handlePasswordChange = (e) => setPassword(e.target.value);
+  const handleRememberMeChange = () => setRememberMe(!rememberMe);
 
   const handleEmailLogin = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      toast.success("Login successful!");
       navigate("/");
     } catch (error) {
+      toast.error("Login failed. Please check your credentials.");
       console.error("Error logging in with email and password", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleGoogleLogin = async () => {
+    setIsLoading(true);
     try {
       await signInWithPopup(auth, googleProvider);
+      toast.success("Google login successful!");
       navigate("/");
     } catch (error) {
+      toast.error("Google login failed. Please try again.");
       console.error("Error logging in with Google", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const handleClick = () => {
-    navigate("/signup");
+  const handleAppleLogin = async () => {
+    setIsLoading(true);
+    try {
+      const provider = new OAuthProvider("apple.com");
+      await signInWithPopup(auth, provider);
+      toast.success("Apple login successful!");
+      navigate("/");
+    } catch (error) {
+      toast.error("Apple login failed. Please try again.");
+      console.error("Error logging in with Apple", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const formVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+    exit: { opacity: 0, y: -50, transition: { duration: 0.5 } },
   };
 
   return (
@@ -57,121 +102,134 @@ const LoginForm = () => {
       animate="animate"
       exit="exit"
       variants={pageTransition}
+      className="bg-mainBackgroundColor font-poppins flex flex-col min-h-screen"
     >
-      <div className="bg-mainBackgroundColor">
-        {" "}
-        <Navbar />
-      </div>
-      <div className="relative flex min-h-screen flex-col items-center justify-center bg-mainBackgroundColor font-poppins md:pt-[80px]">
-        <div className="flex w-full max-w-lg flex-col rounded-3xl bg-[#FFFFFF] bg-opacity-70 p-8 shadow-lg md:max-w-4xl md:flex-row">
-          <div className="w-full md:w-1/2">
-            <h2 className="mb-6 text-center text-2xl font-semibold text-mainTextColor">
-              Log in to your account
-            </h2>
-            <p className="mb-4 text-center text-gray-500">
-              Don't have an account?{" "}
-              <a onClick={handleClick} className="cursor-pointer text-blue-500">
-                Sign up
-              </a>
-            </p>
+      <Navbar />
+      <ToastContainer position="top-right" autoClose={3000} />
+      <div className="md:py-16 flex flex-col items-center justify-center flex-grow px-4 py-8">
+        <motion.div
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="rounded-3xl bg-opacity-90 md:max-w-2xl md:p-8 w-full max-w-md p-6 bg-white shadow-2xl"
+        >
+          <h2 className="text-mainTextColor mb-6 text-3xl font-bold text-center">
+            Welcome Back
+          </h2>
 
-            <form onSubmit={handleEmailLogin}>
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">
-                  Email Address or Username
-                </label>
-                <input
-                  type="text"
-                  value={email} // Bind input to email state
-                  onChange={handleEmailChange} // Handle email change
-                  className="mt-1 w-full rounded-2xl border p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">
-                  Password
-                </label>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={handlePasswordChange}
-                  className="mt-1 w-full rounded-2xl border p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                <Link
-                  to="/forgot-password"
-                  className="mt-1 inline-block text-sm text-blue-500"
-                >
-                  Forgot Password?
-                </Link>
-              </div>
-              <div className="mb-6 flex items-center">
+          {/* Add this new section */}
+          <p className="mb-6 text-center text-gray-600">
+            New here?{" "}
+            <span
+              onClick={() => navigate("/signup")}
+              className="hover:underline text-blue-500 cursor-pointer"
+            >
+              Create an account
+            </span>
+          </p>
+
+          <form onSubmit={handleEmailLogin} className="space-y-4">
+            <div className="relative">
+              <FaEnvelope className="left-3 top-3 absolute text-gray-400" />
+              <input
+                type="email"
+                value={email}
+                onChange={handleEmailChange}
+                className="focus:border-blue-500 focus:ring-2 focus:ring-blue-500 w-full p-2 pl-10 border rounded-full"
+                placeholder="Email Address"
+                required
+              />
+            </div>
+            <div className="relative">
+              <FaLock className="left-3 top-3 absolute text-gray-400" />
+              <input
+                type="password"
+                value={password}
+                onChange={handlePasswordChange}
+                className="focus:border-blue-500 focus:ring-2 focus:ring-blue-500 w-full p-2 pl-10 border rounded-full"
+                placeholder="Password"
+                required
+              />
+            </div>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
                 <input
                   type="checkbox"
                   checked={rememberMe}
                   onChange={handleRememberMeChange}
-                  className="h-4 w-4 rounded border-gray-300 text-blue-600"
+                  className="focus:ring-blue-500 w-4 h-4 text-blue-600 border-gray-300 rounded"
                 />
                 <label
                   htmlFor="rememberMe"
-                  className="ml-2 block text-sm text-gray-900"
+                  className="ml-2 text-sm text-gray-700"
                 >
                   Remember Me
                 </label>
               </div>
-              <button
-                type="submit"
-                className="w-full rounded-2xl bg-blue-600 p-2 text-white hover:bg-blue-700"
+              <Link
+                to="/forgot-password"
+                className="hover:underline text-sm text-blue-600"
               >
-                LOG IN
-              </button>
-            </form>
-          </div>
-
-          <div className="m-auto flex items-center justify-center font-bold">
-            OR
-          </div>
-
-          {/* Social Login Options */}
-          <div className="mt-6 flex flex-col items-center justify-center space-y-2 md:ml-0 md:mt-0 md:w-1/3">
-            <button
-              onClick={handleGoogleLogin}
-              className="flex w-full items-center justify-center rounded-2xl border border-gray-300 bg-white py-2 text-gray-700 hover:bg-gray-50"
+                Forgot Password?
+              </Link>
+            </div>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              type="submit"
+              className="focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 w-full p-2 text-white transition duration-300 ease-in-out bg-blue-500 rounded-full"
+              disabled={isLoading}
             >
-              <img
-                src="https://img.icons8.com/color/16/000000/google-logo.png"
-                alt="Google"
-                className="mr-2"
-              />
-              Log in with Google
-            </button>
-            <button className="flex w-full items-center justify-center rounded-2xl bg-black py-2 text-white hover:bg-gray-800">
-              <img
-                src="https://img.icons8.com/ios-filled/16/ffffff/mac-os.png"
-                alt="Apple"
-                className="mr-2"
-              />
-              Log in with Apple
-            </button>
-            <button className="flex w-full items-center justify-center rounded-2xl bg-blue-600 py-2 text-white hover:bg-blue-700">
-              <img
-                src="https://img.icons8.com/color/16/000000/facebook-new.png"
-                alt="Facebook"
-                className="mr-2"
-              />
-              Log in with Facebook
-            </button>
-          </div>
-        </div>
+              {isLoading ? "Logging in..." : "LOG IN"}
+            </motion.button>
+          </form>
 
-        {/* Footer Links */}
-        <div className="mt-4 flex w-full max-w-lg flex-col items-center justify-between text-sm text-gray-600 md:flex-row">
+          <div className="flex items-center justify-center my-6">
+            <span className="lg:w-1/4 w-1/5 border-b border-gray-300"></span>
+            <span className="px-2 text-xs text-center text-gray-500 uppercase">
+              or
+            </span>
+            <span className="lg:w-1/4 w-1/5 border-b border-gray-300"></span>
+          </div>
+
+          <div className="space-y-4">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handleGoogleLogin}
+              className="hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 flex items-center justify-center w-full py-2 text-gray-700 transition duration-300 ease-in-out bg-white border border-gray-300 rounded-full"
+              disabled={isLoading}
+            >
+              <FaGoogle className="mr-2" />
+              Log in with Google
+            </motion.button>
+
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handleAppleLogin}
+              className="hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 flex items-center justify-center w-full py-2 text-white transition duration-300 ease-in-out bg-black rounded-full"
+              disabled={isLoading}
+            >
+              <FaApple className="mr-2" />
+              Log in with Apple
+            </motion.button>
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5, duration: 0.5 }}
+          className="md:flex-row md:space-y-0 flex flex-col items-center justify-between w-full max-w-md mt-8 space-y-4 text-sm text-black"
+        >
           <div className="relative">
-            <select className="appearance-none bg-transparent text-gray-600 focus:outline-none">
+            <select className="focus:outline-none pb-1 text-black bg-transparent border-b border-black appearance-none">
               <option>English (United States)</option>
             </select>
-            <span className="pointer-events-none absolute inset-y-0 -right-6 flex items-center pr-2">
+            <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
               <svg
-                className="h-4 w-4 text-gray-600"
+                className="w-4 h-4 text-white"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -185,7 +243,7 @@ const LoginForm = () => {
               </svg>
             </span>
           </div>
-          <div className="mt-4 flex space-x-4 md:mt-0">
+          <div className="flex space-x-4">
             <a href="#" className="hover:underline">
               Help
             </a>
@@ -196,7 +254,7 @@ const LoginForm = () => {
               Terms
             </a>
           </div>
-        </div>
+        </motion.div>
       </div>
       <Footer />
     </motion.div>
