@@ -16,6 +16,8 @@ import Malls from "./pages/malls";
 import Profile from "./pages/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ForgotPassword from "./components/ForgotPassword";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AnimatedRoutes = () => {
   const location = useLocation();
@@ -138,9 +140,12 @@ const AnimatedRoutes = () => {
 
 function App() {
   return (
-    <Router>
-      <AnimatedRoutes />
-    </Router>
+    <div className="App">
+      <ToastContainer position="top-center" autoClose={5000} />
+      <Router>
+        <AnimatedRoutes />
+      </Router>
+    </div>
   );
 }
 

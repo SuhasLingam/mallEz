@@ -12,6 +12,12 @@ import {
 } from "firebase/auth";
 import { auth, googleProvider, db } from "../firebase/firebaseConfig";
 import { doc, setDoc } from "firebase/firestore";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+// Import the regex pattern at the top of the file
+const vehicleNumberPattern =
+  /\b[A-Z]{2}[-.\s]?\d{2}[-.\s]?[A-Z]{1,2}[-.\s]?\d{4}\b/;
 
 // Define the getStrengthColor function
 const getStrengthColor = (score) => {
@@ -50,7 +56,7 @@ const AccountForm = () => {
 
   const handleVehicleChange = (index, value) => {
     const newVehicleNumbers = [...vehicleNumbers];
-    newVehicleNumbers[index] = value;
+    newVehicleNumbers[index] = value.toUpperCase();
     setVehicleNumbers(newVehicleNumbers);
   };
 
@@ -66,6 +72,10 @@ const AccountForm = () => {
 
   const handleEmailSignUp = async (e) => {
     e.preventDefault();
+    if (!validateVehicleNumbers()) {
+      toast.error("Please enter a valid vehicle number (e.g., MH-12-AB-1234).");
+      return;
+    }
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -74,10 +84,9 @@ const AccountForm = () => {
       );
       const user = userCredential.user;
       await updateProfile(user, {
-        displayName: firstName, // Set the display name to the first name
+        displayName: firstName,
       });
 
-      // Save user data to Firestore
       await setDoc(doc(db, "users", user.uid), {
         firstName,
         lastName,
@@ -85,12 +94,14 @@ const AccountForm = () => {
         vehicleNumbers,
       });
 
+      toast.success("Account created successfully!");
       navigate("/");
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {
-        alert("This email is already in use. Please log in instead.");
+        toast.error("This email is already in use. Please log in instead.");
         navigate("/login");
       } else {
+        toast.error("Error signing up. Please try again.");
         console.error("Error signing up with email and password", error);
       }
     }
@@ -101,7 +112,6 @@ const AccountForm = () => {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
 
-      // Save user data to Firestore
       await setDoc(doc(db, "users", user.uid), {
         firstName: user.displayName.split(" ")[0],
         lastName: user.displayName.split(" ")[1],
@@ -109,10 +119,19 @@ const AccountForm = () => {
         vehicleNumbers: [],
       });
 
+      toast.success("Account created successfully with Google!");
       navigate("/");
     } catch (error) {
+      toast.error("Error signing up with Google. Please try again.");
       console.error("Error signing up with Google", error);
     }
+  };
+
+  // Add a new function to validate vehicle numbers
+  const validateVehicleNumbers = () => {
+    return vehicleNumbers.every(
+      (number) => number === "" || vehicleNumberPattern.test(number),
+    );
   };
 
   return (
@@ -123,6 +142,7 @@ const AccountForm = () => {
       exit="exit"
       variants={pageTransition}
     >
+      <ToastContainer position="top-center" autoClose={5000} />
       <div className="bg-mainBackgroundColor">
         <Navbar />
       </div>
@@ -220,7 +240,12 @@ const AccountForm = () => {
                         onChange={(e) =>
                           handleVehicleChange(index, e.target.value)
                         }
-                        className="w-full rounded-2xl border p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className={`w-full rounded-2xl border p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                          vehicle && !vehicleNumberPattern.test(vehicle)
+                            ? "border-red-500"
+                            : ""
+                        }`}
+                        placeholder="e.g., MH-12-AB-1234"
                       />
                       {index === vehicleNumbers.length - 1 && (
                         <button
@@ -233,6 +258,9 @@ const AccountForm = () => {
                       )}
                     </div>
                   ))}
+                  <p className="mt-1 text-sm text-gray-500">
+                    Enter vehicle numbers in the format: XX-00-YY-0000
+                  </p>
                 </div>
                 <div className="col-span-2">
                   <button
