@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Button = ({ text, redirectTo }) => {
+const Button = ({ text, redirectTo, onClick }) => {
   const [lastColor, setLastColor] = useState("#08E3FF");
   const [currentColor, setCurrentColor] = useState("#5799F7");
   const navigate = useNavigate();
@@ -26,6 +26,9 @@ const Button = ({ text, redirectTo }) => {
       if (redirectTo) {
         navigate(redirectTo);
       }
+      if (onClick) {
+        onClick(e);
+      }
     }, 600);
 
     setLastColor(currentColor);
@@ -35,7 +38,7 @@ const Button = ({ text, redirectTo }) => {
   return (
     <button
       onClick={handleClick}
-      className="relative overflow-hidden bg-white text-lg md:text-2xl font-semibold text-mainTextColor p-2 md:p-4 px-4 md:px-10 rounded-full shadow-md transition-transform duration-300 ease-in-out transform hover:scale-105 hover:text-white hover:bg-gradient-to-b hover:from-[#08E3FF] hover:to-[#5799F7] focus:outline-none"
+      className="relative transform overflow-hidden rounded-full bg-white p-2 px-4 text-lg font-semibold text-mainTextColor shadow-md transition-transform duration-300 ease-in-out hover:scale-105 hover:bg-gradient-to-b hover:from-[#08E3FF] hover:to-[#5799F7] hover:text-white focus:outline-none md:p-4 md:px-10 md:text-2xl"
     >
       {text}
       <style>{`
