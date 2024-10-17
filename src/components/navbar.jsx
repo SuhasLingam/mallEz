@@ -82,25 +82,25 @@ const Navbar = () => {
   };
 
   return (
-    <header className="lg:static lg:left-0 lg:right-0 lg:top-0 lg:z-30 lg:pb-11 lg:pt-5 w-full py-4 bg-transparent">
-      <div className="container px-4 mx-auto">
+    <header className="w-full bg-transparent py-4 lg:static lg:left-0 lg:right-0 lg:top-0 lg:z-30 lg:pb-11 lg:pt-5">
+      <div className="container mx-auto px-4">
         <div className="flex flex-wrap items-center justify-between">
           <div className="flex items-center">
             <img
               onClick={handleLogo}
               src={mallEz}
               alt="MallEz Logo"
-              className="w-28 lg:w-36 p-2 cursor-pointer"
+              className="w-28 cursor-pointer p-2 lg:w-36"
               tabIndex={0}
               onKeyPress={(e) => handleKeyPress(e, handleLogo)}
             />
-            <div className="lg:flex lg:gap-4 hidden ml-4">
+            <div className="ml-4 hidden lg:flex lg:gap-4">
               <Button text="Recharge" />
               <Button text="Navigate" />
             </div>
           </div>
 
-          <div className="lg:hidden flex items-center">
+          <div className="flex items-center lg:hidden">
             <button
               className="text-3xl"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -116,18 +116,18 @@ const Navbar = () => {
               isMenuOpen ? "flex" : "hidden"
             } w-full flex-col items-center transition-all duration-300 ease-in-out lg:flex lg:w-auto lg:flex-row lg:items-center`}
           >
-            <div className="lg:hidden flex flex-col items-center gap-4 my-4">
+            <div className="my-4 flex flex-col items-center gap-4 lg:hidden">
               <Button text="Recharge" />
               <Button text="Navigate" />
             </div>
-            <ul className="lg:flex-row lg:space-x-8 lg:space-y-0 flex flex-col items-center space-y-4">
+            <ul className="flex flex-col items-center space-y-4 lg:flex-row lg:space-x-8 lg:space-y-0">
               {navItems.map((item, index) => (
                 <li
                   key={item.title}
-                  className="lg:my-0 relative flex flex-col items-center justify-center"
+                  className="relative flex flex-col items-center justify-center lg:my-0"
                 >
                   <a
-                    className="lg:text-xl flex items-center text-lg font-medium cursor-pointer"
+                    className="flex cursor-pointer items-center text-lg font-medium lg:text-xl"
                     onClick={() => {
                       handleSubMenuToggle(index);
                       if (!item.subItems) {
@@ -154,7 +154,7 @@ const Navbar = () => {
                     )}
                   </a>
                   {item.subItems && activeSubMenu === index && (
-                    <ul className="lg:absolute lg:top-full lg:mt-1 lg:flex-row lg:gap-4 lg:rounded-full lg:shadow-lg flex flex-col gap-2 px-4 py-2 mt-2 bg-white rounded-lg">
+                    <ul className="mt-2 flex flex-col gap-2 rounded-lg bg-white px-4 py-2 lg:absolute lg:top-full lg:mt-1 lg:flex-row lg:gap-4 lg:rounded-full lg:shadow-lg">
                       {item.subItems.map((subItem, subIndex) => (
                         <li key={subIndex}>
                           <button
@@ -174,10 +174,10 @@ const Navbar = () => {
               {userName && (
                 <li
                   ref={dropdownRef}
-                  className="lg:text-xl relative flex flex-col items-center justify-center gap-2 text-lg font-medium"
+                  className="relative flex flex-col items-center justify-center gap-2 text-lg font-medium lg:text-xl"
                 >
                   <span
-                    className="flex flex-row items-center justify-center gap-2 cursor-pointer"
+                    className="flex cursor-pointer flex-row items-center justify-center gap-2"
                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                     tabIndex={0}
                     onKeyPress={(e) =>
@@ -194,7 +194,7 @@ const Navbar = () => {
                     />
                   </span>
                   {isDropdownOpen && (
-                    <ul className="lg:absolute lg:right-0 lg:top-full lg:mt-1 lg:flex-row lg:gap-3 lg:rounded-full lg:shadow-lg flex flex-col gap-2 px-4 py-2 mt-2 bg-white rounded-lg">
+                    <ul className="mt-2 flex flex-col gap-2 rounded-lg bg-white px-4 py-2 lg:absolute lg:right-0 lg:top-full lg:mt-1 lg:flex-row lg:gap-3 lg:rounded-full lg:shadow-lg">
                       <li>
                         <button
                           onClick={() => navigate("/profile")}

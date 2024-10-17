@@ -32,8 +32,16 @@ const MallOverlay = ({ mall, onClose }) => {
         <div className="flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-8">
           {mall.locations.map((location) => (
             <div key={location.id} className="flex flex-col items-center">
-              <div className="mb-2 flex h-24 w-24 items-center justify-center rounded-3xl bg-white shadow-md sm:mb-4 sm:h-32 sm:w-32 md:h-40 md:w-40">
-                <div className="h-20 w-20 rounded-lg bg-gray-200 sm:h-24 sm:w-24 md:h-32 md:w-32"></div>
+              <div className="mb-2 flex h-24 w-24 items-center justify-center overflow-hidden rounded-3xl bg-white shadow-md sm:mb-4 sm:h-32 sm:w-32 md:h-40 md:w-40">
+                {location.imageUrl ? (
+                  <img
+                    src={location.imageUrl}
+                    alt={location.name}
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  <div className="h-20 w-20 rounded-lg bg-gray-200 sm:h-24 sm:w-24 md:h-32 md:w-32"></div>
+                )}
               </div>
               <span className="rounded-full bg-white px-3 py-1 text-center text-sm font-semibold sm:px-4 sm:py-2 sm:text-base md:px-6 md:py-2 md:text-lg">
                 {location.name}

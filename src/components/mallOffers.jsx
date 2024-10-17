@@ -14,7 +14,7 @@ const MallOffers = ({
         {/* Image Section */}
         <div className="h-56 w-full sm:h-auto sm:w-1/2 lg:w-3/5">
           <img
-            className="h-full w-full object-cover"
+            className="h-full w-full -scale-x-90 object-cover"
             src={image}
             alt="mallsImage"
           />
