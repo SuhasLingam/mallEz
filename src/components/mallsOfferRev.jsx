@@ -1,7 +1,13 @@
 import React from "react";
 import Button from "./button";
 
-const MallOffersRev = ({ title, description, image, buttonText }) => {
+const MallOffersRev = ({
+  title,
+  description,
+  image,
+  buttonText,
+  redirectDirectory,
+}) => {
   return (
     <div className="sm:px-6 sm:py-8 md:px-8 md:py-10 lg:px-10 lg:py-12 container px-4 py-6">
       <div className="rounded-xl border-opacity-10 bg-mainBackgroundColor sm:flex-row flex flex-col-reverse overflow-hidden border border-black shadow-md">
@@ -19,7 +25,7 @@ const MallOffersRev = ({ title, description, image, buttonText }) => {
             <span className="sm:text-2xl md:text-3xl text-xl font-semibold text-gray-600">
               VR Chain
             </span>
-            <Button text={buttonText} redirectTo={"/"} />
+            <Button text={buttonText} redirectTo={redirectDirectory} />
           </div>
         </div>
 

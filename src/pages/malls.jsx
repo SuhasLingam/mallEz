@@ -1,39 +1,42 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebase/firebaseConfig"; // Make sure this path is correct
 import MallOffers from "../components/mallOffers";
 import MallOffersRev from "../components/mallsOfferRev";
 import Footer from "../components/footer";
 import mallVector from "../assets/mallVector.svg";
 import Navbar from "../components/navbar";
 
-const malls = () => {
-  // Dynamic data for the components
-  const content = [
-    {
-      Component: MallOffers,
-      title: "VR Chain",
-      description:
-        "VR Malls are redefining the shopping and entertainment landscape across India, offering a seamless blend of luxury, convenience, and culture. With six iconic locations—Bengaluru, Chennai, Surat, Punjab, Nagpur, and Amritsar—each VR Mall provides a unique experience while maintaining the high standards that the VR brand is known for.",
-      image: mallVector,
-      buttonText: "EXPLORE",
-    },
-    {
-      Component: MallOffersRev,
-      title: "FORUM Chain",
-      description:
-        "Forum Malls are vibrant spaces where fashion, food, and fun come together in perfect harmony. Spanning multiple cities across India, each Forum Mall offers a distinctive yet consistently exceptional experience, making it a beloved spot for shoppers and visitors alike.",
-      image: mallVector,
-      buttonText: "EXPLORE",
-    },
+const Malls = () => {
+  const [mallChains, setMallChains] = useState([]);
 
-    {
-      Component: MallOffers,
-      title: "VR Chain",
-      description:
-        "VR Malls are redefining the shopping and entertainment landscape across India, offering a seamless blend of luxury, convenience, and culture. With six iconic locations—Bengaluru, Chennai, Surat, Punjab, Nagpur, and Amritsar—each VR Mall provides a unique experience while maintaining the high standards that the VR brand is known for.",
-      image: mallVector,
-      buttonText: "EXPLORE",
-    },
-  ];
+  useEffect(() => {
+    const fetchMallChainsFromFirestore = async () => {
+      const mallChainsCollection = collection(db, "mallChains");
+
+      try {
+        const querySnapshot = await getDocs(mallChainsCollection);
+        const fetchedMallChains = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          title: doc.data().title,
+          description: doc.data().description,
+          redirectDirectory: doc.data().redirectDirectory || "", // Add this line
+        }));
+        setMallChains(fetchedMallChains);
+      } catch (error) {
+        console.error("Error fetching mall chains: ", error);
+      }
+    };
+
+    fetchMallChainsFromFirestore();
+  }, []);
+
+  const content = mallChains.map((mallChain, index) => ({
+    ...mallChain,
+    Component: index % 2 === 0 ? MallOffers : MallOffersRev,
+    image: mallVector,
+    buttonText: "EXPLORE",
+  }));
 
   return (
     <div className="h-max bg-mainBackgroundColor w-full">
@@ -41,13 +44,24 @@ const malls = () => {
         <Navbar />
       </div>
       {content.map(
-        ({ Component, title, description, image, buttonText }, index) => (
+        (
+          {
+            Component,
+            title,
+            description,
+            image,
+            buttonText,
+            redirectDirectory,
+          },
+          index,
+        ) => (
           <div key={index}>
             <Component
               title={title}
               description={description}
               image={image}
               buttonText={buttonText}
+              redirectDirectory={redirectDirectory}
             />
           </div>
         ),
@@ -57,4 +71,4 @@ const malls = () => {
   );
 };
 
-export default malls;
+export default Malls;
