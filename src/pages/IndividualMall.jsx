@@ -8,6 +8,7 @@ import FloorButtons from "../components/FloorButtons";
 import TopOffers from "../components/TopOffers";
 import { CategorySearch } from "../components/CategorySearch";
 import { FaSearch } from "react-icons/fa";
+import Footer from "../components/footer";
 
 const IndividualMall = () => {
   const { mallId, locationId } = useParams();
@@ -85,25 +86,30 @@ const IndividualMall = () => {
         imageUrl={mallData.location?.imageUrl}
       />
       <div className="container mx-auto max-w-7xl px-4 py-8">
-        <div className="mb-8 rounded-lg bg-white p-6 shadow-lg">
-          <h1 className="mb-6 text-3xl font-bold text-gray-800">
-            {mallData.location?.name || "VR CHENNAI"}
+        <div className="mb-8 rounded-lg bg-white p-4 shadow-lg sm:p-6">
+          <h1 className="mb-8 text-center text-3xl font-bold text-mainTextColor sm:text-4xl">
+            <span className="border-b-4 border-blue-500 pb-2">
+              {mallData.location?.name || "VR CHENNAI"}
+            </span>
           </h1>
           <div className="relative mb-6">
             <input
               type="text"
               placeholder="Search for stores, brands, or items"
-              className="w-full rounded-full border-2 border-blue-500 bg-gray-100 px-6 py-3 pr-12 text-lg focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-200"
+              className="w-full rounded-full border-2 border-blue-500 bg-gray-100 px-4 py-2 pr-10 text-base focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-200 sm:px-6 sm:py-3 sm:text-lg"
             />
-            <button className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-blue-500 p-2 text-white transition-colors hover:bg-blue-600">
-              <FaSearch className="h-5 w-5" />
+            <button className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-blue-500 p-2 text-white transition-colors hover:bg-blue-600 sm:right-4">
+              <FaSearch className="h-4 w-4 sm:h-5 sm:w-5" />
             </button>
           </div>
           <FloorButtons floors={floors} />
           <TopOffers />
         </div>
-        {/* You can add other components like CategorySearch here if needed */}
+        <div className="rounded-lg bg-sky-50 p-4 shadow-lg sm:p-8">
+          <CategorySearch />
+        </div>
       </div>
+      <Footer />
     </div>
   );
 };
