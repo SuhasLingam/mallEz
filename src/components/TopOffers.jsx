@@ -26,7 +26,9 @@ const TopOffers = () => {
   }, []);
 
   useEffect(() => {
-    const interval = setInterval(nextSlide, 5000);
+    const interval = setInterval(() => {
+      nextSlide();
+    }, 2000);
     return () => clearInterval(interval);
   }, [nextSlide]);
 
