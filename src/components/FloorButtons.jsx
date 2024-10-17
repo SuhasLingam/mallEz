@@ -5,7 +5,7 @@ const FloorButtons = ({ floors }) => {
     <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-4">
       {floors.map((floor, index) => (
         <button
-          key={index}
+          key={floor.id}
           className="flex flex-col items-center justify-center rounded-lg bg-gradient-to-r from-blue-500 to-blue-600 p-4 shadow-md transition-all hover:from-blue-600 hover:to-blue-700 hover:shadow-lg"
         >
           <div className="mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-white bg-opacity-20">
@@ -24,7 +24,7 @@ const FloorButtons = ({ floors }) => {
               />
             </svg>
           </div>
-          <span className="text-sm font-medium text-white">{floor}</span>
+          <span className="text-sm font-medium text-white">{floor.name}</span>
         </button>
       ))}
     </div>

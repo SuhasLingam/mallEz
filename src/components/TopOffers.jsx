@@ -1,13 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const offers = [
-  { id: 1, title: "50% Off", store: "Fashion Store" },
-  { id: 2, title: "Buy 1 Get 1", store: "Electronics Shop" },
-  { id: 3, title: "Season Sale", store: "Home Decor" },
-  { id: 4, title: "Free Shipping", store: "Online Store" },
-  { id: 5, title: "Flash Sale", store: "Sportswear" },
-];
+const offers = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }];
 
 const TopOffers = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -41,9 +35,6 @@ const TopOffers = () => {
 
   return (
     <div className="my-8">
-      <h2 className="mb-4 text-center text-xl font-bold text-gray-800 sm:text-2xl">
-        TOP OFFERS
-      </h2>
       <div className="relative mx-auto max-w-xs overflow-hidden rounded-xl bg-gradient-to-r from-blue-100 to-blue-200 p-4 shadow-lg sm:max-w-md sm:p-6 md:max-w-2xl md:p-8 lg:max-w-4xl xl:max-w-5xl">
         <div className="flex items-center justify-center">
           <button
@@ -126,12 +117,9 @@ const OfferCard = React.memo(({ offer, position, direction }) => {
         transition={{ delay: 0.1, duration: 0.2 }}
         className="flex h-full flex-col justify-between"
       >
-        <h3
-          className={`font-bold ${position === 0 ? "text-lg sm:text-xl" : "text-base sm:text-lg"}`}
-        >
-          {offer.title}
-        </h3>
-        <p className="text-sm sm:text-base">{offer.store}</p>
+        {/* Placeholder elements instead of text */}
+        <div className="h-4 w-3/4 rounded bg-white bg-opacity-20"></div>
+        <div className="h-4 w-1/2 rounded bg-white bg-opacity-20"></div>
       </motion.div>
     </motion.div>
   );

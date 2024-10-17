@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase/firebaseConfig";
 import Navbar from "../components/navbar";
 import CityImage from "../components/CityImage";
@@ -16,6 +16,7 @@ const IndividualMall = () => {
   const [mallData, setMallData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [floors, setFloors] = useState([]);
 
   const fadeInUp = {
     hidden: { opacity: 0, y: 50 },
@@ -47,6 +48,31 @@ const IndividualMall = () => {
               ...locationSnap.data(),
             };
             setMallData({ ...mallData, location: locationData });
+
+            // Fetch floor layout
+            const floorLayoutRef = collection(
+              db,
+              "mallChains",
+              mallId,
+              "floorLayout",
+            );
+            const floorLayoutSnap = await getDocs(floorLayoutRef);
+
+            if (floorLayoutSnap.empty) {
+              console.warn("No floor layout found for this mall");
+              // You might want to set some default floors here
+              setFloors([
+                { id: "groundfloor", name: "Ground Floor", order: 0 },
+                { id: "firstfloor", name: "First Floor", order: 1 },
+              ]);
+            } else {
+              setFloors(
+                floorLayoutSnap.docs.map((doc) => ({
+                  id: doc.id,
+                  ...doc.data(),
+                })),
+              );
+            }
           } else {
             setError("Location not found");
           }
@@ -64,20 +90,8 @@ const IndividualMall = () => {
     fetchMallData();
   }, [mallId, locationId]);
 
-  if (error)
-    return (
-      <div className="flex h-screen items-center justify-center">
-        Error: {error}
-      </div>
-    );
-  if (!mallData)
-    return (
-      <div className="flex h-screen items-center justify-center">
-        No data available
-      </div>
-    );
-
-  const floors = ["GROUND FLOOR", "FLOOR 1", "FLOOR 2", "FLOOR 3"];
+  if (error) return <div>Error: {error}</div>;
+  if (!mallData) return <div>No data available</div>;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-white via-blue-300 to-white">
