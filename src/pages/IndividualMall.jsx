@@ -89,7 +89,7 @@ const IndividualMall = () => {
     <div className="min-h-screen bg-gradient-to-br from-white via-blue-300 to-white">
       <Navbar />
       <CityImage
-        cityName={mallData.location?.name || "VR CHENNAI"}
+        cityName={mallData.location?.name || "N/A"}
         imageUrl={mallData.location?.imageUrl}
       />
       <div className="container mx-auto max-w-7xl px-4 py-8">
