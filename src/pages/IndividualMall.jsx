@@ -4,9 +4,10 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase/firebaseConfig";
 import Navbar from "../components/navbar";
 import CityImage from "../components/CityImage";
-import FloorPlan from "../components/FloorPlan";
+import FloorButtons from "../components/FloorButtons";
 import TopOffers from "../components/TopOffers";
-import CategorySearch from "../components/CategorySearch";
+import { CategorySearch } from "../components/CategorySearch";
+import { FaSearch } from "react-icons/fa";
 
 const IndividualMall = () => {
   const { mallId, locationId } = useParams();
@@ -74,17 +75,34 @@ const IndividualMall = () => {
       </div>
     );
 
+  const floors = ["GROUND FLOOR", "FLOOR 1", "FLOOR 2", "FLOOR 3"];
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-white via-blue-300 to-white">
       <Navbar />
+      <CityImage
+        cityName={mallData.location?.name || "VR CHENNAI"}
+        imageUrl={mallData.location?.imageUrl}
+      />
       <div className="container mx-auto max-w-7xl px-4 py-8">
-        <CityImage
-          cityName={mallData.location?.name}
-          imageUrl={mallData.location?.imageUrl}
-        />
-        <FloorPlan floors={mallData.location?.floors || []} />
-        <TopOffers offers={mallData.location?.topOffers || []} />
-        <CategorySearch categories={mallData.location?.categories || []} />
+        <div className="mb-8 rounded-lg bg-white p-6 shadow-lg">
+          <h1 className="mb-6 text-3xl font-bold text-gray-800">
+            {mallData.location?.name || "VR CHENNAI"}
+          </h1>
+          <div className="relative mb-6">
+            <input
+              type="text"
+              placeholder="Search for stores, brands, or items"
+              className="w-full rounded-full border-2 border-blue-500 bg-gray-100 px-6 py-3 pr-12 text-lg focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-200"
+            />
+            <button className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-blue-500 p-2 text-white transition-colors hover:bg-blue-600">
+              <FaSearch className="h-5 w-5" />
+            </button>
+          </div>
+          <FloorButtons floors={floors} />
+          <TopOffers />
+        </div>
+        {/* You can add other components like CategorySearch here if needed */}
       </div>
     </div>
   );
