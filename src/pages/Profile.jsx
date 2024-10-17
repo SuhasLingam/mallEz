@@ -196,7 +196,7 @@ const Profile = () => {
   return (
     <div className="min-h-screen bg-mainBackgroundColor">
       <Navbar />
-      <div className="container mx-auto max-w-2xl p-4 sm:p-6 md:pt-[135px]">
+      <div className="container mx-auto max-w-2xl p-4 sm:p-6">
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}

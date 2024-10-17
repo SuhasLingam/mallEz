@@ -22,6 +22,8 @@ import {
 } from "react-icons/fa";
 import { getAuth } from "firebase/auth";
 import { FacebookAuthProvider, OAuthProvider } from "firebase/auth";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { db } from "../firebase/firebaseConfig";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -45,11 +47,32 @@ const LoginForm = () => {
   const handlePasswordChange = (e) => setPassword(e.target.value);
   const handleRememberMeChange = () => setRememberMe(!rememberMe);
 
+  const ensureUserRole = async (user) => {
+    const userRef = doc(db, "users", user.uid);
+    const userSnap = await getDoc(userRef);
+
+    if (!userSnap.exists()) {
+      // If the user document doesn't exist, create it with the role
+      await setDoc(userRef, {
+        email: user.email,
+        role: "user",
+      });
+    } else if (!userSnap.data().role) {
+      // If the user document exists but doesn't have a role, add it
+      await setDoc(userRef, { role: "user" }, { merge: true });
+    }
+  };
+
   const handleEmailLogin = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password,
+      );
+      await ensureUserRole(userCredential.user);
       toast.success("Login successful!");
       navigate("/");
     } catch (error) {
@@ -63,7 +86,8 @@ const LoginForm = () => {
   const handleGoogleLogin = async () => {
     setIsLoading(true);
     try {
-      await signInWithPopup(auth, googleProvider);
+      const result = await signInWithPopup(auth, googleProvider);
+      await ensureUserRole(result.user);
       toast.success("Google login successful!");
       navigate("/");
     } catch (error) {
@@ -78,7 +102,8 @@ const LoginForm = () => {
     setIsLoading(true);
     try {
       const provider = new OAuthProvider("apple.com");
-      await signInWithPopup(auth, provider);
+      const result = await signInWithPopup(auth, provider);
+      await ensureUserRole(result.user);
       toast.success("Apple login successful!");
       navigate("/");
     } catch (error) {
@@ -102,18 +127,18 @@ const LoginForm = () => {
       animate="animate"
       exit="exit"
       variants={pageTransition}
-      className="bg-mainBackgroundColor font-poppins flex flex-col min-h-screen"
+      className="flex min-h-screen flex-col bg-mainBackgroundColor font-poppins"
     >
       <Navbar />
       <ToastContainer position="top-right" autoClose={3000} />
-      <div className="md:py-16 flex flex-col items-center justify-center flex-grow px-4 py-8">
+      <div className="flex flex-grow flex-col items-center justify-center px-4 py-8 md:py-16">
         <motion.div
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.5 }}
-          className="rounded-3xl bg-opacity-90 md:max-w-2xl md:p-8 w-full max-w-md p-6 bg-white shadow-2xl"
+          className="w-full max-w-md rounded-3xl bg-white bg-opacity-90 p-6 shadow-2xl md:max-w-2xl md:p-8"
         >
-          <h2 className="text-mainTextColor mb-6 text-3xl font-bold text-center">
+          <h2 className="mb-6 text-center text-3xl font-bold text-mainTextColor">
             Welcome Back
           </h2>
 
@@ -122,7 +147,7 @@ const LoginForm = () => {
             New here?{" "}
             <span
               onClick={() => navigate("/signup")}
-              className="hover:underline text-blue-500 cursor-pointer"
+              className="cursor-pointer text-blue-500 hover:underline"
             >
               Create an account
             </span>
@@ -130,23 +155,23 @@ const LoginForm = () => {
 
           <form onSubmit={handleEmailLogin} className="space-y-4">
             <div className="relative">
-              <FaEnvelope className="left-3 top-3 absolute text-gray-400" />
+              <FaEnvelope className="absolute left-3 top-3 text-gray-400" />
               <input
                 type="email"
                 value={email}
                 onChange={handleEmailChange}
-                className="focus:border-blue-500 focus:ring-2 focus:ring-blue-500 w-full p-2 pl-10 border rounded-full"
+                className="w-full rounded-full border p-2 pl-10 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
                 placeholder="Email Address"
                 required
               />
             </div>
             <div className="relative">
-              <FaLock className="left-3 top-3 absolute text-gray-400" />
+              <FaLock className="absolute left-3 top-3 text-gray-400" />
               <input
                 type="password"
                 value={password}
                 onChange={handlePasswordChange}
-                className="focus:border-blue-500 focus:ring-2 focus:ring-blue-500 w-full p-2 pl-10 border rounded-full"
+                className="w-full rounded-full border p-2 pl-10 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
                 placeholder="Password"
                 required
               />
@@ -157,7 +182,7 @@ const LoginForm = () => {
                   type="checkbox"
                   checked={rememberMe}
                   onChange={handleRememberMeChange}
-                  className="focus:ring-blue-500 w-4 h-4 text-blue-600 border-gray-300 rounded"
+                  className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                 />
                 <label
                   htmlFor="rememberMe"
@@ -168,7 +193,7 @@ const LoginForm = () => {
               </div>
               <Link
                 to="/forgot-password"
-                className="hover:underline text-sm text-blue-600"
+                className="text-sm text-blue-600 hover:underline"
               >
                 Forgot Password?
               </Link>
@@ -177,19 +202,19 @@ const LoginForm = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               type="submit"
-              className="focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 w-full p-2 text-white transition duration-300 ease-in-out bg-blue-500 rounded-full"
+              className="w-full rounded-full bg-blue-500 p-2 text-white transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
               disabled={isLoading}
             >
               {isLoading ? "Logging in..." : "LOG IN"}
             </motion.button>
           </form>
 
-          <div className="flex items-center justify-center my-6">
-            <span className="lg:w-1/4 w-1/5 border-b border-gray-300"></span>
-            <span className="px-2 text-xs text-center text-gray-500 uppercase">
+          <div className="my-6 flex items-center justify-center">
+            <span className="w-1/5 border-b border-gray-300 lg:w-1/4"></span>
+            <span className="px-2 text-center text-xs uppercase text-gray-500">
               or
             </span>
-            <span className="lg:w-1/4 w-1/5 border-b border-gray-300"></span>
+            <span className="w-1/5 border-b border-gray-300 lg:w-1/4"></span>
           </div>
 
           <div className="space-y-4">
@@ -197,7 +222,7 @@ const LoginForm = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={handleGoogleLogin}
-              className="hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 flex items-center justify-center w-full py-2 text-gray-700 transition duration-300 ease-in-out bg-white border border-gray-300 rounded-full"
+              className="flex w-full items-center justify-center rounded-full border border-gray-300 bg-white py-2 text-gray-700 transition duration-300 ease-in-out hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
               disabled={isLoading}
             >
               <FaGoogle className="mr-2" />
@@ -208,7 +233,7 @@ const LoginForm = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={handleAppleLogin}
-              className="hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 flex items-center justify-center w-full py-2 text-white transition duration-300 ease-in-out bg-black rounded-full"
+              className="flex w-full items-center justify-center rounded-full bg-black py-2 text-white transition duration-300 ease-in-out hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
               disabled={isLoading}
             >
               <FaApple className="mr-2" />
@@ -221,15 +246,15 @@ const LoginForm = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.5 }}
-          className="md:flex-row md:space-y-0 flex flex-col items-center justify-between w-full max-w-md mt-8 space-y-4 text-sm text-black"
+          className="mt-8 flex w-full max-w-md flex-col items-center justify-between space-y-4 text-sm text-black md:flex-row md:space-y-0"
         >
           <div className="relative">
-            <select className="focus:outline-none pb-1 text-black bg-transparent border-b border-black appearance-none">
+            <select className="appearance-none border-b border-black bg-transparent pb-1 text-black focus:outline-none">
               <option>English (United States)</option>
             </select>
-            <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+            <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
               <svg
-                className="w-4 h-4 text-white"
+                className="h-4 w-4 text-black"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
