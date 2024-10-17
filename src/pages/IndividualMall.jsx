@@ -64,12 +64,6 @@ const IndividualMall = () => {
     fetchMallData();
   }, [mallId, locationId]);
 
-  if (loading)
-    return (
-      <div className="flex h-screen items-center justify-center">
-        Loading...
-      </div>
-    );
   if (error)
     return (
       <div className="flex h-screen items-center justify-center">
