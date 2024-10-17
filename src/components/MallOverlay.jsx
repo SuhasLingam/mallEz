@@ -1,9 +1,22 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { FaTimesCircle } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const MallOverlay = ({ mall, onClose }) => {
-  console.log("Rendering MallOverlay with mall:", mall);
+  const navigate = useNavigate();
+
+  const handleLocationClick = (location) => {
+    const path = `/mall/${mall.id}/${location.id}`;
+    console.log("Attempting to navigate to:", path);
+    try {
+      navigate(path);
+      console.log("Navigation successful");
+    } catch (error) {
+      console.error("Navigation failed:", error);
+    }
+    onClose();
+  };
 
   return (
     <motion.div
@@ -31,7 +44,11 @@ const MallOverlay = ({ mall, onClose }) => {
         </h2>
         <div className="flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-8">
           {mall.locations.map((location) => (
-            <div key={location.id} className="flex flex-col items-center">
+            <div
+              key={location.id}
+              className="flex cursor-pointer flex-col items-center"
+              onClick={() => handleLocationClick(location)}
+            >
               <div className="mb-2 flex h-24 w-24 items-center justify-center overflow-hidden rounded-3xl bg-white shadow-md sm:mb-4 sm:h-32 sm:w-32 md:h-40 md:w-40">
                 {location.imageUrl ? (
                   <img

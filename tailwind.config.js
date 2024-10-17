@@ -12,6 +12,8 @@ export default {
       colors: {
         mainBackgroundColor: "#CBECFC",
         mainTextColor: "#000D49",
+        "navy-blue": "#000080", // Adjust this value to match your desired navy blue
+        "light-blue": "#E6F3FF", // Adjust this value to match the background in the image
       },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
