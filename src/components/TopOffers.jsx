@@ -1,54 +1,91 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-
-const offers = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }];
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebase/firebaseConfig";
+import { useParams } from "react-router-dom";
 
 const TopOffers = () => {
+  const { mallId } = useParams();
+  const [offers, setOffers] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
 
+  useEffect(() => {
+    const fetchOffers = async () => {
+      try {
+        const offersRef = collection(db, "mallChains", mallId, "MallOffers");
+        const offersSnapshot = await getDocs(offersRef);
+        const offersData = offersSnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setOffers(offersData);
+      } catch (error) {
+        console.error("Error fetching offers:", error);
+      }
+    };
+
+    if (mallId) {
+      fetchOffers();
+    }
+  }, [mallId]);
+
   const nextSlide = useCallback(() => {
-    setDirection(1);
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % offers.length);
-  }, []);
+    if (offers.length > 1) {
+      setDirection(1);
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % offers.length);
+    }
+  }, [offers.length]);
 
   const prevSlide = useCallback(() => {
-    setDirection(-1);
-    setCurrentIndex(
-      (prevIndex) => (prevIndex - 1 + offers.length) % offers.length,
-    );
-  }, []);
+    if (offers.length > 1) {
+      setDirection(-1);
+      setCurrentIndex(
+        (prevIndex) => (prevIndex - 1 + offers.length) % offers.length,
+      );
+    }
+  }, [offers.length]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      nextSlide();
-    }, 2000);
-    return () => clearInterval(interval);
-  }, [nextSlide]);
+    if (offers.length > 1) {
+      const interval = setInterval(() => {
+        nextSlide();
+      }, 2000);
+      return () => clearInterval(interval);
+    }
+  }, [nextSlide, offers.length]);
 
   const getVisibleOffers = useCallback(() => {
+    if (offers.length === 0) return [];
+    if (offers.length === 1) return [{ ...offers[0], position: 0 }];
     return [-1, 0, 1].map((offset) => {
       const index = (currentIndex + offset + offers.length) % offers.length;
       return { ...offers[index], position: offset };
     });
-  }, [currentIndex]);
+  }, [currentIndex, offers]);
+
+  if (offers.length === 0) {
+    return null;
+  }
 
   return (
     <div className="my-8">
       <div className="relative mx-auto max-w-xs overflow-hidden rounded-xl bg-gradient-to-r from-blue-100 to-blue-200 p-4 shadow-lg sm:max-w-md sm:p-6 md:max-w-2xl md:p-8 lg:max-w-4xl xl:max-w-5xl">
         <div className="flex items-center justify-center">
-          <button
-            onClick={prevSlide}
-            className="absolute left-2 z-10 text-2xl text-blue-900 transition-colors duration-200 hover:text-blue-700 focus:outline-none sm:left-4 sm:text-4xl"
-            aria-label="Previous offer"
-          >
-            &#8249;
-          </button>
+          {offers.length > 1 && (
+            <button
+              onClick={prevSlide}
+              className="absolute left-2 z-10 text-2xl text-blue-900 transition-colors duration-200 hover:text-blue-700 focus:outline-none sm:left-4 sm:text-4xl"
+              aria-label="Previous offer"
+            >
+              &#8249;
+            </button>
+          )}
           <div className="flex h-48 w-full items-center justify-center sm:h-64 md:h-80">
             <AnimatePresence initial={false} custom={direction}>
               {getVisibleOffers().map((offer) => (
                 <OfferCard
-                  key={offer.id}
+                  key={`${offer.id}-${offer.position}`}
                   offer={offer}
                   position={offer.position}
                   direction={direction}
@@ -56,13 +93,15 @@ const TopOffers = () => {
               ))}
             </AnimatePresence>
           </div>
-          <button
-            onClick={nextSlide}
-            className="absolute right-2 z-10 text-2xl text-blue-900 transition-colors duration-200 hover:text-blue-700 focus:outline-none sm:right-4 sm:text-4xl"
-            aria-label="Next offer"
-          >
-            &#8250;
-          </button>
+          {offers.length > 1 && (
+            <button
+              onClick={nextSlide}
+              className="absolute right-2 z-10 text-2xl text-blue-900 transition-colors duration-200 hover:text-blue-700 focus:outline-none sm:right-4 sm:text-4xl"
+              aria-label="Next offer"
+            >
+              &#8250;
+            </button>
+          )}
         </div>
       </div>
     </div>
@@ -103,7 +142,7 @@ const OfferCard = React.memo(({ offer, position, direction }) => {
         scale: { duration: 0.2 },
         layout: { duration: 0.3 },
       }}
-      className="absolute rounded-lg bg-gradient-to-br from-blue-900 to-blue-700 p-3 text-white shadow-lg sm:p-4"
+      className="absolute overflow-hidden rounded-lg p-0 shadow-lg"
       style={{
         width: "calc(100% - 2rem)",
         maxWidth: "256px",
@@ -111,16 +150,19 @@ const OfferCard = React.memo(({ offer, position, direction }) => {
         maxHeight: "320px",
       }}
     >
-      <motion.div
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.1, duration: 0.2 }}
-        className="flex h-full flex-col justify-between"
-      >
-        {/* Placeholder elements instead of text */}
-        <div className="h-4 w-3/4 rounded bg-white bg-opacity-20"></div>
-        <div className="h-4 w-1/2 rounded bg-white bg-opacity-20"></div>
-      </motion.div>
+      {offer.imageUrl ? (
+        <img
+          src={offer.imageUrl}
+          alt="Offer"
+          className="h-full w-full object-cover"
+        />
+      ) : (
+        <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-blue-900 to-blue-700">
+          <span className="text-lg font-semibold text-white">
+            Offer {offer.id}
+          </span>
+        </div>
+      )}
     </motion.div>
   );
 });
