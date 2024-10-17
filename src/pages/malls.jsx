@@ -44,6 +44,10 @@ const Malls = () => {
     };
 
     fetchMallChainsFromFirestore();
+
+    return () => {
+      console.log("Malls component unmounting");
+    };
   }, []);
 
   const handleExplore = (mall) => {

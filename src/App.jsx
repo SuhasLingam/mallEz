@@ -18,6 +18,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import ForgotPassword from "./components/ForgotPassword";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import IndividualMall from "./pages/IndividualMall";
 
 const AnimatedRoutes = () => {
   const location = useLocation();
@@ -110,6 +111,22 @@ const AnimatedRoutes = () => {
                 variants={pageTransition}
               >
                 <Malls />
+              </motion.div>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/mall/:mallId/:locationId"
+          element={
+            <ProtectedRoute>
+              <motion.div
+                key="individual-mall"
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                variants={pageTransition}
+              >
+                <IndividualMall />
               </motion.div>
             </ProtectedRoute>
           }
