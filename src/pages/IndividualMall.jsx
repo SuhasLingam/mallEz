@@ -96,7 +96,7 @@ const IndividualMall = () => {
         <div className="mb-8 rounded-lg bg-white p-4 shadow-lg sm:p-6">
           <h1 className="mb-8 text-center text-3xl font-bold text-mainTextColor sm:text-4xl">
             <span className="border-b-4 border-blue-500 pb-2">
-              {mallData.location?.name || "VR CHENNAI"}
+              {mallData.location?.name || "N/A"}
             </span>
           </h1>
           <div className="relative mb-6">
