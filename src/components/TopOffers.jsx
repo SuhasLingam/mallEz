@@ -5,7 +5,7 @@ import { db } from "../firebase/firebaseConfig";
 import { useParams } from "react-router-dom";
 
 const TopOffers = () => {
-  const { mallId } = useParams();
+  const { mallId, locationId } = useParams();
   const [offers, setOffers] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
@@ -13,7 +13,14 @@ const TopOffers = () => {
   useEffect(() => {
     const fetchOffers = async () => {
       try {
-        const offersRef = collection(db, "mallChains", mallId, "MallOffers");
+        const offersRef = collection(
+          db,
+          "mallChains",
+          mallId,
+          "locations",
+          locationId,
+          "MallOffers",
+        );
         const offersSnapshot = await getDocs(offersRef);
         const offersData = offersSnapshot.docs.map((doc) => ({
           id: doc.id,
@@ -25,10 +32,10 @@ const TopOffers = () => {
       }
     };
 
-    if (mallId) {
+    if (mallId && locationId) {
       fetchOffers();
     }
-  }, [mallId]);
+  }, [mallId, locationId]);
 
   const nextSlide = useCallback(() => {
     if (offers.length > 1) {

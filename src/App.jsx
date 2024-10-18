@@ -19,6 +19,7 @@ import ForgotPassword from "./components/ForgotPassword";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import IndividualMall from "./pages/IndividualMall";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 const AnimatedRoutes = () => {
   const location = useLocation();
@@ -126,7 +127,9 @@ const AnimatedRoutes = () => {
                 exit="exit"
                 variants={pageTransition}
               >
-                <IndividualMall />
+                <ErrorBoundary>
+                  <IndividualMall />
+                </ErrorBoundary>
               </motion.div>
             </ProtectedRoute>
           }

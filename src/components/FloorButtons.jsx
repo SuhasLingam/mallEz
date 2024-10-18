@@ -3,7 +3,7 @@ import React from "react";
 const FloorButtons = ({ floors }) => {
   return (
     <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-4">
-      {floors.map((floor, index) => (
+      {floors.map((floor) => (
         <button
           key={floor.id}
           className="flex flex-col items-center justify-center rounded-lg bg-gradient-to-r from-blue-500 to-blue-600 p-4 shadow-md transition-all hover:from-blue-600 hover:to-blue-700 hover:shadow-lg"

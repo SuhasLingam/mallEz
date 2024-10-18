@@ -11,6 +11,12 @@ import { FaSearch } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { FaInstagram, FaTwitter, FaLinkedin } from "react-icons/fa";
 
+const fadeInUp = {
+  hidden: { opacity: 0, y: 50 },
+  visible: { opacity: 1, y: 0, transition: { duration: 1 } },
+  exit: { opacity: 0, y: 50, transition: { duration: 0.5 } },
+};
+
 const IndividualMall = () => {
   const { mallId, locationId } = useParams();
   const [mallData, setMallData] = useState(null);
@@ -18,21 +24,19 @@ const IndividualMall = () => {
   const [error, setError] = useState(null);
   const [floors, setFloors] = useState([]);
 
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 50 },
-    visible: { opacity: 1, y: 0, transition: { duration: 1 } },
-    exit: { opacity: 0, y: 50, transition: { duration: 0.5 } },
-  };
-
   useEffect(() => {
     const fetchMallData = async () => {
       setLoading(true);
       try {
+        console.log("Fetching mall data for mallId:", mallId);
         const mallRef = doc(db, "mallChains", mallId);
         const mallSnap = await getDoc(mallRef);
 
         if (mallSnap.exists()) {
           const mallData = { id: mallSnap.id, ...mallSnap.data() };
+          console.log("Mall data fetched:", mallData);
+
+          console.log("Fetching location data for locationId:", locationId);
           const locationRef = doc(
             db,
             "mallChains",
@@ -47,41 +51,43 @@ const IndividualMall = () => {
               id: locationSnap.id,
               ...locationSnap.data(),
             };
+            console.log("Location data fetched:", locationData);
             setMallData({ ...mallData, location: locationData });
 
             // Fetch floor layout
+            console.log("Fetching floor layout");
             const floorLayoutRef = collection(
               db,
               "mallChains",
               mallId,
+              "locations",
+              locationId,
               "floorLayout",
             );
             const floorLayoutSnap = await getDocs(floorLayoutRef);
 
             if (floorLayoutSnap.empty) {
-              console.warn("No floor layout found for this mall");
-              // You might want to set some default floors here
-              setFloors([
-                { id: "groundfloor", name: "Ground Floor", order: 0 },
-                { id: "firstfloor", name: "First Floor", order: 1 },
-              ]);
+              console.warn("No floor layout found for this location");
+              setFloors([]);
             } else {
-              setFloors(
-                floorLayoutSnap.docs.map((doc) => ({
-                  id: doc.id,
-                  ...doc.data(),
-                })),
-              );
+              const floorData = floorLayoutSnap.docs.map((doc) => ({
+                id: doc.id,
+                name: doc.data().name,
+              }));
+              console.log("Floor layout fetched:", floorData);
+              setFloors(floorData);
             }
           } else {
+            console.error("Location not found");
             setError("Location not found");
           }
         } else {
+          console.error("Mall not found");
           setError("Mall not found");
         }
       } catch (error) {
         console.error("Error fetching mall data:", error);
-        setError("Failed to fetch mall data");
+        setError(`Failed to fetch mall data: ${error.message}`);
       } finally {
         setLoading(false);
       }
@@ -90,6 +96,7 @@ const IndividualMall = () => {
     fetchMallData();
   }, [mallId, locationId]);
 
+  if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
   if (!mallData) return <div>No data available</div>;
 
@@ -117,7 +124,11 @@ const IndividualMall = () => {
               <FaSearch className="h-4 w-4 sm:h-5 sm:w-5" />
             </button>
           </div>
-          <FloorButtons floors={floors} />
+          {floors.length > 0 ? (
+            <FloorButtons floors={floors} />
+          ) : (
+            <p>No floors available</p>
+          )}
           <TopOffers />
         </div>
         <div className="rounded-lg bg-sky-50 p-4 shadow-lg sm:p-8">
