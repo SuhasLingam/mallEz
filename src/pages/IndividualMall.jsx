@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { doc, getDoc, collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase/firebaseConfig";
 import Navbar from "../components/navbar";
@@ -19,6 +19,7 @@ const fadeInUp = {
 
 const IndividualMall = () => {
   const { mallId, locationId } = useParams();
+  const navigate = useNavigate();
   const [mallData, setMallData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -28,6 +29,10 @@ const IndividualMall = () => {
     const fetchMallData = async () => {
       setLoading(true);
       try {
+        if (!mallId || !locationId) {
+          throw new Error("Mall ID or Location ID is missing");
+        }
+
         console.log("Fetching mall data for mallId:", mallId);
         const mallRef = doc(db, "mallChains", mallId);
         const mallSnap = await getDoc(mallRef);
@@ -78,23 +83,21 @@ const IndividualMall = () => {
               setFloors(floorData);
             }
           } else {
-            console.error("Location not found");
-            setError("Location not found");
+            throw new Error("Location not found");
           }
         } else {
-          console.error("Mall not found");
-          setError("Mall not found");
+          throw new Error("Mall not found");
         }
       } catch (error) {
         console.error("Error fetching mall data:", error);
-        setError(`Failed to fetch mall data: ${error.message}`);
+        setError(error.message);
       } finally {
         setLoading(false);
       }
     };
 
     fetchMallData();
-  }, [mallId, locationId]);
+  }, [mallId, locationId, navigate]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -103,11 +106,12 @@ const IndividualMall = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-white via-blue-300 to-white">
       <Navbar />
-      <CityImage
-        cityName={mallData.location?.name || "N/A"}
-        imageUrl={mallData.location?.imageUrl}
-      />
-      <div className="container mx-auto max-w-7xl px-4 py-8">
+
+      <div className="container mx-auto px-4 py-8">
+        <CityImage
+          cityName={mallData.location?.name || "N/A"}
+          imageUrl={mallData.location?.imageUrl}
+        />
         <div className="mb-8 rounded-lg bg-white p-4 shadow-lg sm:p-6">
           <h1 className="mb-8 text-center text-3xl font-bold text-mainTextColor sm:text-4xl">
             <span className="border-b-4 border-blue-500 pb-2">
@@ -124,11 +128,7 @@ const IndividualMall = () => {
               <FaSearch className="h-4 w-4 sm:h-5 sm:w-5" />
             </button>
           </div>
-          {floors.length > 0 ? (
-            <FloorButtons floors={floors} />
-          ) : (
-            <p>No floors available</p>
-          )}
+          <FloorButtons floors={floors} />
           <TopOffers />
         </div>
         <div className="rounded-lg bg-sky-50 p-4 shadow-lg sm:p-8">

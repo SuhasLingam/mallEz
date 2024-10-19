@@ -20,141 +20,144 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import IndividualMall from "./pages/IndividualMall";
 import ErrorBoundary from "./components/ErrorBoundary";
+import Breadcrumb from "./components/Breadcrumb";
 
 const AnimatedRoutes = () => {
   const location = useLocation();
 
   return (
-    <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
-        {/* Public routes */}
-        <Route
-          path="/"
-          element={
-            <motion.div
-              key="home-page"
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              variants={pageTransition}
-            >
-              <Home />
-            </motion.div>
-          }
-        />
-        <Route
-          path="/login"
-          element={
-            <motion.div
-              key="login-page"
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              variants={pageTransition}
-            >
-              <LoginForm />
-            </motion.div>
-          }
-        />
-        <Route
-          path="/signup"
-          element={
-            <motion.div
-              key="signup-page"
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              variants={pageTransition}
-            >
-              <SignupForm />
-            </motion.div>
-          }
-        />
-        <Route
-          path="/about"
-          element={
-            <motion.div
-              key="aboutus"
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              variants={pageTransition}
-            >
-              <AboutUs />
-            </motion.div>
-          }
-        />
-        <Route
-          path="/forgot-password"
-          element={
-            <motion.div
-              key="forgot-password"
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              variants={pageTransition}
-            >
-              <ForgotPassword />
-            </motion.div>
-          }
-        />
+    <>
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          {/* Public routes */}
+          <Route
+            path="/"
+            element={
+              <motion.div
+                key="home-page"
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                variants={pageTransition}
+              >
+                <Home />
+              </motion.div>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <motion.div
+                key="login-page"
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                variants={pageTransition}
+              >
+                <LoginForm />
+              </motion.div>
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              <motion.div
+                key="signup-page"
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                variants={pageTransition}
+              >
+                <SignupForm />
+              </motion.div>
+            }
+          />
+          <Route
+            path="/about"
+            element={
+              <motion.div
+                key="aboutus"
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                variants={pageTransition}
+              >
+                <AboutUs />
+              </motion.div>
+            }
+          />
+          <Route
+            path="/forgot-password"
+            element={
+              <motion.div
+                key="forgot-password"
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                variants={pageTransition}
+              >
+                <ForgotPassword />
+              </motion.div>
+            }
+          />
 
-        {/* Protected routes */}
-        <Route
-          path="/malls"
-          element={
-            <ProtectedRoute>
-              <motion.div
-                key="malls"
-                initial="initial"
-                animate="animate"
-                exit="exit"
-                variants={pageTransition}
-              >
-                <Malls />
-              </motion.div>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/mall/:mallId/:locationId"
-          element={
-            <ProtectedRoute>
-              <motion.div
-                key="individual-mall"
-                initial="initial"
-                animate="animate"
-                exit="exit"
-                variants={pageTransition}
-              >
-                <ErrorBoundary>
-                  <IndividualMall />
-                </ErrorBoundary>
-              </motion.div>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/profile"
-          element={
-            <ProtectedRoute>
-              <motion.div
-                key="profile"
-                initial="initial"
-                animate="animate"
-                exit="exit"
-                variants={pageTransition}
-              >
-                <Profile />
-              </motion.div>
-            </ProtectedRoute>
-          }
-        />
+          {/* Protected routes */}
+          <Route
+            path="/malls"
+            element={
+              <ProtectedRoute>
+                <motion.div
+                  key="malls"
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
+                  variants={pageTransition}
+                >
+                  <Malls />
+                </motion.div>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/mall/:mallId/:locationId"
+            element={
+              <ProtectedRoute>
+                <motion.div
+                  key="individual-mall"
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
+                  variants={pageTransition}
+                >
+                  <ErrorBoundary>
+                    <IndividualMall />
+                  </ErrorBoundary>
+                </motion.div>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <motion.div
+                  key="profile"
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
+                  variants={pageTransition}
+                >
+                  <Profile />
+                </motion.div>
+              </ProtectedRoute>
+            }
+          />
 
-        {/* Redirect all other routes to home */}
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </AnimatePresence>
+          {/* Redirect all other routes to home */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </AnimatePresence>
+    </>
   );
 };
 
