@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { doc, getDoc, collection, getDocs } from "firebase/firestore";
-import { db } from "../firebase/firebaseConfig";
+import { ref, getDownloadURL } from "firebase/storage";
+import { db, storage } from "../firebase/firebaseConfig";
 import Navbar from "../components/navbar";
 import CityImage from "../components/CityImage";
 import FloorButtons from "../components/FloorButtons";
@@ -17,6 +18,8 @@ const IndividualMall = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [floors, setFloors] = useState([]);
+  const [mallOffers, setMallOffers] = useState([]);
+  const [floorLayout, setFloorLayout] = useState([]);
 
   const fadeInUp = {
     hidden: { opacity: 0, y: 50 },
@@ -54,25 +57,57 @@ const IndividualMall = () => {
               db,
               "mallChains",
               mallId,
+              "locations",
+              locationId,
               "floorLayout",
             );
             const floorLayoutSnap = await getDocs(floorLayoutRef);
+            const floorLayoutData = floorLayoutSnap.docs.map((doc) => ({
+              id: doc.id,
+              ...doc.data(),
+            }));
+            setFloorLayout(floorLayoutData);
 
-            if (floorLayoutSnap.empty) {
+            if (floorLayoutData.length === 0) {
               console.warn("No floor layout found for this mall");
-              // You might want to set some default floors here
               setFloors([
                 { id: "groundfloor", name: "Ground Floor", order: 0 },
                 { id: "firstfloor", name: "First Floor", order: 1 },
               ]);
             } else {
-              setFloors(
-                floorLayoutSnap.docs.map((doc) => ({
-                  id: doc.id,
-                  ...doc.data(),
-                })),
-              );
+              setFloors(floorLayoutData);
             }
+
+            // Fetch MallOffers from Firestore
+            const mallOffersRef = collection(
+              db,
+              "mallChains",
+              mallId,
+              "locations",
+              locationId,
+              "MallOffers",
+            );
+            const mallOffersSnap = await getDocs(mallOffersRef);
+            const mallOffersData = await Promise.all(
+              mallOffersSnap.docs.map(async (doc) => {
+                const offerData = doc.data();
+                // Fetch image URL from Firebase Storage
+                if (offerData.imagePath) {
+                  try {
+                    const imageUrl = await getDownloadURL(
+                      ref(storage, offerData.imagePath),
+                    );
+                    return { id: doc.id, ...offerData, imageUrl };
+                  } catch (error) {
+                    console.error("Error fetching image URL:", error);
+                    return { id: doc.id, ...offerData };
+                  }
+                }
+                return { id: doc.id, ...offerData };
+              }),
+            );
+            setMallOffers(mallOffersData);
+            console.log("Fetched Mall Offers:", mallOffersData);
           } else {
             setError("Location not found");
           }
@@ -90,6 +125,9 @@ const IndividualMall = () => {
     fetchMallData();
   }, [mallId, locationId]);
 
+  console.log("Current Mall Offers:", mallOffers);
+
+  if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
   if (!mallData) return <div>No data available</div>;
 
@@ -118,12 +156,31 @@ const IndividualMall = () => {
             </button>
           </div>
           <FloorButtons floors={floors} />
-          <TopOffers />
+          {console.log(
+            "Rendering TopOffers, mallOffers length:",
+            mallOffers.length,
+          )}
+          {mallOffers.length > 0 ? (
+            <div className="mt-8">
+              <h2 className="mb-8 text-center text-3xl font-bold text-mainTextColor sm:text-4xl">
+                <span className="border-b-4 border-blue-500 pb-2">
+                  Top Offers
+                </span>
+              </h2>
+              <TopOffers />
+            </div>
+          ) : (
+            <p className="mt-8 text-center text-lg text-gray-600">
+              No offers available for this mall.
+            </p>
+          )}
         </div>
         <div className="rounded-lg bg-sky-50 p-4 shadow-lg sm:p-8">
           <CategorySearch />
         </div>
       </div>
+
+      {/* Footer content remains unchanged */}
       <footer className="border-t-2 border-slate-400 bg-transparent py-8">
         <div className="container mx-auto px-6 md:flex md:justify-around">
           <motion.div

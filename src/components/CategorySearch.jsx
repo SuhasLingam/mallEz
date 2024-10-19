@@ -33,7 +33,7 @@ export function CategorySearch() {
                 ></path>
               </svg>
             </div>
-            <span className="text-navy-blue text-sm font-semibold sm:text-base">
+            <span className="text-sm font-semibold text-navy-blue sm:text-base">
               {category}
             </span>
           </button>
