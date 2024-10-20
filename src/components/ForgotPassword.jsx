@@ -3,10 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaEnvelope } from "react-icons/fa";
 import { auth } from "../firebase/firebaseConfig";
-import {
-  sendPasswordResetEmail,
-  fetchSignInMethodsForEmail,
-} from "firebase/auth";
+import { sendPasswordResetEmail } from "firebase/auth";
+import { getUserData } from "../firebaseOperations";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -20,10 +18,19 @@ const ForgotPassword = () => {
     setMessage("");
 
     try {
-      await sendPasswordResetEmail(auth, email);
-      setMessage(
-        "If an account exists with this email, a password reset link has been sent. Please check your inbox.",
-      );
+      // Check if the user exists in our new collection structure
+      const userSnapshot = await getUserData("user", email);
+
+      if (userSnapshot) {
+        // User exists, send password reset email
+        await sendPasswordResetEmail(auth, email);
+        setMessage(
+          "A password reset link has been sent to your email. Please check your inbox.",
+        );
+      } else {
+        // User doesn't exist
+        setMessage("No account found with this email address.");
+      }
     } catch (error) {
       console.error("Error:", error);
       if (error.code === "auth/invalid-email") {

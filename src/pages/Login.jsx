@@ -24,6 +24,7 @@ import { getAuth } from "firebase/auth";
 import { FacebookAuthProvider, OAuthProvider } from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../firebase/firebaseConfig";
+import { getUserData, createUser, updateUser } from "../firebaseOperations";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -48,18 +49,21 @@ const LoginForm = () => {
   const handleRememberMeChange = () => setRememberMe(!rememberMe);
 
   const ensureUserRole = async (user) => {
-    const userRef = doc(db, "users", user.uid);
-    const userSnap = await getDoc(userRef);
+    try {
+      let userData = await getUserData("user", user.uid);
 
-    if (!userSnap.exists()) {
-      // If the user document doesn't exist, create it with the role
-      await setDoc(userRef, {
-        email: user.email,
-        role: "user",
-      });
-    } else if (!userSnap.data().role) {
-      // If the user document exists but doesn't have a role, add it
-      await setDoc(userRef, { role: "user" }, { merge: true });
+      if (!userData) {
+        // If the user document doesn't exist, create it with the role
+        await createUser("user", user.uid, {
+          email: user.email,
+          role: "user",
+        });
+      } else if (!userData.role) {
+        // If the user document exists but doesn't have a role, add it
+        await updateUser("user", user.uid, { role: "user" });
+      }
+    } catch (error) {
+      console.error("Error ensuring user role:", error);
     }
   };
 

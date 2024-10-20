@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { auth, db } from "../firebase/firebaseConfig";
-import { doc, getDoc, updateDoc, arrayRemove } from "firebase/firestore";
+import { auth } from "../firebase/firebaseConfig";
 import {
   updateEmail,
   updateProfile,
@@ -11,6 +10,7 @@ import { motion } from "framer-motion";
 import ProfileComponent from "../components/ProfileComponent";
 import Navbar from "../components/navbar";
 import { sendPasswordReset } from "../firebase/auth";
+import { getUserData, updateUser } from "../firebaseOperations";
 
 const Profile = () => {
   const [user, setUser] = useState(null);
@@ -42,9 +42,8 @@ const Profile = () => {
 
   const fetchUserData = async (currentUser) => {
     try {
-      const userDoc = await getDoc(doc(db, "users", currentUser.uid));
-      if (userDoc.exists()) {
-        const data = userDoc.data();
+      const data = await getUserData("user", currentUser.uid);
+      if (data) {
         setUserData({
           firstName: data.firstName || "",
           lastName: data.lastName || "",
@@ -59,8 +58,9 @@ const Profile = () => {
           lastName: "",
           phoneNumber: "",
           vehicleNumbers: [],
+          role: "user",
         };
-        await updateDoc(doc(db, "users", currentUser.uid), defaultData);
+        await updateUser("user", currentUser.uid, defaultData);
         setUserData({
           ...defaultData,
           email: currentUser.email || "",
@@ -83,8 +83,7 @@ const Profile = () => {
         throw new Error("User not authenticated");
       }
 
-      const userRef = doc(db, "users", user.uid);
-      await updateDoc(userRef, { [field]: userData[field] });
+      await updateUser("user", user.uid, { [field]: userData[field] });
 
       if (field === "email") {
         await updateEmail(user, userData.email);
@@ -111,11 +110,11 @@ const Profile = () => {
   const handleAddVehicle = async () => {
     if (newVehicle && !vehicleNumbers.includes(newVehicle)) {
       try {
-        const userRef = doc(db, "users", user.uid);
-        await updateDoc(userRef, {
-          vehicleNumbers: [...vehicleNumbers, newVehicle],
+        const updatedVehicleNumbers = [...vehicleNumbers, newVehicle];
+        await updateUser("user", user.uid, {
+          vehicleNumbers: updatedVehicleNumbers,
         });
-        setVehicleNumbers([...vehicleNumbers, newVehicle]);
+        setVehicleNumbers(updatedVehicleNumbers);
         setNewVehicle("");
         setMessage("Vehicle number added successfully!");
       } catch (error) {
@@ -127,11 +126,11 @@ const Profile = () => {
 
   const handleRemoveVehicle = async (vehicle) => {
     try {
-      const userRef = doc(db, "users", user.uid);
-      await updateDoc(userRef, {
-        vehicleNumbers: arrayRemove(vehicle),
+      const updatedVehicleNumbers = vehicleNumbers.filter((v) => v !== vehicle);
+      await updateUser("user", user.uid, {
+        vehicleNumbers: updatedVehicleNumbers,
       });
-      setVehicleNumbers(vehicleNumbers.filter((v) => v !== vehicle));
+      setVehicleNumbers(updatedVehicleNumbers);
       setMessage("Vehicle number removed successfully!");
     } catch (error) {
       console.error("Error removing vehicle number:", error);

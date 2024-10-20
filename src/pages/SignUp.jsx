@@ -17,6 +17,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaEnvelope, FaLock, FaGoogle, FaApple, FaCar } from "react-icons/fa";
 import { OAuthProvider } from "firebase/auth";
+import { createUser } from "../firebaseOperations";
 
 const vehicleNumberPattern =
   /\b[A-Z]{2}[-.\s]?\d{2}[-.\s]?[A-Z]{1,2}[-.\s]?\d{4}\b/;
@@ -112,13 +113,16 @@ const SignUpForm = () => {
       );
       const user = userCredential.user;
       await updateProfile(user, { displayName: firstName });
-      await setDoc(doc(db, "users", user.uid), {
+
+      // Use the new createUser function from firebaseOperations
+      await createUser("user", user.uid, {
         firstName,
         lastName,
         email,
         vehicleNumbers,
-        role: "user", // Add this line to set the role
+        role: "user",
       });
+
       toast.success("Account created successfully!");
       navigate("/");
     } catch (error) {
@@ -139,13 +143,16 @@ const SignUpForm = () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
-      await setDoc(doc(db, "users", user.uid), {
+
+      // Use the new createUser function from firebaseOperations
+      await createUser("user", user.uid, {
         firstName: user.displayName.split(" ")[0],
         lastName: user.displayName.split(" ")[1],
         email: user.email,
         vehicleNumbers: [],
-        role: "user", // Add this line to set the role
+        role: "user",
       });
+
       toast.success("Account created successfully with Google!");
       navigate("/");
     } catch (error) {
@@ -162,13 +169,16 @@ const SignUpForm = () => {
       const provider = new OAuthProvider("apple.com");
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
-      await setDoc(doc(db, "users", user.uid), {
+
+      // Use the new createUser function from firebaseOperations
+      await createUser("user", user.uid, {
         firstName: user.displayName ? user.displayName.split(" ")[0] : "",
         lastName: user.displayName ? user.displayName.split(" ")[1] : "",
         email: user.email,
         vehicleNumbers: [],
-        role: "user", // Add this line to set the role
+        role: "user",
       });
+
       toast.success("Account created successfully with Apple!");
       navigate("/");
     } catch (error) {
