@@ -13,14 +13,14 @@ const Team = () => {
     { name: "Aryan Naidu", title: "Co-Founder & COO" },
     { name: "Suhas Lingam", title: "Chief Technical Officer" },
     { name: "Aryan Reddy", title: "Chief Design Officer" },
-    { name: "Elon Musk", title: "Chai Sutta Shop Owner" },
-    { name: "Bill Gates", title: "GateKeper" },
+    { name: "NA", title: "NA" },
+    { name: "NA", title: "NA" },
   ];
 
   return (
-    <section className="bg-mainBackgroundColor min-h-screen py-10">
+    <section className="min-h-screen bg-mainBackgroundColor py-10">
       <motion.h2
-        className="sm:text-5xl md:text-8xl sm:mb-8 md:mb-7 text-mainTextColor my-11 flex items-center justify-center mb-6 text-4xl font-bold"
+        className="my-11 mb-6 flex items-center justify-center text-4xl font-bold text-mainTextColor sm:mb-8 sm:text-5xl md:mb-7 md:text-8xl"
         variants={fadeInUp}
         initial="hidden"
         whileInView="visible"
@@ -29,18 +29,18 @@ const Team = () => {
       >
         Meet Our Leadership
       </motion.h2>
-      <div className="md:grid-cols-2 mt-[120px] lg:grid-cols-3 grid grid-cols-1 gap-8 px-4">
+      <div className="mt-[120px] grid grid-cols-1 gap-8 px-4 md:grid-cols-2 lg:grid-cols-3">
         {leaders.map((leader, index) => (
           <motion.div
             key={index}
-            className="flex flex-col items-center m-auto"
+            className="m-auto flex flex-col items-center"
             variants={fadeInUp}
             initial="hidden"
             whileInView="visible"
             exit="hidden"
             viewport={{ once: false, amount: 0.2 }}
           >
-            <div className="w-80 h-80 md:mx-11 -rotate-12 mb-4 bg-gray-300 rounded-lg"></div>
+            <div className="mb-4 h-80 w-80 -rotate-12 rounded-lg bg-gray-300 md:mx-11"></div>
             <div className="my-11">
               <h3 className="text-xl font-semibold text-blue-900">
                 {leader.name}

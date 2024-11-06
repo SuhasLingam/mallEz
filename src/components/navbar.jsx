@@ -82,84 +82,94 @@ const Navbar = () => {
   };
 
   return (
-    <header className="w-full bg-transparent py-4 lg:static lg:left-0 lg:right-0 lg:top-0 lg:z-30 lg:pb-11 lg:pt-5">
-      <div className="container mx-auto px-4">
+    <header className="sticky top-0 z-50 w-full border-b border-gray-100 bg-mainBackgroundColor backdrop-blur-md">
+      <div className="container mx-auto px-4 py-3 lg:py-4">
         <div className="flex flex-wrap items-center justify-between">
-          <div className="flex items-center">
+          {/* Logo Section */}
+          <div className="flex items-center space-x-4">
             <img
               onClick={handleLogo}
               src={mallEz}
               alt="MallEz Logo"
-              className="w-28 cursor-pointer p-2 lg:w-36"
+              className="w-28 cursor-pointer transition-all duration-300 hover:scale-105 hover:brightness-110 active:scale-95 lg:w-36"
               tabIndex={0}
               onKeyPress={(e) => handleKeyPress(e, handleLogo)}
             />
-            <div className="ml-4 hidden lg:flex lg:gap-4">
-              <Button text="Recharge" />
-              <Button text="Navigate" />
+            <div className="hidden space-x-3 lg:flex">
+              <Button
+                text="Recharge"
+                className="text-lg font-medium transition-all duration-300 hover:scale-105 hover:ring-2 hover:ring-blue-200 active:scale-95"
+              />
+              <Button
+                text="Navigate"
+                className="text-lg font-medium transition-all duration-300 hover:scale-105 hover:ring-2 hover:ring-blue-200 active:scale-95"
+              />
             </div>
           </div>
 
-          <div className="flex items-center lg:hidden">
-            <button
-              className="text-3xl"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-            >
-              {isMenuOpen ? <FaTimes size={32} /> : <FaBars size={32} />}
-            </button>
-          </div>
+          {/* Mobile Menu Button */}
+          <button
+            className="rounded-lg p-2 text-gray-600 transition-all duration-300 hover:bg-blue-50 hover:text-blue-600 active:scale-95 lg:hidden"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          >
+            {isMenuOpen ? <FaTimes size={28} /> : <FaBars size={28} />}
+          </button>
 
+          {/* Navigation Menu */}
           <nav
             ref={menuRef}
             className={`${
-              isMenuOpen ? "flex" : "hidden"
-            } w-full flex-col items-center transition-all duration-300 ease-in-out lg:flex lg:w-auto lg:flex-row lg:items-center`}
+              isMenuOpen
+                ? "absolute left-0 right-0 top-full block animate-slide-down bg-mainBackgroundColor shadow-lg"
+                : "hidden"
+            } w-full lg:static lg:block lg:w-auto lg:shadow-none`}
           >
-            <div className="my-4 flex flex-col items-center gap-4 lg:hidden">
-              <Button text="Recharge" />
-              <Button text="Navigate" />
+            {/* Mobile-only buttons */}
+            <div className="border-b border-gray-100 p-4 lg:hidden">
+              <div className="flex flex-col space-y-3">
+                <Button
+                  text="Recharge"
+                  className="w-full text-lg font-medium transition-all duration-300 hover:ring-2 hover:ring-blue-200 active:scale-95"
+                />
+                <Button
+                  text="Navigate"
+                  className="w-full text-lg font-medium transition-all duration-300 hover:ring-2 hover:ring-blue-200 active:scale-95"
+                />
+              </div>
             </div>
-            <ul className="flex flex-col items-center space-y-4 lg:flex-row lg:space-x-8 lg:space-y-0">
+
+            {/* Navigation Items */}
+            <ul className="flex flex-col space-y-2 p-4 text-lg lg:flex-row lg:items-center lg:space-x-8 lg:space-y-0 lg:p-0">
               {navItems.map((item, index) => (
-                <li
-                  key={item.title}
-                  className="relative flex flex-col items-center justify-center lg:my-0"
-                >
-                  <a
-                    className="flex cursor-pointer items-center text-lg font-medium lg:text-xl"
+                <li key={item.title} className="group relative">
+                  <button
+                    className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-gray-700 transition-all duration-300 hover:bg-blue-50 hover:text-blue-600 group-hover:translate-x-1 lg:inline-flex lg:w-auto lg:hover:bg-transparent lg:group-hover:translate-x-0"
                     onClick={() => {
                       handleSubMenuToggle(index);
                       if (!item.subItems) {
                         handleNavigation(item.path);
                       }
                     }}
-                    tabIndex={0}
-                    onKeyPress={(e) =>
-                      handleKeyPress(e, () => {
-                        handleSubMenuToggle(index);
-                        if (!item.subItems) {
-                          handleNavigation(item.path);
-                        }
-                      })
-                    }
                   >
-                    {item.title}
+                    <span className="text-lg font-medium">{item.title}</span>
                     {item.subItems && (
                       <FaChevronDown
-                        className={`ml-1 transition-transform duration-300 ${
+                        className={`ml-2 h-5 w-5 transition-transform duration-300 ${
                           activeSubMenu === index ? "rotate-180" : ""
                         }`}
                       />
                     )}
-                  </a>
+                  </button>
+
+                  {/* Submenu */}
                   {item.subItems && activeSubMenu === index && (
-                    <ul className="mt-2 flex flex-col gap-2 rounded-lg bg-white px-4 py-2 lg:absolute lg:top-full lg:mt-1 lg:flex-row lg:gap-4 lg:rounded-full lg:shadow-lg">
-                      {item.subItems.map((subItem, subIndex) => (
-                        <li key={subIndex}>
+                    <ul className="mt-2 space-y-2 rounded-lg bg-white p-2 lg:absolute lg:left-0 lg:mt-1 lg:min-w-[180px] lg:animate-slide-down lg:space-y-1 lg:shadow-lg">
+                      {item.subItems.map((subItem) => (
+                        <li key={subItem.title}>
                           <button
                             onClick={() => handleNavigation(subItem.path)}
-                            className="rounded-full bg-mainBackgroundColor p-2 px-4 text-base font-semibold text-mainTextColor shadow-inner drop-shadow-md transition-all duration-300 ease-in-out hover:bg-gradient-to-b hover:from-[#08E3FF] hover:to-[#5799F7] hover:text-white"
+                            className="block w-full rounded-md px-4 py-2 text-left text-base text-gray-700 transition-all duration-300 hover:translate-x-1 hover:bg-blue-50 hover:text-blue-600"
                           >
                             {subItem.title}
                           </button>
@@ -170,35 +180,29 @@ const Navbar = () => {
                 </li>
               ))}
 
-              {/* User Dropdown */}
+              {/* User Menu */}
               {userName && (
-                <li
-                  ref={dropdownRef}
-                  className="relative flex flex-col items-center justify-center gap-2 text-lg font-medium lg:text-xl"
-                >
-                  <span
-                    className="flex cursor-pointer flex-row items-center justify-center gap-2"
+                <li ref={dropdownRef} className="relative">
+                  <button
                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                    tabIndex={0}
-                    onKeyPress={(e) =>
-                      handleKeyPress(e, () =>
-                        setIsDropdownOpen(!isDropdownOpen),
-                      )
-                    }
+                    className="flex w-full items-center space-x-2 rounded-lg px-3 py-2 transition-all duration-300 hover:bg-blue-50 hover:text-blue-600 active:scale-95 lg:w-auto"
                   >
-                    <FaUser /> {userName}
+                    <FaUser className="text-xl text-gray-600" />
+                    <span className="text-lg font-medium">{userName}</span>
                     <FaChevronDown
-                      className={`transition-transform duration-300 ${
+                      className={`h-5 w-5 transition-transform duration-300 ${
                         isDropdownOpen ? "rotate-180" : ""
                       }`}
                     />
-                  </span>
+                  </button>
+
+                  {/* User Dropdown */}
                   {isDropdownOpen && (
-                    <ul className="mt-2 flex flex-col gap-2 rounded-lg bg-white px-4 py-2 lg:absolute lg:right-0 lg:top-full lg:mt-1 lg:flex-row lg:gap-3 lg:rounded-full lg:shadow-lg">
+                    <ul className="mt-2 space-y-1 rounded-lg bg-white p-2 lg:absolute lg:right-0 lg:mt-1 lg:min-w-[180px] lg:animate-slide-down lg:shadow-lg">
                       <li>
                         <button
                           onClick={() => navigate("/profile")}
-                          className="rounded-full bg-mainBackgroundColor p-2 px-4 text-base font-semibold text-mainTextColor shadow-inner drop-shadow-md transition-all duration-300 ease-in-out hover:bg-gradient-to-b hover:from-[#08E3FF] hover:to-[#5799F7] hover:text-white"
+                          className="block w-full rounded-md px-4 py-2 text-left text-base text-gray-700 transition-all duration-300 hover:translate-x-1 hover:bg-blue-50 hover:text-blue-600"
                         >
                           Profile
                         </button>
@@ -206,9 +210,9 @@ const Navbar = () => {
                       <li>
                         <button
                           onClick={handleSignOut}
-                          className="rounded-full bg-mainBackgroundColor p-2 px-4 text-base font-semibold text-mainTextColor shadow-inner drop-shadow-md transition-all duration-300 ease-in-out hover:bg-gradient-to-b hover:from-[#08E3FF] hover:to-[#5799F7] hover:text-white"
+                          className="block w-full rounded-md px-4 py-2 text-left text-base text-gray-700 transition-all duration-300 hover:translate-x-1 hover:bg-red-50 hover:text-red-600"
                         >
-                          SignOut
+                          Sign Out
                         </button>
                       </li>
                     </ul>
