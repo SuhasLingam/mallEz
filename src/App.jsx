@@ -19,7 +19,7 @@ import ForgotPassword from "./components/ForgotPassword";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import IndividualMall from "./pages/IndividualMall";
-
+import Theater from "./pages/Theater";
 const AnimatedRoutes = () => {
   const location = useLocation();
 
@@ -143,6 +143,22 @@ const AnimatedRoutes = () => {
                 variants={pageTransition}
               >
                 <Profile />
+              </motion.div>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/theaters"
+          element={
+            <ProtectedRoute>
+              <motion.div
+                key="theaters"
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                variants={pageTransition}
+              >
+                <Theater />
               </motion.div>
             </ProtectedRoute>
           }
