@@ -57,6 +57,7 @@ const Navbar = () => {
       subItems: [
         { title: "Malls", path: "/malls" },
         { title: "Offers", path: "/offers" },
+        { title: "Theaters", path: "/theaters" },
       ],
     },
     { title: "About Us", path: "/about" },
