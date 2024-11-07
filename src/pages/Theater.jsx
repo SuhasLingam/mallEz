@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import { motion } from "framer-motion";
 import Navbar from "../components/navbar";
 import StepIndicator from "../components/theater/StepIndicator";
 import AuditoriumSelection from "../components/theater/AuditoriumSelection";
@@ -6,130 +7,74 @@ import ShowTimeSelection from "../components/theater/ShowTimeSelection";
 import SeatInput from "../components/theater/SeatInput";
 import FoodMenu from "../components/theater/FoodMenu";
 import CartSummary from "../components/theater/CartSummary";
-import { motion } from "framer-motion";
+import { useCart } from "../features/theater/hooks/useCart";
+import { useBooking } from "../features/theater/hooks/useBooking";
+import { STEPS, FOOD_MENU } from "../features/theater/constants";
+import { validateSeatNumber } from "../features/theater/utils/validators";
+import OrderSummary from "../components/theater/OrderSummary";
+import PaymentSection from "../components/theater/PaymentSection";
 
 const Theater = () => {
-  // States
-  const [currentStep, setCurrentStep] = useState(0);
-  const [selectedAudi, setSelectedAudi] = useState(null);
-  const [selectedShow, setSelectedShow] = useState(null);
-  const [selectedSeats, setSelectedSeats] = useState([]);
-  const [tempSeat, setTempSeat] = useState("");
-  const [cart, setCart] = useState([]);
-  const [selectedVariants, setSelectedVariants] = useState({});
+  const {
+    currentStep,
+    setCurrentStep,
+    selectedAudi,
+    setSelectedAudi,
+    selectedShow,
+    setSelectedShow,
+    selectedSeats,
+    setSelectedSeats,
+    tempSeat,
+    setTempSeat,
+    resetBooking,
+  } = useBooking();
 
-  // Food Menu Data
-  const foodMenu = [
-    {
-      id: 1,
-      name: "Popcorn Combo",
-      price: 350,
-      image:
-        "https://images.unsplash.com/photo-1585647347483-22b66260dfff?w=300",
-      description: "Large Popcorn + 2 Coke",
-      variants: ["Salted", "Caramel", "Cheese"],
-    },
-    {
-      id: 2,
-      name: "Nachos",
-      price: 200,
-      image:
-        "https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?w=300",
-      description: "Crispy Nachos with Cheese Sauce",
-      variants: ["Cheese", "Spicy", "Regular"],
-    },
-    {
-      id: 3,
-      name: "Pizza",
-      price: 250,
-      image:
-        "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=300",
-      description: "Fresh Personal Pizza",
-      variants: ["Margherita", "Pepperoni", "Veggie"],
-    },
-    {
-      id: 4,
-      name: "Burger Combo",
-      price: 300,
-      image: "https://images.unsplash.com/photo-1550547660-d9450f859349?w=300",
-      description: "Burger + Fries + Drink",
-      variants: ["Veg", "Chicken", "Fish"],
-    },
-  ];
+  const {
+    cart,
+    selectedVariants,
+    setSelectedVariants,
+    handleAddToCart,
+    updateCartItemQuantity,
+    removeFromCart,
+    calculateTotal,
+  } = useCart();
 
-  // Handlers
-  const handleAddToCart = (item) => {
-    const selectedVariant = selectedVariants[item.id] || item.variants[0];
-    const cartItemId = `${item.id}-${selectedVariant}`;
-
-    setCart((prevCart) => {
-      const existingItem = prevCart.find((i) => i.id === cartItemId);
-      if (existingItem) {
-        return prevCart.map((i) =>
-          i.id === cartItemId ? { ...i, quantity: i.quantity + 1 } : i,
-        );
-      }
-      return [
-        ...prevCart,
-        {
-          id: cartItemId,
-          name: item.name,
-          price: item.price,
-          variant: selectedVariant,
-          quantity: 1,
-        },
-      ];
-    });
+  const handlePayment = () => {
+    alert("Payment Successful! Your food will be delivered to your seat.");
+    resetBooking();
   };
-
-  const calculateTotal = () => {
-    const foodTotal = cart.reduce(
-      (total, item) => total + item.price * item.quantity,
-      0,
-    );
-    return { foodTotal, total: foodTotal };
-  };
-
-  const validateSeatNumber = (seatNumber) => {
-    const regex = /^[A-F][1-2]?[0-9]$/;
-    if (!regex.test(seatNumber)) return false;
-    const row = seatNumber.charAt(0);
-    if (!"ABCDEF".includes(row)) return false;
-    const seatNum = parseInt(seatNumber.slice(1));
-    return seatNum >= 1 && seatNum <= 30;
-  };
-
-  // Steps configuration
-  const steps = ["Enter Details", "Add Food", "Payment"];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-white via-blue-300 to-white">
       <Navbar />
 
       {/* Hero Section */}
-      <div className="relative h-[300px] w-full">
+      <div className="relative h-[400px] w-full overflow-hidden">
         <img
           src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?ixlib=rb-4.0.3"
           alt="Theater"
-          className="h-full w-full object-cover brightness-50"
+          className="brightness-40 h-full w-full object-cover transition-transform duration-700 hover:scale-105"
         />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <h1 className="text-4xl font-bold text-white md:text-6xl">
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/50">
+          <h1 className="mb-4 text-5xl font-bold text-white md:text-7xl">
             Movie Theater
           </h1>
+          <p className="text-xl text-gray-200">
+            Book your perfect movie experience
+          </p>
         </div>
       </div>
 
-      <div className="container mx-auto max-w-7xl px-4 py-8">
-        <StepIndicator currentStep={currentStep} steps={steps} />
+      <div className="container mx-auto max-w-7xl px-4 py-12">
+        <StepIndicator currentStep={currentStep} steps={STEPS} />
 
-        <div className="rounded-lg bg-white p-6 shadow-lg">
+        <div className="rounded-2xl bg-white/80 p-8 shadow-xl backdrop-blur-sm">
           {currentStep === 0 && (
-            <div className="space-y-6">
-              <h2 className="text-center text-2xl font-bold">
+            <div className="space-y-8">
+              <h2 className="text-center text-3xl font-bold text-gray-800">
                 Enter Show Details
               </h2>
-              <div className="rounded-lg border-2 border-blue-100 bg-gradient-to-br from-white to-blue-50 p-8">
+              <div className="rounded-xl border-2 border-blue-100 p-8 shadow-inner">
                 <AuditoriumSelection
                   selectedAudi={selectedAudi}
                   setSelectedAudi={setSelectedAudi}
@@ -146,29 +91,47 @@ const Theater = () => {
                   validateSeatNumber={validateSeatNumber}
                 />
 
-                {/* Summary Card */}
+                {/* Updated Summary Card */}
                 {selectedAudi && selectedShow && selectedSeats.length > 0 && (
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="mt-8 rounded-xl bg-gradient-to-r from-blue-500 to-blue-600 p-6 text-white shadow-lg"
+                    className="mt-8 overflow-hidden rounded-xl bg-blue-600 shadow-2xl"
                   >
-                    <h3 className="mb-4 text-xl font-semibold">
-                      Booking Summary
-                    </h3>
-                    <div className="space-y-3">
-                      <p>Auditorium: {selectedAudi.name}</p>
-                      <p>Time: {selectedShow.time}</p>
-                      <p>Seats: {selectedSeats.join(", ")}</p>
+                    <div className="p-6">
+                      <h3 className="mb-4 text-2xl font-semibold text-white">
+                        Booking Summary
+                      </h3>
+                      <div className="space-y-4 text-gray-100">
+                        <div className="flex justify-between">
+                          <span>Auditorium</span>
+                          <span className="font-medium">
+                            {selectedAudi.name}
+                          </span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span>Time</span>
+                          <span className="font-medium">
+                            {selectedShow.time}
+                          </span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span>Seats</span>
+                          <span className="font-medium">
+                            {selectedSeats.join(", ")}
+                          </span>
+                        </div>
+                      </div>
                     </div>
                   </motion.div>
                 )}
 
+                {/* Updated Continue Button */}
                 <button
-                  className={`mt-6 w-full transform rounded-lg py-3 text-lg font-semibold transition-all duration-300 ${
+                  className={`mt-8 w-full transform rounded-xl py-4 text-lg font-semibold shadow-lg transition-all duration-300 ${
                     !selectedAudi || !selectedShow || !selectedSeats.length
                       ? "cursor-not-allowed bg-gray-300"
-                      : "bg-blue-500 text-white hover:scale-105 hover:bg-blue-600"
+                      : "hover:scale-102 bg-blue-600 text-white hover:bg-blue-700"
                   }`}
                   disabled={
                     !selectedAudi || !selectedShow || !selectedSeats.length
@@ -177,7 +140,7 @@ const Theater = () => {
                 >
                   {!selectedAudi || !selectedShow || !selectedSeats.length
                     ? "Please Fill All Details"
-                    : "Continue to Food Selection"}
+                    : "Continue to Food Selection →"}
                 </button>
               </div>
             </div>
@@ -196,7 +159,7 @@ const Theater = () => {
               </div>
 
               <FoodMenu
-                foodMenu={foodMenu}
+                foodMenu={FOOD_MENU}
                 selectedVariants={selectedVariants}
                 setSelectedVariants={setSelectedVariants}
                 handleAddToCart={handleAddToCart}
@@ -208,75 +171,55 @@ const Theater = () => {
                   cart={cart}
                   calculateTotal={calculateTotal}
                   setCurrentStep={setCurrentStep}
+                  removeFromCart={removeFromCart}
+                  updateCartItemQuantity={updateCartItemQuantity}
                 />
               )}
             </div>
           )}
 
           {currentStep === 2 && (
-            <div className="space-y-6">
+            <div className="space-y-8">
               <div className="flex items-center gap-4">
                 <button
                   onClick={() => setCurrentStep(1)}
-                  className="text-blue-500 hover:text-blue-600"
+                  className="flex items-center gap-2 text-blue-600 hover:text-blue-700"
                 >
-                  ← Back
+                  <svg
+                    className="h-5 w-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M15 19l-7-7 7-7"
+                    />
+                  </svg>
+                  Back to Cart
                 </button>
-                <h2 className="text-2xl font-bold">Payment</h2>
+                <h2 className="text-2xl font-bold text-gray-800">
+                  Secure Checkout
+                </h2>
               </div>
 
-              <div className="rounded-lg border p-6">
-                <h3 className="mb-4 text-xl font-semibold">Order Summary</h3>
-                <div className="space-y-4">
-                  <div className="flex justify-between">
-                    <span>Auditorium</span>
-                    <span>{selectedAudi.name}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Time</span>
-                    <span>{selectedShow.time}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Delivery to Seat</span>
-                    <span>{selectedSeats.join(", ")}</span>
-                  </div>
-                  {cart.length > 0 && (
-                    <div>
-                      <h4 className="mb-2 font-semibold">Food & Beverages</h4>
-                      {cart.map((item) => (
-                        <div key={item.id} className="flex justify-between">
-                          <span>
-                            {item.name} ({item.variant}) x {item.quantity}
-                          </span>
-                          <span>₹{item.price * item.quantity}</span>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                  <div className="border-t pt-4">
-                    <div className="flex justify-between font-bold">
-                      <span>Total Amount</span>
-                      <span>₹{calculateTotal().total}</span>
-                    </div>
-                  </div>
-                </div>
-
-                <button
-                  onClick={() => {
-                    alert(
-                      "Payment Successful! Your food will be delivered to your seat.",
-                    );
-                    setCurrentStep(0);
-                    setSelectedAudi(null);
-                    setSelectedShow(null);
-                    setSelectedSeats([]);
-                    setCart([]);
-                    setTempSeat("");
-                  }}
-                  className="mt-6 w-full transform rounded-lg bg-green-500 py-3 text-lg font-semibold text-white transition-all duration-300 hover:scale-105 hover:bg-green-600"
-                >
-                  Pay Now ₹{calculateTotal().total}
-                </button>
+              <div className="grid gap-8 lg:grid-cols-2">
+                <OrderSummary
+                  selectedAudi={selectedAudi}
+                  selectedShow={selectedShow}
+                  selectedSeats={selectedSeats}
+                  cart={cart}
+                  calculateTotal={calculateTotal}
+                />
+                <PaymentSection
+                  handlePayment={handlePayment}
+                  total={
+                    calculateTotal().total +
+                    Math.round(calculateTotal().total * 0.18)
+                  }
+                />
               </div>
             </div>
           )}
