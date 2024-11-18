@@ -13,8 +13,16 @@ import { STEPS, FOOD_MENU } from "../features/theater/constants";
 import { validateSeatNumber } from "../features/theater/utils/validators";
 import OrderSummary from "../components/theater/OrderSummary";
 import PaymentSection from "../components/theater/PaymentSection";
+import { useTheaterData } from "../features/theater/hooks/useTheaterData";
+import { useParams } from "react-router-dom";
+import LoadingSpinner from "../components/LoadingSpinner";
+import ErrorMessage from "../components/ErrorMessage";
 
 const Theater = () => {
+  const { chainId, locationId } = useParams();
+  const { loading, error, theaterData, screens, currentMovies, concessions } =
+    useTheaterData(chainId, locationId);
+
   const {
     currentStep,
     setCurrentStep,
@@ -44,44 +52,47 @@ const Theater = () => {
     resetBooking();
   };
 
+  if (loading) return <LoadingSpinner />;
+  if (error) return <ErrorMessage message={error} />;
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-blue-300 to-white">
+    <div className="bg-gradient-to-br from-white via-blue-300 to-white min-h-screen pt-20">
       <Navbar />
 
       {/* Hero Section */}
       <div className="relative h-[400px] w-full overflow-hidden">
         <img
-          src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?ixlib=rb-4.0.3"
-          alt="Theater"
-          className="brightness-40 h-full w-full object-cover transition-transform duration-700 hover:scale-105"
+          src={theaterData.imageUrl}
+          alt={theaterData.name}
+          className="brightness-40 hover:scale-105 object-cover w-full h-full transition-transform duration-700"
         />
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/50">
-          <h1 className="mb-4 text-5xl font-bold text-white md:text-7xl">
-            Movie Theater
+        <div className="bg-black/50 absolute inset-0 flex flex-col items-center justify-center">
+          <h1 className="md:text-7xl mb-4 text-5xl font-bold text-white">
+            {theaterData.name}
           </h1>
-          <p className="text-xl text-gray-200">
-            Book your perfect movie experience
-          </p>
+          <p className="text-xl text-gray-200">{theaterData.address}</p>
         </div>
       </div>
 
-      <div className="container mx-auto max-w-7xl px-4 py-12">
+      <div className="max-w-7xl container px-4 py-12 mx-auto">
         <StepIndicator currentStep={currentStep} steps={STEPS} />
 
-        <div className="rounded-2xl bg-white/80 p-8 shadow-xl backdrop-blur-sm">
+        <div className="rounded-2xl bg-white/80 backdrop-blur-sm p-8 shadow-xl">
           {currentStep === 0 && (
             <div className="space-y-8">
-              <h2 className="text-center text-3xl font-bold text-gray-800">
+              <h2 className="text-3xl font-bold text-center text-gray-800">
                 Enter Show Details
               </h2>
-              <div className="rounded-xl border-2 border-blue-100 p-8 shadow-inner">
+              <div className="rounded-xl p-8 border-2 border-blue-100 shadow-inner">
                 <AuditoriumSelection
                   selectedAudi={selectedAudi}
                   setSelectedAudi={setSelectedAudi}
+                  screens={screens}
                 />
                 <ShowTimeSelection
                   selectedShow={selectedShow}
                   setSelectedShow={setSelectedShow}
+                  currentMovies={currentMovies}
                 />
                 <SeatInput
                   selectedSeats={selectedSeats}
@@ -96,7 +107,7 @@ const Theater = () => {
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="mt-8 overflow-hidden rounded-xl bg-blue-600 shadow-2xl"
+                    className="rounded-xl mt-8 overflow-hidden bg-blue-600 shadow-2xl"
                   >
                     <div className="p-6">
                       <h3 className="mb-4 text-2xl font-semibold text-white">
@@ -151,7 +162,7 @@ const Theater = () => {
               <div className="flex items-center gap-4">
                 <button
                   onClick={() => setCurrentStep(0)}
-                  className="text-blue-500 hover:text-blue-600"
+                  className="hover:text-blue-600 text-blue-500"
                 >
                   ← Back
                 </button>
@@ -164,6 +175,7 @@ const Theater = () => {
                 setSelectedVariants={setSelectedVariants}
                 handleAddToCart={handleAddToCart}
                 cart={cart}
+                concessions={concessions}
               />
 
               {cart.length > 0 && (
@@ -183,10 +195,10 @@ const Theater = () => {
               <div className="flex items-center gap-4">
                 <button
                   onClick={() => setCurrentStep(1)}
-                  className="flex items-center gap-2 text-blue-600 hover:text-blue-700"
+                  className="hover:text-blue-700 flex items-center gap-2 text-blue-600"
                 >
                   <svg
-                    className="h-5 w-5"
+                    className="w-5 h-5"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -205,7 +217,7 @@ const Theater = () => {
                 </h2>
               </div>
 
-              <div className="grid gap-8 lg:grid-cols-2">
+              <div className="lg:grid-cols-2 grid gap-8">
                 <OrderSummary
                   selectedAudi={selectedAudi}
                   selectedShow={selectedShow}

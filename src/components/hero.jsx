@@ -84,10 +84,7 @@ const HeroSection = () => {
   }, [displayedText, isDeleting, typingSpeed, currentWordIndex]);
 
   return (
-    <div
-      ref={ref}
-      className="bg-mainBackgroundColor md:p-8 relative min-h-screen p-4"
-    >
+    <div ref={ref} className="md:p-8 relative min-h-screen p-4 bg-transparent">
       <div className="lg:flex-row lg:justify-between container flex flex-col items-center mx-auto">
         <motion.div
           className="lg:mb-0 lg:w-1/2 lg:text-center mb-8 text-center"

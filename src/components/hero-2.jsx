@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import herobgtwo from "../assets/homebg-2.svg";
+//import herobgtwo from "../assets/homebg-2.svg";
 import homeImageTwo from "../assets/homeElement-2.svg";
 
 const fadeInLeft = {
@@ -41,15 +41,17 @@ const HeroTwo = () => {
   return (
     <div
       ref={ref}
-      className="bg-mainBackgroundColor sm:p-6 md:p-8 lg:p-12 relative w-full min-h-screen p-4"
-      style={{
-        backgroundImage: width < 768 ? "none" : `url(${herobgtwo})`,
-        backgroundSize: "cover",
-      }}
+      className="relative min-h-screen w-full bg-transparent p-4 sm:p-6 md:p-8 lg:p-12"
+      style={
+        {
+          //  backgroundImage: width < 768 ? "none" : `url(${herobgtwo})`,
+          //  backgroundSize: "cover",
+        }
+      }
     >
-      <div className="lg:flex-row lg:items-center lg:justify-between container flex flex-col items-center mx-auto">
+      <div className="container mx-auto flex flex-col items-center lg:flex-row lg:items-center lg:justify-between">
         <motion.div
-          className="lg:mb-0 lg:w-1/2 lg:pr-8 w-full mb-8"
+          className="mb-8 w-full lg:mb-0 lg:w-1/2 lg:pr-8"
           variants={fadeInLeft}
           initial="hidden"
           animate={controls}
@@ -57,17 +59,17 @@ const HeroTwo = () => {
           <img
             src={homeImageTwo}
             alt="Mall Features"
-            className="lg:max-w-full w-full max-w-md mx-auto"
+            className="mx-auto w-full max-w-md lg:max-w-full"
           />
         </motion.div>
 
         <motion.div
-          className="rounded-3xl bg-opacity-80 backdrop-blur-md sm:p-10 lg:w-1/2 w-full p-8 bg-transparent shadow-lg"
+          className="w-full rounded-3xl bg-transparent bg-opacity-80 p-8 shadow-lg backdrop-blur-md sm:p-10 lg:w-1/2"
           variants={fadeInRight}
           initial="hidden"
           animate={controls}
         >
-          <p className="font-poppins text-mainTextColor sm:text-xl md:text-2xl lg:text-3xl text-xl font-semibold text-justify">
+          <p className="text-justify font-poppins text-xl font-semibold text-mainTextColor sm:text-xl md:text-2xl lg:text-3xl">
             CyloMall is your all-in-one shopping companion that revolutionizes
             the way you navigate, shop, and park at your favorite malls. With
             features like smart mall navigation, personalized shopping

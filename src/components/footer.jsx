@@ -10,7 +10,7 @@ const fadeInUp = {
 
 const Footer = () => {
   return (
-    <footer className="border-slate-400 bg-mainBackgroundColor py-8 border-t-2">
+    <footer className="border-slate-400 py-8 bg-transparent border-t-2">
       <div className="md:flex md:justify-around container px-6 mx-auto">
         <motion.div
           className="md:space-x-12 flex flex-wrap justify-between"

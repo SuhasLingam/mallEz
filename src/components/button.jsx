@@ -38,7 +38,7 @@ const Button = ({ text, redirectTo, onClick }) => {
   return (
     <button
       onClick={handleClick}
-      className="relative transform overflow-hidden rounded-full bg-white p-2 px-4 text-lg font-semibold text-mainTextColor shadow-md transition-transform duration-300 ease-in-out hover:scale-100 hover:bg-gradient-to-b hover:from-[#08E3FF] hover:to-[#5799F7] hover:text-white focus:outline-none md:p-4 md:px-10 md:text-2xl"
+      className="relative transform overflow-hidden rounded-xl bg-white p-2 px-4 text-lg font-semibold text-mainTextColor shadow-md transition-transform duration-300 ease-in-out hover:scale-100 hover:bg-gradient-to-b hover:from-[#08E3FF] hover:to-[#5799F7] hover:text-white focus:outline-none md:p-1 md:px-6 md:text-lg"
     >
       {text}
       {/* <style>{`

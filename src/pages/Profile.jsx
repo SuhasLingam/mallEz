@@ -164,7 +164,7 @@ const Profile = () => {
 
   if (loading) {
     return (
-      <div className="bg-mainBackground flex h-screen items-center justify-center">
+      <div className="bg-mainBackground flex items-center justify-center h-screen">
         <motion.div
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -179,7 +179,7 @@ const Profile = () => {
 
   if (!user) {
     return (
-      <div className="bg-mainBackground flex h-screen items-center justify-center">
+      <div className="bg-mainBackground flex items-center justify-center h-screen">
         <motion.div
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
@@ -193,14 +193,14 @@ const Profile = () => {
   }
 
   return (
-    <div className="min-h-screen bg-mainBackgroundColor">
+    <div className="bg-mainBackgroundColor min-h-screen pt-20">
       <Navbar />
-      <div className="container mx-auto max-w-2xl p-4 sm:p-6">
+      <div className="sm:p-6 container max-w-2xl p-4 mx-auto">
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="mb-6 text-center text-3xl font-bold text-mainTextColor sm:mb-8 sm:text-4xl"
+          className="text-mainTextColor sm:mb-8 sm:text-4xl mb-6 text-3xl font-bold text-center"
         >
           User Profile
         </motion.h1>

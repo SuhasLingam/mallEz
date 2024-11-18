@@ -132,7 +132,7 @@ const IndividualMall = () => {
   if (!mallData) return <div>No data available</div>;
 
   return (
-    <div className="bg-gradient-to-br from-white via-blue-300 to-white min-h-screen">
+    <div className="bg-gradient-to-br from-white via-blue-300 to-white min-h-screen pt-20">
       <Navbar />
       <CityImage
         cityName={mallData.location?.name || "N/A"}

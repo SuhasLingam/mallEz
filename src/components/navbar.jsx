@@ -83,16 +83,16 @@ const Navbar = () => {
   };
 
   return (
-    <header className="bg-mainBackgroundColor backdrop-blur-md sticky top-0 z-50 w-full border-b border-gray-100">
-      <div className="lg:py-4 container px-4 py-3 mx-auto">
+    <header className="backdrop-blur-lg fixed top-0 z-50 w-full bg-transparent border-b border-gray-100">
+      <div className="lg:py-3 container px-4 py-3 mx-auto">
         <div className="flex flex-wrap items-center justify-between">
           {/* Logo Section */}
-          <div className="mx-11 space-x-11 flex items-center">
+          <div className="flex items-center mx-2 space-x-10">
             <img
               onClick={handleLogo}
               src={newLogo}
               alt="CyloMall Logo"
-              className="w-28 hover:scale-105 hover:brightness-110 active:scale-95 lg:w-36 transition-all duration-300 cursor-pointer"
+              className="w-28 hover:scale-105 hover:brightness-110 active:scale-95 lg:w-28 pt-1 transition-all duration-300 cursor-pointer"
               tabIndex={0}
               onKeyPress={(e) => handleKeyPress(e, handleLogo)}
             />
