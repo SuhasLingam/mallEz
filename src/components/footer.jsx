@@ -10,17 +10,17 @@ const fadeInUp = {
 
 const Footer = () => {
   return (
-    <footer className="border-slate-400 py-8 bg-transparent border-t-2">
-      <div className="md:flex md:justify-around container px-6 mx-auto">
+    <footer className="border-t-2 border-slate-400 bg-transparent py-8">
+      <div className="container mx-auto px-6 md:flex md:justify-around">
         <motion.div
-          className="md:space-x-12 flex flex-wrap justify-between"
+          className="flex flex-wrap justify-between md:space-x-12"
           variants={fadeInUp}
           initial="hidden"
           whileInView="visible"
           exit="hidden"
           viewport={{ once: false, amount: 0.2 }}
         >
-          <div className="md:mb-0 mb-6">
+          <div className="mb-6 md:mb-0">
             <h5 className="mb-2 text-lg font-bold text-blue-900">Product</h5>
             <ul className="space-y-1 text-blue-900">
               <li>
@@ -34,7 +34,7 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          <div className="md:mb-0 mb-6">
+          <div className="mb-6 md:mb-0">
             <h5 className="mb-2 text-lg font-bold text-blue-900">About Us</h5>
             <ul className="space-y-1 text-blue-900">
               <li>
@@ -48,7 +48,7 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          <div className="md:mb-0 mb-6">
+          <div className="mb-6 md:mb-0">
             <h5 className="mb-2 text-lg font-bold text-blue-900">
               Help & Support
             </h5>
@@ -94,14 +94,14 @@ const Footer = () => {
 
       {/* Footer Bottom */}
       <motion.div
-        className="border-slate-400 container flex items-center justify-between px-6 pt-4 mx-auto mt-8 border-t-2"
+        className="container mx-auto mt-8 flex items-center justify-between border-t-2 border-slate-400 px-6 pt-4"
         variants={fadeInUp}
         initial="hidden"
         whileInView="visible"
         exit="hidden"
         viewport={{ once: false, amount: 0.2 }}
       >
-        <p className="text-blue-900">© 2024 CyloMall</p>
+        <p className="text-blue-900">© 2024 clyoMall</p>
         <div className="flex space-x-4">
           <a href="#" className="text-2xl text-[#E4405F]">
             <FaInstagram />

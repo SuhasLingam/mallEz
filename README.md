@@ -1,6 +1,6 @@
-# CyloMall
+# clyoMall
 
-CyloMall is a web application designed to simplify parking management in shopping malls. It provides features for user authentication, profile management, and vehicle registration.
+clyoMall is a web application designed to simplify parking management in shopping malls. It provides features for user authentication, profile management, and vehicle registration.
 
 ## Features
 
@@ -20,7 +20,7 @@ CyloMall is a web application designed to simplify parking management in shoppin
 ## Project Structure
 
 ```
-CyloMall/
+clyoMall/
 ├── public/
 │ └── index.html
 ├── src/

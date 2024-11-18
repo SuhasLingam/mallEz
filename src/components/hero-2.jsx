@@ -70,10 +70,10 @@ const HeroTwo = () => {
           animate={controls}
         >
           <p className="text-justify font-poppins text-xl font-semibold text-mainTextColor sm:text-xl md:text-2xl lg:text-3xl">
-            CyloMall is your all-in-one shopping companion that revolutionizes
+            clyoMall is your all-in-one shopping companion that revolutionizes
             the way you navigate, shop, and park at your favorite malls. With
             features like smart mall navigation, personalized shopping
-            experiences, and automated parking solutions, CyloMall simplifies
+            experiences, and automated parking solutions, clyoMall simplifies
             and enhances your mall visits.
           </p>
         </motion.div>

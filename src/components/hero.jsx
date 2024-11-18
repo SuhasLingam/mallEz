@@ -84,29 +84,29 @@ const HeroSection = () => {
   }, [displayedText, isDeleting, typingSpeed, currentWordIndex]);
 
   return (
-    <div ref={ref} className="md:p-8 relative min-h-screen p-4 bg-transparent">
-      <div className="lg:flex-row lg:justify-between container flex flex-col items-center mx-auto">
+    <div ref={ref} className="relative min-h-screen bg-transparent p-4 md:p-8">
+      <div className="container mx-auto flex flex-col items-center lg:flex-row lg:justify-between">
         <motion.div
-          className="lg:mb-0 lg:w-1/2 lg:text-center mb-8 text-center"
+          className="mb-8 text-center lg:mb-0 lg:w-1/2 lg:text-center"
           variants={fadeInLeft}
           initial="hidden"
           animate={controls}
         >
-          <h1 className="sm:text-6xl lg:text-7xl mb-4 text-5xl font-bold">
+          <h1 className="mb-4 text-5xl font-bold sm:text-6xl lg:text-7xl">
             Feel The Ease,
           </h1>
           <h2
-            className="sm:text-6xl lg:text-7xl mb-4 text-5xl font-bold"
+            className="mb-4 text-5xl font-bold sm:text-6xl lg:text-7xl"
             style={{ color: colors[currentWordIndex], minHeight: "1.2em" }}
           >
             {displayedText}
           </h2>
-          <h1 className="sm:text-6xl lg:text-7xl mb-8 text-5xl font-bold">
-            With CyloMall
+          <h1 className="mb-8 text-5xl font-bold sm:text-6xl lg:text-7xl">
+            With clyoMall
           </h1>
 
           <motion.div
-            className="lg:hidden mb-8"
+            className="mb-8 lg:hidden"
             variants={fadeInUp}
             initial="hidden"
             animate={controls}
@@ -116,7 +116,7 @@ const HeroSection = () => {
 
           {!isLoggedIn && (
             <motion.div
-              className="lg:justify-center flex justify-center gap-4"
+              className="flex justify-center gap-4 lg:justify-center"
               variants={fadeInUp}
               initial="hidden"
               animate={controls}
@@ -127,20 +127,20 @@ const HeroSection = () => {
           )}
 
           <motion.p
-            className="font-poppins text-mainTextColor sm:text-lg lg:text-2xl mt-8 text-base italic font-semibold"
+            className="mt-8 font-poppins text-base font-semibold italic text-mainTextColor sm:text-lg lg:text-2xl"
             variants={fadeInUp}
             initial="hidden"
             animate={controls}
           >
             Imagine effortlessly navigating the mall during the busy holiday
-            season, with CyloMall guiding you directly to your favorite stores
+            season, with clyoMall guiding you directly to your favorite stores
             and securing a parking spot just as you arrive. That's the power of
-            CyloMall.
+            clyoMall.
           </motion.p>
         </motion.div>
 
         <motion.div
-          className="lg:block lg:w-1/2 hidden"
+          className="hidden lg:block lg:w-1/2"
           variants={fadeInRight}
           initial="hidden"
           animate={controls}

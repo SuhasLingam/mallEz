@@ -83,31 +83,31 @@ const Navbar = () => {
   };
 
   return (
-    <header className="backdrop-blur-lg fixed top-0 z-50 w-full bg-transparent border-b border-gray-100">
-      <div className="lg:py-3 container px-4 py-3 mx-auto">
+    <header className="fixed top-0 z-50 w-full border-b border-gray-100 bg-transparent backdrop-blur-lg">
+      <div className="container mx-auto px-4 py-3 lg:py-3">
         <div className="flex flex-wrap items-center justify-between">
           {/* Logo Section */}
-          <div className="flex items-center mx-2 space-x-10">
+          <div className="mx-2 flex items-center space-x-10">
             <img
               onClick={handleLogo}
               src={newLogo}
-              alt="CyloMall Logo"
-              className="w-28 hover:scale-105 hover:brightness-110 active:scale-95 lg:w-28 pt-1 transition-all duration-300 cursor-pointer"
+              alt="clyoMall Logo"
+              className="w-28 cursor-pointer pt-1 transition-all duration-300 hover:scale-105 hover:brightness-110 active:scale-95 lg:w-28"
               tabIndex={0}
               onKeyPress={(e) => handleKeyPress(e, handleLogo)}
             />
-            <div className="lg:flex hidden space-x-3">
+            <div className="hidden space-x-3 lg:flex">
               <Button
                 text="Recharge"
                 redirectTo="/recharge"
-                className="hover:scale-105 hover:ring-2 hover:ring-blue-200 active:scale-95 text-lg font-medium transition-all duration-300"
+                className="text-lg font-medium transition-all duration-300 hover:scale-105 hover:ring-2 hover:ring-blue-200 active:scale-95"
               />
             </div>
           </div>
 
           {/* Mobile Menu Button */}
           <button
-            className="hover:bg-blue-50 hover:text-blue-600 active:scale-95 lg:hidden p-2 text-gray-600 transition-all duration-300 rounded-lg"
+            className="rounded-lg p-2 text-gray-600 transition-all duration-300 hover:bg-blue-50 hover:text-blue-600 active:scale-95 lg:hidden"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           >
@@ -124,21 +124,21 @@ const Navbar = () => {
             } w-full lg:static lg:block lg:w-auto lg:shadow-none`}
           >
             {/* Mobile-only buttons */}
-            <div className="lg:hidden p-4 border-b border-gray-100">
+            <div className="border-b border-gray-100 p-4 lg:hidden">
               <div className="flex flex-col space-y-3">
                 <Button
                   text="Recharge"
-                  className="hover:ring-2 hover:ring-blue-200 active:scale-95 w-full text-lg font-medium transition-all duration-300"
+                  className="w-full text-lg font-medium transition-all duration-300 hover:ring-2 hover:ring-blue-200 active:scale-95"
                 />
               </div>
             </div>
 
             {/* Navigation Items */}
-            <ul className="lg:flex-row lg:items-center lg:space-x-8 lg:space-y-0 lg:p-0 flex flex-col p-4 space-y-2 text-lg">
+            <ul className="flex flex-col space-y-2 p-4 text-lg lg:flex-row lg:items-center lg:space-x-8 lg:space-y-0 lg:p-0">
               {navItems.map((item, index) => (
                 <li key={item.title} className="group relative">
                   <button
-                    className="hover:bg-blue-50 hover:text-blue-600 group-hover:translate-x-1 lg:inline-flex lg:w-auto lg:hover:bg-transparent lg:group-hover:translate-x-0 flex items-center justify-between w-full px-3 py-2 text-gray-700 transition-all duration-300 rounded-lg"
+                    className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-gray-700 transition-all duration-300 hover:bg-blue-50 hover:text-blue-600 group-hover:translate-x-1 lg:inline-flex lg:w-auto lg:hover:bg-transparent lg:group-hover:translate-x-0"
                     onClick={() => {
                       handleSubMenuToggle(index);
                       if (!item.subItems) {
@@ -163,7 +163,7 @@ const Navbar = () => {
                         <li key={subItem.title}>
                           <button
                             onClick={() => handleNavigation(subItem.path)}
-                            className="hover:translate-x-1 hover:bg-blue-50 hover:text-blue-600 block w-full px-4 py-2 text-base text-left text-gray-700 transition-all duration-300 rounded-md"
+                            className="block w-full rounded-md px-4 py-2 text-left text-base text-gray-700 transition-all duration-300 hover:translate-x-1 hover:bg-blue-50 hover:text-blue-600"
                           >
                             {subItem.title}
                           </button>
@@ -179,7 +179,7 @@ const Navbar = () => {
                 <li ref={dropdownRef} className="relative">
                   <button
                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                    className="hover:bg-blue-50 hover:text-blue-600 active:scale-95 lg:w-auto flex items-center w-full px-3 py-2 space-x-2 transition-all duration-300 rounded-lg"
+                    className="flex w-full items-center space-x-2 rounded-lg px-3 py-2 transition-all duration-300 hover:bg-blue-50 hover:text-blue-600 active:scale-95 lg:w-auto"
                   >
                     <FaUser className="text-xl text-gray-600" />
                     <span className="text-lg font-medium">{userName}</span>
@@ -196,7 +196,7 @@ const Navbar = () => {
                       <li>
                         <button
                           onClick={() => navigate("/profile")}
-                          className="hover:translate-x-1 hover:bg-blue-50 hover:text-blue-600 block w-full px-4 py-2 text-base text-left text-gray-700 transition-all duration-300 rounded-md"
+                          className="block w-full rounded-md px-4 py-2 text-left text-base text-gray-700 transition-all duration-300 hover:translate-x-1 hover:bg-blue-50 hover:text-blue-600"
                         >
                           Profile
                         </button>
@@ -204,7 +204,7 @@ const Navbar = () => {
                       <li>
                         <button
                           onClick={handleSignOut}
-                          className="hover:translate-x-1 hover:bg-red-50 hover:text-red-600 block w-full px-4 py-2 text-base text-left text-gray-700 transition-all duration-300 rounded-md"
+                          className="block w-full rounded-md px-4 py-2 text-left text-base text-gray-700 transition-all duration-300 hover:translate-x-1 hover:bg-red-50 hover:text-red-600"
                         >
                           Sign Out
                         </button>
