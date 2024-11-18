@@ -99,6 +99,7 @@ const Navbar = () => {
             <div className="lg:flex hidden space-x-3">
               <Button
                 text="Recharge"
+                redirectTo="/recharge"
                 className="hover:scale-105 hover:ring-2 hover:ring-blue-200 active:scale-95 text-lg font-medium transition-all duration-300"
               />
             </div>

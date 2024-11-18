@@ -8,12 +8,14 @@ export default {
       },
       backgroundImage: {
         home2bg: "./assets/homebg-2.svg",
+        "gradient-custom": "linear-gradient(180deg, #FFFFFF 0%, #CBECFC 100%)",
       },
       colors: {
         mainBackgroundColor: "#CBECFC",
         mainTextColor: "#000D49",
         "navy-blue": "#000080", // Adjust this value to match your desired navy blue
         "light-blue": "#E6F3FF", // Adjust this value to match the background in the image
+        "custom-blue": "#CBECFC",
       },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],

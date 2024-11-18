@@ -20,6 +20,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import IndividualMall from "./pages/IndividualMall";
 import Theater from "./pages/Theater";
+import Recharge from "./pages/recharge";
 const AnimatedRoutes = () => {
   const location = useLocation();
 
@@ -80,6 +81,20 @@ const AnimatedRoutes = () => {
               variants={pageTransition}
             >
               <AboutUs />
+            </motion.div>
+          }
+        />
+        <Route
+          path="/recharge"
+          element={
+            <motion.div
+              key="recharge"
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              variants={pageTransition}
+            >
+              <Recharge />
             </motion.div>
           }
         />

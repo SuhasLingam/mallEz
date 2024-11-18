@@ -7,22 +7,22 @@ const Button = ({ text, redirectTo, onClick }) => {
   const navigate = useNavigate();
 
   const handleClick = (e) => {
-    const ripple = document.createElement("span");
-    const rect = e.target.getBoundingClientRect();
-    const size = Math.max(rect.width, rect.height);
-    ripple.style.width = ripple.style.height = `${size}px`;
-    ripple.style.left = `${e.clientX - rect.left - size / 2}px`;
-    ripple.style.top = `${e.clientY - rect.top - size / 2}px`;
-    ripple.style.background = `linear-gradient(135deg, ${lastColor}, ${currentColor})`;
-    ripple.style.position = "absolute";
-    ripple.style.borderRadius = "50%";
-    ripple.style.transform = "scale(0)";
-    ripple.style.animation = "ripple-animation 0.6s linear";
-    ripple.style.pointerEvents = "none";
-    e.target.appendChild(ripple);
+    // const ripple = document.createElement("span");
+    // const rect = e.target.getBoundingClientRect();
+    // const size = Math.max(rect.width, rect.height);
+    // ripple.style.width = ripple.style.height = `${size}px`;
+    // ripple.style.left = `${e.clientX - rect.left - size / 2}px`;
+    // ripple.style.top = `${e.clientY - rect.top - size / 2}px`;
+    // ripple.style.background = `linear-gradient(135deg, ${lastColor}, ${currentColor})`;
+    // ripple.style.position = "absolute";
+    // ripple.style.borderRadius = "50%";
+    // ripple.style.transform = "scale(0)";
+    // ripple.style.animation = "ripple-animation 0.6s linear";
+    // ripple.style.pointerEvents = "none";
+    // e.target.appendChild(ripple);
 
     setTimeout(() => {
-      ripple.remove();
+      // ripple.remove();
       if (redirectTo) {
         navigate(redirectTo);
       }
