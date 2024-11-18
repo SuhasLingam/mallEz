@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../firebase/firebaseConfig";
-import mallEz from "../assets/Mallez.svg";
 import Button from "../components/button";
 import { FaUser, FaBars, FaTimes, FaChevronDown } from "react-icons/fa";
 import { useNavigate, Link } from "react-router-dom";
+import newLogo from "../assets/logo.png";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -83,34 +83,30 @@ const Navbar = () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-gray-100 bg-mainBackgroundColor backdrop-blur-md">
-      <div className="container mx-auto px-4 py-3 lg:py-4">
+    <header className="bg-mainBackgroundColor backdrop-blur-md sticky top-0 z-50 w-full border-b border-gray-100">
+      <div className="lg:py-4 container px-4 py-3 mx-auto">
         <div className="flex flex-wrap items-center justify-between">
           {/* Logo Section */}
-          <div className="flex items-center space-x-4">
+          <div className="mx-11 space-x-11 flex items-center">
             <img
               onClick={handleLogo}
-              src={mallEz}
-              alt="MallEz Logo"
-              className="w-28 cursor-pointer transition-all duration-300 hover:scale-105 hover:brightness-110 active:scale-95 lg:w-36"
+              src={newLogo}
+              alt="CyloMall Logo"
+              className="w-28 hover:scale-105 hover:brightness-110 active:scale-95 lg:w-36 transition-all duration-300 cursor-pointer"
               tabIndex={0}
               onKeyPress={(e) => handleKeyPress(e, handleLogo)}
             />
-            <div className="hidden space-x-3 lg:flex">
+            <div className="lg:flex hidden space-x-3">
               <Button
                 text="Recharge"
-                className="text-lg font-medium transition-all duration-300 hover:scale-105 hover:ring-2 hover:ring-blue-200 active:scale-95"
-              />
-              <Button
-                text="Navigate"
-                className="text-lg font-medium transition-all duration-300 hover:scale-105 hover:ring-2 hover:ring-blue-200 active:scale-95"
+                className="hover:scale-105 hover:ring-2 hover:ring-blue-200 active:scale-95 text-lg font-medium transition-all duration-300"
               />
             </div>
           </div>
 
           {/* Mobile Menu Button */}
           <button
-            className="rounded-lg p-2 text-gray-600 transition-all duration-300 hover:bg-blue-50 hover:text-blue-600 active:scale-95 lg:hidden"
+            className="hover:bg-blue-50 hover:text-blue-600 active:scale-95 lg:hidden p-2 text-gray-600 transition-all duration-300 rounded-lg"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           >
@@ -127,25 +123,21 @@ const Navbar = () => {
             } w-full lg:static lg:block lg:w-auto lg:shadow-none`}
           >
             {/* Mobile-only buttons */}
-            <div className="border-b border-gray-100 p-4 lg:hidden">
+            <div className="lg:hidden p-4 border-b border-gray-100">
               <div className="flex flex-col space-y-3">
                 <Button
                   text="Recharge"
-                  className="w-full text-lg font-medium transition-all duration-300 hover:ring-2 hover:ring-blue-200 active:scale-95"
-                />
-                <Button
-                  text="Navigate"
-                  className="w-full text-lg font-medium transition-all duration-300 hover:ring-2 hover:ring-blue-200 active:scale-95"
+                  className="hover:ring-2 hover:ring-blue-200 active:scale-95 w-full text-lg font-medium transition-all duration-300"
                 />
               </div>
             </div>
 
             {/* Navigation Items */}
-            <ul className="flex flex-col space-y-2 p-4 text-lg lg:flex-row lg:items-center lg:space-x-8 lg:space-y-0 lg:p-0">
+            <ul className="lg:flex-row lg:items-center lg:space-x-8 lg:space-y-0 lg:p-0 flex flex-col p-4 space-y-2 text-lg">
               {navItems.map((item, index) => (
                 <li key={item.title} className="group relative">
                   <button
-                    className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-gray-700 transition-all duration-300 hover:bg-blue-50 hover:text-blue-600 group-hover:translate-x-1 lg:inline-flex lg:w-auto lg:hover:bg-transparent lg:group-hover:translate-x-0"
+                    className="hover:bg-blue-50 hover:text-blue-600 group-hover:translate-x-1 lg:inline-flex lg:w-auto lg:hover:bg-transparent lg:group-hover:translate-x-0 flex items-center justify-between w-full px-3 py-2 text-gray-700 transition-all duration-300 rounded-lg"
                     onClick={() => {
                       handleSubMenuToggle(index);
                       if (!item.subItems) {
@@ -170,7 +162,7 @@ const Navbar = () => {
                         <li key={subItem.title}>
                           <button
                             onClick={() => handleNavigation(subItem.path)}
-                            className="block w-full rounded-md px-4 py-2 text-left text-base text-gray-700 transition-all duration-300 hover:translate-x-1 hover:bg-blue-50 hover:text-blue-600"
+                            className="hover:translate-x-1 hover:bg-blue-50 hover:text-blue-600 block w-full px-4 py-2 text-base text-left text-gray-700 transition-all duration-300 rounded-md"
                           >
                             {subItem.title}
                           </button>
@@ -186,7 +178,7 @@ const Navbar = () => {
                 <li ref={dropdownRef} className="relative">
                   <button
                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                    className="flex w-full items-center space-x-2 rounded-lg px-3 py-2 transition-all duration-300 hover:bg-blue-50 hover:text-blue-600 active:scale-95 lg:w-auto"
+                    className="hover:bg-blue-50 hover:text-blue-600 active:scale-95 lg:w-auto flex items-center w-full px-3 py-2 space-x-2 transition-all duration-300 rounded-lg"
                   >
                     <FaUser className="text-xl text-gray-600" />
                     <span className="text-lg font-medium">{userName}</span>
@@ -203,7 +195,7 @@ const Navbar = () => {
                       <li>
                         <button
                           onClick={() => navigate("/profile")}
-                          className="block w-full rounded-md px-4 py-2 text-left text-base text-gray-700 transition-all duration-300 hover:translate-x-1 hover:bg-blue-50 hover:text-blue-600"
+                          className="hover:translate-x-1 hover:bg-blue-50 hover:text-blue-600 block w-full px-4 py-2 text-base text-left text-gray-700 transition-all duration-300 rounded-md"
                         >
                           Profile
                         </button>
@@ -211,7 +203,7 @@ const Navbar = () => {
                       <li>
                         <button
                           onClick={handleSignOut}
-                          className="block w-full rounded-md px-4 py-2 text-left text-base text-gray-700 transition-all duration-300 hover:translate-x-1 hover:bg-red-50 hover:text-red-600"
+                          className="hover:translate-x-1 hover:bg-red-50 hover:text-red-600 block w-full px-4 py-2 text-base text-left text-gray-700 transition-all duration-300 rounded-md"
                         >
                           Sign Out
                         </button>

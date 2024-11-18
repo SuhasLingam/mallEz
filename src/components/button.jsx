@@ -38,17 +38,17 @@ const Button = ({ text, redirectTo, onClick }) => {
   return (
     <button
       onClick={handleClick}
-      className="relative transform overflow-hidden rounded-full bg-white p-2 px-4 text-lg font-semibold text-mainTextColor shadow-md transition-transform duration-300 ease-in-out hover:scale-105 hover:bg-gradient-to-b hover:from-[#08E3FF] hover:to-[#5799F7] hover:text-white focus:outline-none md:p-4 md:px-10 md:text-2xl"
+      className="relative transform overflow-hidden rounded-full bg-white p-2 px-4 text-lg font-semibold text-mainTextColor shadow-md transition-transform duration-300 ease-in-out hover:scale-100 hover:bg-gradient-to-b hover:from-[#08E3FF] hover:to-[#5799F7] hover:text-white focus:outline-none md:p-4 md:px-10 md:text-2xl"
     >
       {text}
-      <style>{`
+      {/* <style>{`
         @keyframes ripple-animation {
           to {
             transform: scale(4);
             opacity: 0;
           }
         }
-      `}</style>
+      `}</style> */}
     </button>
   );
 };

@@ -132,16 +132,16 @@ const IndividualMall = () => {
   if (!mallData) return <div>No data available</div>;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-blue-300 to-white">
+    <div className="bg-gradient-to-br from-white via-blue-300 to-white min-h-screen">
       <Navbar />
       <CityImage
         cityName={mallData.location?.name || "N/A"}
         imageUrl={mallData.location?.imageUrl}
       />
-      <div className="container mx-auto max-w-7xl px-4 py-8">
-        <div className="mb-8 rounded-lg bg-white p-4 shadow-lg sm:p-6">
-          <h1 className="mb-8 text-center text-3xl font-bold text-mainTextColor sm:text-4xl">
-            <span className="border-b-4 border-blue-500 pb-2">
+      <div className="max-w-7xl container px-4 py-8 mx-auto">
+        <div className="sm:p-6 p-4 mb-8 bg-white rounded-lg shadow-lg">
+          <h1 className="text-mainTextColor sm:text-4xl mb-8 text-3xl font-bold text-center">
+            <span className="pb-2 border-b-4 border-blue-500">
               {mallData.location?.name || "N/A"}
             </span>
           </h1>
@@ -149,10 +149,10 @@ const IndividualMall = () => {
             <input
               type="text"
               placeholder="Search for stores, brands, or items"
-              className="w-full rounded-full border-2 border-blue-500 bg-gray-100 px-4 py-2 pr-10 text-base focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-200 sm:px-6 sm:py-3 sm:text-lg"
+              className="focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-200 sm:px-6 sm:py-3 sm:text-lg w-full px-4 py-2 pr-10 text-base bg-gray-100 border-2 border-blue-500 rounded-full"
             />
-            <button className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-blue-500 p-2 text-white transition-colors hover:bg-blue-600 sm:right-4">
-              <FaSearch className="h-4 w-4 sm:h-5 sm:w-5" />
+            <button className="right-2 top-1/2 hover:bg-blue-600 sm:right-4 absolute p-2 text-white transition-colors -translate-y-1/2 bg-blue-500 rounded-full">
+              <FaSearch className="sm:h-5 sm:w-5 w-4 h-4" />
             </button>
           </div>
           <FloorButtons floors={floors} />
@@ -162,36 +162,36 @@ const IndividualMall = () => {
           )}
           {mallOffers.length > 0 ? (
             <div className="mt-8">
-              <h2 className="mb-8 text-center text-3xl font-bold text-mainTextColor sm:text-4xl">
-                <span className="border-b-4 border-blue-500 pb-2">
+              <h2 className="text-mainTextColor sm:text-4xl mb-8 text-3xl font-bold text-center">
+                <span className="pb-2 border-b-4 border-blue-500">
                   Top Offers
                 </span>
               </h2>
               <TopOffers />
             </div>
           ) : (
-            <p className="mt-8 text-center text-lg text-gray-600">
+            <p className="mt-8 text-lg text-center text-gray-600">
               No offers available for this mall.
             </p>
           )}
         </div>
-        <div className="rounded-lg bg-sky-50 p-4 shadow-lg sm:p-8">
+        <div className="bg-sky-50 sm:p-8 p-4 rounded-lg shadow-lg">
           <CategorySearch />
         </div>
       </div>
 
       {/* Footer content remains unchanged */}
-      <footer className="border-t-2 border-slate-400 bg-transparent py-8">
-        <div className="container mx-auto px-6 md:flex md:justify-around">
+      <footer className="border-slate-400 py-8 bg-transparent border-t-2">
+        <div className="md:flex md:justify-around container px-6 mx-auto">
           <motion.div
-            className="flex flex-wrap justify-between md:space-x-12"
+            className="md:space-x-12 flex flex-wrap justify-between"
             variants={fadeInUp}
             initial="hidden"
             whileInView="visible"
             exit="hidden"
             viewport={{ once: false, amount: 0.2 }}
           >
-            <div className="mb-6 md:mb-0">
+            <div className="md:mb-0 mb-6">
               <h5 className="mb-2 text-lg font-bold text-blue-900">Product</h5>
               <ul className="space-y-1 text-blue-900">
                 <li>
@@ -205,7 +205,7 @@ const IndividualMall = () => {
                 </li>
               </ul>
             </div>
-            <div className="mb-6 md:mb-0">
+            <div className="md:mb-0 mb-6">
               <h5 className="mb-2 text-lg font-bold text-blue-900">About Us</h5>
               <ul className="space-y-1 text-blue-900">
                 <li>
@@ -219,7 +219,7 @@ const IndividualMall = () => {
                 </li>
               </ul>
             </div>
-            <div className="mb-6 md:mb-0">
+            <div className="md:mb-0 mb-6">
               <h5 className="mb-2 text-lg font-bold text-blue-900">
                 Help & Support
               </h5>
@@ -265,14 +265,14 @@ const IndividualMall = () => {
 
         {/* Footer Bottom */}
         <motion.div
-          className="container mx-auto mt-8 flex items-center justify-between border-t-2 border-slate-400 px-6 pt-4"
+          className="border-slate-400 container flex items-center justify-between px-6 pt-4 mx-auto mt-8 border-t-2"
           variants={fadeInUp}
           initial="hidden"
           whileInView="visible"
           exit="hidden"
           viewport={{ once: false, amount: 0.2 }}
         >
-          <p className="text-blue-900">© 2024 MallEZ</p>
+          <p className="text-blue-900">© 2024 CyloMall</p>
           <div className="flex space-x-4">
             <a href="#" className="text-2xl text-[#E4405F]">
               <FaInstagram />

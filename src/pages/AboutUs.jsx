@@ -29,17 +29,17 @@ const AboutUs = () => {
       <div className="m-auto flex h-full flex-col items-center justify-center bg-mainBackgroundColor font-poppins md:px-28 md:pt-[100px]">
         {/* About Us */}
         <motion.span
-          className="my-6 text-4xl font-bold text-mainTextColor sm:my-8 sm:text-5xl md:my-11 md:text-8xl"
+          className="text-mainTextColor sm:my-8 sm:text-5xl md:my-11 md:text-8xl my-6 text-4xl font-bold"
           variants={fadeInUp}
           initial="hidden"
           whileInView="visible"
           exit="hidden"
           viewport={{ once: false, amount: 0.2 }}
         >
-          About MallEZ
+          About CyloMall
         </motion.span>
         <motion.div
-          className="flex flex-col items-center justify-center space-y-6 px-4 text-center text-lg sm:space-y-8 sm:px-8 sm:text-xl md:space-y-11 md:px-11 md:text-2xl"
+          className="sm:space-y-8 sm:px-8 sm:text-xl md:space-y-11 md:px-11 md:text-2xl flex flex-col items-center justify-center px-4 space-y-6 text-lg text-center"
           variants={fadeInUp}
           initial="hidden"
           whileInView="visible"
@@ -47,37 +47,37 @@ const AboutUs = () => {
           viewport={{ once: false, amount: 0.2 }}
         >
           <p>
-            Welcome to <span className="px-2 font-bold">MallEZ©</span>, your
+            Welcome to <span className="px-2 font-bold">CyloMall©</span>, your
             ultimate digital guide to all the malls in your locality!
           </p>
           <p>
-            At MallEZ, we believe that shopping should be an experience, not a
+            At CyloMall, we believe that shopping should be an experience, not a
             hassle. That's why we've created a unified platform where you can
             explore all the malls around you, discover the best deals, navigate
             effortlessly, and make the most out of your visits.
           </p>
           <p>
-            We want to profit with our members, not from them. That’s why MallEZ
-            doesn’t rely on monthly service fees or minimum balance
+            We want to profit with our members, not from them. That’s why
+            CyloMall doesn’t rely on monthly service fees or minimum balance
             requirements.
           </p>
         </motion.div>
 
         {/* Our Mission */}
         <motion.div
-          className="sm:border-y-3 mt-6 flex flex-col items-center justify-center space-y-6 border-y-2 border-slate-400 px-4 py-6 text-center text-lg sm:mt-8 sm:space-y-8 sm:px-8 sm:py-8 sm:text-xl md:mt-11 md:space-y-10 md:border-y-4 md:px-11 md:py-11 md:text-2xl"
+          className="sm:border-y-3 border-y-2 border-slate-400 sm:mt-8 sm:space-y-8 sm:px-8 sm:py-8 sm:text-xl md:mt-11 md:space-y-10 md:border-y-4 md:px-11 md:py-11 md:text-2xl flex flex-col items-center justify-center px-4 py-6 mt-6 space-y-6 text-lg text-center"
           variants={fadeInUp}
           initial="hidden"
           whileInView="visible"
           exit="hidden"
           viewport={{ once: false, amount: 0.2 }}
         >
-          <span className="mb-6 text-4xl font-bold text-mainTextColor sm:mb-8 sm:text-5xl md:mb-7 md:text-8xl">
+          <span className="text-mainTextColor sm:mb-8 sm:text-5xl md:mb-7 md:text-8xl mb-6 text-4xl font-bold">
             Our Mission
           </span>
           <div>
             <p>
-              <span className="px-1 font-bold sm:px-2">
+              <span className="sm:px-2 px-1 font-bold">
                 Our mission is simple:
               </span>{" "}
               to bring convenience, excitement, and savings to your shopping
@@ -91,7 +91,7 @@ const AboutUs = () => {
 
         {/* What We Offer */}
         <motion.div
-          className="sm:border-b-3 mt-6 flex min-h-screen flex-col justify-center border-b-2 border-slate-400 bg-cover bg-no-repeat px-4 py-6 text-lg sm:mt-8 sm:px-8 sm:py-8 sm:text-xl md:mt-11 md:border-b-4 md:px-11 md:py-11 md:text-2xl"
+          className="sm:border-b-3 border-slate-400 sm:mt-8 sm:px-8 sm:py-8 sm:text-xl md:mt-11 md:border-b-4 md:px-11 md:py-11 md:text-2xl flex flex-col justify-center min-h-screen px-4 py-6 mt-6 text-lg bg-no-repeat bg-cover border-b-2"
           style={{
             backgroundImage: width < 768 ? "none" : `url(${AboutBG})`,
             backgroundSize: "cover",
@@ -102,46 +102,46 @@ const AboutUs = () => {
           exit="hidden"
           viewport={{ once: false, amount: 0.2 }}
         >
-          <span className="mb-6 ml-4 flex text-left text-4xl font-bold text-mainTextColor sm:mb-8 sm:ml-8 sm:text-5xl md:mb-7 md:ml-11 md:text-8xl">
+          <span className="text-mainTextColor sm:mb-8 sm:ml-8 sm:text-5xl md:mb-7 md:ml-11 md:text-8xl flex mb-6 ml-4 text-4xl font-bold text-left">
             What We Offer:
           </span>
           <div className="flex">
-            <ul className="ml-4 list-disc py-6 sm:ml-8 sm:py-8 md:ml-11 md:py-11">
-              <li className="py-2 sm:py-3 md:py-4">
-                <span className="px-1 font-bold sm:px-2">
+            <ul className="sm:ml-8 sm:py-8 md:ml-11 md:py-11 py-6 ml-4 list-disc">
+              <li className="sm:py-3 md:py-4 py-2">
+                <span className="sm:px-2 px-1 font-bold">
                   All Malls in One Place:
                 </span>{" "}
                 Explore all the malls in your area with just a few clicks.
                 Whether you're looking for the latest fashion trends, the best
-                dining options, or the newest entertainment spots, MallEZ has
+                dining options, or the newest entertainment spots, CyloMall has
                 got you covered.
               </li>
-              <li className="py-2 sm:py-3 md:py-4">
-                <span className="px-1 font-bold sm:px-2">
+              <li className="sm:py-3 md:py-4 py-2">
+                <span className="sm:px-2 px-1 font-bold">
                   Exclusive Offers and Coupons:
                 </span>
                 Never miss out on a deal! Get access to exclusive offers, redeem
                 codes, and coupons that you can use on your favorite brands and
                 stores.
               </li>
-              <li className="py-2 sm:py-3 md:py-4">
-                <span className="px-1 font-bold sm:px-2">
+              <li className="sm:py-3 md:py-4 py-2">
+                <span className="sm:px-2 px-1 font-bold">
                   In-Mall Navigation:
                 </span>{" "}
                 Lost inside a mall? Not anymore! Our in-mall navigation system
                 ensures you find your way to your desired shop or facility
                 without any hassle.
               </li>
-              <li className="py-2 sm:py-3 md:py-4">
-                <span className="px-1 font-bold sm:px-2">
+              <li className="sm:py-3 md:py-4 py-2">
+                <span className="sm:px-2 px-1 font-bold">
                   Tokenized System for Purchases:
                 </span>{" "}
                 Experience the future of shopping with our tokenized purchase
                 system, which makes transactions faster, easier, and more
                 secure.
               </li>
-              <li className="py-2 sm:py-3 md:py-4">
-                <span className="px-1 font-bold sm:px-2">
+              <li className="sm:py-3 md:py-4 py-2">
+                <span className="sm:px-2 px-1 font-bold">
                   Automated Parking Management:
                 </span>{" "}
                 Say goodbye to parking headaches. With our automated parking
@@ -152,52 +152,52 @@ const AboutUs = () => {
           </div>
         </motion.div>
 
-        {/* Why MallEZ */}
+        {/* Why CyloMall */}
         <motion.div
-          className="sm:border-b-3 mt-6 flex flex-col items-center justify-center space-y-6 border-b-2 border-slate-400 px-4 py-6 text-center text-lg sm:mt-8 sm:space-y-8 sm:px-8 sm:py-8 sm:text-xl md:mt-11 md:space-y-10 md:border-b-4 md:px-11 md:py-11 md:text-2xl"
+          className="sm:border-b-3 border-slate-400 sm:mt-8 sm:space-y-8 sm:px-8 sm:py-8 sm:text-xl md:mt-11 md:space-y-10 md:border-b-4 md:px-11 md:py-11 md:text-2xl flex flex-col items-center justify-center px-4 py-6 mt-6 space-y-6 text-lg text-center border-b-2"
           variants={fadeInUp}
           initial="hidden"
           whileInView="visible"
           exit="hidden"
           viewport={{ once: false, amount: 0.2 }}
         >
-          <span className="mb-6 text-4xl font-bold text-mainTextColor sm:mb-8 sm:text-5xl md:mb-7 md:text-8xl">
-            Why MallEZ:
+          <span className="text-mainTextColor sm:mb-8 sm:text-5xl md:mb-7 md:text-8xl mb-6 text-4xl font-bold">
+            Why CyloMall:
           </span>
           <p>
             We understand that today's shoppers demand more than just a place to
             buy goods; they want an experience that’s easy, efficient, and
-            enjoyable. MallEZ is here to revolutionize the way you shop by
+            enjoyable. CyloMall is here to revolutionize the way you shop by
             bringing all your mall needs into one comprehensive platform. With a
             focus on customer convenience and innovative technology, we’re
             setting a new standard in the shopping industry.
           </p>
-          <span className="mb-6 text-lg font-bold text-mainTextColor sm:mb-8 sm:text-xl md:mb-11 md:text-2xl">
+          <span className="text-mainTextColor sm:mb-8 sm:text-xl md:mb-11 md:text-2xl mb-6 text-lg font-bold">
             Join Us on Our Journey
           </span>
         </motion.div>
 
         {/* Join Us */}
         <motion.div
-          className="sm:border-b-3 mt-6 flex flex-col items-center justify-center space-y-6 border-b-2 border-slate-400 px-4 py-6 text-center text-lg sm:mt-8 sm:space-y-8 sm:px-8 sm:py-8 sm:text-xl md:mt-11 md:space-y-10 md:border-b-4 md:px-11 md:py-11 md:text-2xl"
+          className="sm:border-b-3 border-slate-400 sm:mt-8 sm:space-y-8 sm:px-8 sm:py-8 sm:text-xl md:mt-11 md:space-y-10 md:border-b-4 md:px-11 md:py-11 md:text-2xl flex flex-col items-center justify-center px-4 py-6 mt-6 space-y-6 text-lg text-center border-b-2"
           variants={fadeInUp}
           initial="hidden"
           whileInView="visible"
           exit="hidden"
           viewport={{ once: false, amount: 0.2 }}
         >
-          <span className="mb-6 text-4xl font-bold text-mainTextColor sm:mb-8 sm:text-5xl md:mb-7 md:text-8xl">
+          <span className="text-mainTextColor sm:mb-8 sm:text-5xl md:mb-7 md:text-8xl mb-6 text-4xl font-bold">
             Join Us on Our Journey:
           </span>
           <p>
-            MallEZ is more than just an app; it’s a community of shoppers who
+            CyloMall is more than just an app; it’s a community of shoppers who
             value convenience and innovation. We’re constantly evolving and
             adding new features to make your shopping experience even better.
             Join us on our journey to make shopping at malls easier and more
             enjoyable than ever before.
           </p>
-          <span className="mb-6 text-lg font-bold text-mainTextColor sm:mb-8 sm:text-xl md:mb-11 md:text-2xl">
-            Feel the Ease, Shop with MallEZ
+          <span className="text-mainTextColor sm:mb-8 sm:text-xl md:mb-11 md:text-2xl mb-6 text-lg font-bold">
+            Feel the Ease, Shop with CyloMall
           </span>
         </motion.div>
         <Team />

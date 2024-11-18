@@ -1,6 +1,6 @@
-# MallEz
+# CyloMall
 
-MallEz is a web application designed to simplify parking management in shopping malls. It provides features for user authentication, profile management, and vehicle registration.
+CyloMall is a web application designed to simplify parking management in shopping malls. It provides features for user authentication, profile management, and vehicle registration.
 
 ## Features
 
@@ -20,7 +20,7 @@ MallEz is a web application designed to simplify parking management in shopping 
 ## Project Structure
 
 ```
-mallez/
+CyloMall/
 ├── public/
 │ └── index.html
 ├── src/

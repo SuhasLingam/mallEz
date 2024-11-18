@@ -86,30 +86,30 @@ const HeroSection = () => {
   return (
     <div
       ref={ref}
-      className="relative min-h-screen bg-mainBackgroundColor p-4 md:p-8"
+      className="bg-mainBackgroundColor md:p-8 relative min-h-screen p-4"
     >
-      <div className="container mx-auto flex flex-col items-center lg:flex-row lg:justify-between">
+      <div className="lg:flex-row lg:justify-between container flex flex-col items-center mx-auto">
         <motion.div
-          className="mb-8 text-center lg:mb-0 lg:w-1/2 lg:text-center"
+          className="lg:mb-0 lg:w-1/2 lg:text-center mb-8 text-center"
           variants={fadeInLeft}
           initial="hidden"
           animate={controls}
         >
-          <h1 className="mb-4 text-5xl font-bold sm:text-6xl lg:text-7xl">
+          <h1 className="sm:text-6xl lg:text-7xl mb-4 text-5xl font-bold">
             Feel The Ease,
           </h1>
           <h2
-            className="mb-4 text-5xl font-bold sm:text-6xl lg:text-7xl"
+            className="sm:text-6xl lg:text-7xl mb-4 text-5xl font-bold"
             style={{ color: colors[currentWordIndex], minHeight: "1.2em" }}
           >
             {displayedText}
           </h2>
-          <h1 className="mb-8 text-5xl font-bold sm:text-6xl lg:text-7xl">
-            With MallEZ
+          <h1 className="sm:text-6xl lg:text-7xl mb-8 text-5xl font-bold">
+            With CyloMall
           </h1>
 
           <motion.div
-            className="mb-8 lg:hidden"
+            className="lg:hidden mb-8"
             variants={fadeInUp}
             initial="hidden"
             animate={controls}
@@ -119,7 +119,7 @@ const HeroSection = () => {
 
           {!isLoggedIn && (
             <motion.div
-              className="flex justify-center gap-4 lg:justify-center"
+              className="lg:justify-center flex justify-center gap-4"
               variants={fadeInUp}
               initial="hidden"
               animate={controls}
@@ -130,20 +130,20 @@ const HeroSection = () => {
           )}
 
           <motion.p
-            className="mt-8 font-poppins text-base font-semibold italic text-mainTextColor sm:text-lg lg:text-2xl"
+            className="font-poppins text-mainTextColor sm:text-lg lg:text-2xl mt-8 text-base italic font-semibold"
             variants={fadeInUp}
             initial="hidden"
             animate={controls}
           >
             Imagine effortlessly navigating the mall during the busy holiday
-            season, with MallEZ guiding you directly to your favorite stores and
-            securing a parking spot just as you arrive. That's the power of
-            MallEZ.
+            season, with CyloMall guiding you directly to your favorite stores
+            and securing a parking spot just as you arrive. That's the power of
+            CyloMall.
           </motion.p>
         </motion.div>
 
         <motion.div
-          className="hidden lg:block lg:w-1/2"
+          className="lg:block lg:w-1/2 hidden"
           variants={fadeInRight}
           initial="hidden"
           animate={controls}

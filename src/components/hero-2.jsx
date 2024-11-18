@@ -41,15 +41,15 @@ const HeroTwo = () => {
   return (
     <div
       ref={ref}
-      className="relative min-h-screen w-full bg-mainBackgroundColor p-4 sm:p-6 md:p-8 lg:p-12"
+      className="bg-mainBackgroundColor sm:p-6 md:p-8 lg:p-12 relative w-full min-h-screen p-4"
       style={{
         backgroundImage: width < 768 ? "none" : `url(${herobgtwo})`,
         backgroundSize: "cover",
       }}
     >
-      <div className="container mx-auto flex flex-col items-center lg:flex-row lg:items-center lg:justify-between">
+      <div className="lg:flex-row lg:items-center lg:justify-between container flex flex-col items-center mx-auto">
         <motion.div
-          className="mb-8 w-full lg:mb-0 lg:w-1/2 lg:pr-8"
+          className="lg:mb-0 lg:w-1/2 lg:pr-8 w-full mb-8"
           variants={fadeInLeft}
           initial="hidden"
           animate={controls}
@@ -57,22 +57,22 @@ const HeroTwo = () => {
           <img
             src={homeImageTwo}
             alt="Mall Features"
-            className="mx-auto w-full max-w-md lg:max-w-full"
+            className="lg:max-w-full w-full max-w-md mx-auto"
           />
         </motion.div>
 
         <motion.div
-          className="w-full rounded-3xl bg-transparent bg-opacity-80 p-8 shadow-lg backdrop-blur-md sm:p-10 lg:w-1/2"
+          className="rounded-3xl bg-opacity-80 backdrop-blur-md sm:p-10 lg:w-1/2 w-full p-8 bg-transparent shadow-lg"
           variants={fadeInRight}
           initial="hidden"
           animate={controls}
         >
-          <p className="text-justify font-poppins text-xl font-semibold text-mainTextColor sm:text-xl md:text-2xl lg:text-3xl">
-            MallEZ is your all-in-one shopping companion that revolutionizes the
-            way you navigate, shop, and park at your favorite malls. With
+          <p className="font-poppins text-mainTextColor sm:text-xl md:text-2xl lg:text-3xl text-xl font-semibold text-justify">
+            CyloMall is your all-in-one shopping companion that revolutionizes
+            the way you navigate, shop, and park at your favorite malls. With
             features like smart mall navigation, personalized shopping
-            experiences, and automated parking solutions, MallEZ simplifies and
-            enhances your mall visits.
+            experiences, and automated parking solutions, CyloMall simplifies
+            and enhances your mall visits.
           </p>
         </motion.div>
       </div>
