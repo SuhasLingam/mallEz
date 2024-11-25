@@ -63,7 +63,7 @@ const Malls = () => {
   }));
 
   return (
-    <div className="h-max w-full bg-mainBackgroundColor">
+    <div className="h-max w-full bg-mainBackgroundColor pt-10">
       <Navbar />
       {content.map((item, index) => (
         <div key={index}>

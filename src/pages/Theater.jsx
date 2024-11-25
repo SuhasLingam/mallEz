@@ -45,7 +45,7 @@ const Theater = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-blue-300 to-white">
+    <div className="min-h-screen bg-gradient-to-br from-white via-blue-300 to-white pt-16">
       <Navbar />
 
       {/* Hero Section */}

@@ -119,7 +119,7 @@ const Navbar = () => {
             ref={menuRef}
             className={`${
               isMenuOpen
-                ? "absolute left-0 right-0 top-full block animate-slide-down bg-mainBackgroundColor shadow-lg"
+                ? "absolute left-0 right-0 top-full block animate-slide-down bg-white shadow-lg"
                 : "hidden"
             } w-full lg:static lg:block lg:w-auto lg:shadow-none`}
           >
@@ -128,6 +128,7 @@ const Navbar = () => {
               <div className="flex flex-col space-y-3">
                 <Button
                   text="Recharge"
+                  redirectTo="/recharge"
                   className="w-full text-lg font-medium transition-all duration-300 hover:ring-2 hover:ring-blue-200 active:scale-95"
                 />
               </div>

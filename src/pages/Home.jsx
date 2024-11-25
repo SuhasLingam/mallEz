@@ -22,7 +22,7 @@ const Home = () => {
 
   return (
     <div
-      className="min-h-screen pt-10 overflow-hidden bg-white"
+      className="min-h-screen overflow-hidden bg-white pt-16"
       style={{
         backgroundColor: `rgb(${255 - scrollPercentage * 0.5}, ${255 - scrollPercentage * 0.2}, ${255 - scrollPercentage * 0.05})`,
       }}
