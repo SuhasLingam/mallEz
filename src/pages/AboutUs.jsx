@@ -23,7 +23,7 @@ const AboutUs = () => {
 
   return (
     <>
-      <div className="bg-mainBackgroundColor">
+      <div className="bg-mainBackgroundColor pt-16 md:pt-0">
         <Navbar />
       </div>
       <div className="m-auto flex h-full flex-col items-center justify-center bg-mainBackgroundColor font-poppins md:px-28 md:pt-[100px]">

@@ -1,40 +1,41 @@
 import React from "react";
 
-const AuditoriumSelection = ({ selectedAudi, setSelectedAudi }) => (
-  <div className="mb-8">
-    <label className="mb-4 block text-lg font-medium text-gray-700">
-      Select Auditorium
-    </label>
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-      {[1, 2, 3].map((audiNum) => (
-        <div
-          key={audiNum}
-          onClick={() =>
-            setSelectedAudi({
-              id: audiNum,
-              name: `Audi ${audiNum}`,
-            })
-          }
-          className={`transform cursor-pointer rounded-xl p-4 transition-all duration-300 hover:scale-105 ${
-            selectedAudi?.id === audiNum
-              ? "bg-blue-500 text-white shadow-lg"
-              : "border-2 border-gray-200 bg-white hover:border-blue-300"
-          }`}
-        >
-          <div className="text-center">
-            <h3 className="text-lg font-semibold">Audi {audiNum}</h3>
-            <p className="mt-1 text-sm opacity-80">
-              {audiNum === 1
-                ? "Dolby Atmos"
-                : audiNum === 2
-                  ? "4K Screen"
-                  : "IMAX"}
-            </p>
-          </div>
-        </div>
-      ))}
+const AuditoriumSelection = ({ screens, selectedAudi, setSelectedAudi }) => {
+  return (
+    <div className="space-y-4">
+      <h3 className="text-xl font-semibold">Select Auditorium</h3>
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {screens.map((screen) => (
+          <button
+            key={screen.id}
+            onClick={() => setSelectedAudi(screen)}
+            className={`rounded-lg p-4 text-left transition-all ${
+              selectedAudi?.id === screen.id
+                ? "bg-blue-600 text-white"
+                : "bg-white hover:bg-blue-50"
+            }`}
+          >
+            <h4 className="text-lg font-semibold">{screen.name}</h4>
+            <p className="text-sm">Capacity: {screen.capacity} seats</p>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {screen.features.map((feature) => (
+                <span
+                  key={feature}
+                  className={`rounded-full px-2 py-1 text-xs ${
+                    selectedAudi?.id === screen.id
+                      ? "bg-blue-500"
+                      : "bg-blue-100 text-blue-800"
+                  }`}
+                >
+                  {feature}
+                </span>
+              ))}
+            </div>
+          </button>
+        ))}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default AuditoriumSelection;

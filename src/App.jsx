@@ -21,6 +21,8 @@ import "react-toastify/dist/ReactToastify.css";
 import IndividualMall from "./pages/IndividualMall";
 import Theater from "./pages/Theater";
 import Recharge from "./pages/recharge";
+import Theaters from "./pages/TheaterChains";
+
 const AnimatedRoutes = () => {
   const location = useLocation();
 
@@ -168,6 +170,22 @@ const AnimatedRoutes = () => {
             <ProtectedRoute>
               <motion.div
                 key="theaters"
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                variants={pageTransition}
+              >
+                <Theaters />
+              </motion.div>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/theater/:chainId/:locationId"
+          element={
+            <ProtectedRoute>
+              <motion.div
+                key="theater"
                 initial="initial"
                 animate="animate"
                 exit="exit"

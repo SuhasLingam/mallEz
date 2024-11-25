@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { useParams } from "react-router-dom";
 import Navbar from "../components/navbar";
 import StepIndicator from "../components/theater/StepIndicator";
 import AuditoriumSelection from "../components/theater/AuditoriumSelection";
@@ -13,8 +14,14 @@ import { STEPS, FOOD_MENU } from "../features/theater/constants";
 import { validateSeatNumber } from "../features/theater/utils/validators";
 import OrderSummary from "../components/theater/OrderSummary";
 import PaymentSection from "../components/theater/PaymentSection";
+import { useTheaterData } from "../features/theater/hooks/useTheaterData";
+import TheaterHero from "../components/theater/TheaterHero";
 
 const Theater = () => {
+  const { chainId, locationId } = useParams();
+  const { loading, error, theaterData, screens, currentMovies, concessions } =
+    useTheaterData(chainId, locationId);
+
   const {
     currentStep,
     setCurrentStep,
@@ -44,26 +51,18 @@ const Theater = () => {
     resetBooking();
   };
 
+  if (loading) {
+    return <div className="min-h-screen pt-16">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="min-h-screen pt-16">Error: {error}</div>;
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-white via-blue-300 to-white pt-16">
       <Navbar />
-
-      {/* Hero Section */}
-      <div className="relative h-[400px] w-full overflow-hidden">
-        <img
-          src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?ixlib=rb-4.0.3"
-          alt="Theater"
-          className="brightness-40 h-full w-full object-cover transition-transform duration-700 hover:scale-105"
-        />
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/50">
-          <h1 className="mb-4 text-5xl font-bold text-white md:text-7xl">
-            Movie Theater
-          </h1>
-          <p className="text-xl text-gray-200">
-            Book your perfect movie experience
-          </p>
-        </div>
-      </div>
+      <TheaterHero theaterData={theaterData} />
 
       <div className="container mx-auto max-w-7xl px-4 py-12">
         <StepIndicator currentStep={currentStep} steps={STEPS} />
@@ -76,10 +75,12 @@ const Theater = () => {
               </h2>
               <div className="rounded-xl border-2 border-blue-100 p-8 shadow-inner">
                 <AuditoriumSelection
+                  screens={screens}
                   selectedAudi={selectedAudi}
                   setSelectedAudi={setSelectedAudi}
                 />
                 <ShowTimeSelection
+                  currentMovies={currentMovies}
                   selectedShow={selectedShow}
                   setSelectedShow={setSelectedShow}
                 />
@@ -159,7 +160,7 @@ const Theater = () => {
               </div>
 
               <FoodMenu
-                foodMenu={FOOD_MENU}
+                foodMenu={concessions}
                 selectedVariants={selectedVariants}
                 setSelectedVariants={setSelectedVariants}
                 handleAddToCart={handleAddToCart}
